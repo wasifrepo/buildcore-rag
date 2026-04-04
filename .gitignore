@@ -1,0 +1,23 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ChromaDB
+data/chroma/
+data/processed/
+
+# Traces
+backend/traces/*.json
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store

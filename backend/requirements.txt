@@ -1,0 +1,36 @@
+# API
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+
+# LLM & Embeddings
+openai==1.51.0
+
+# Vector Store
+chromadb==0.5.15
+
+# Sparse Retrieval
+rank-bm25==0.2.2
+
+# Reranker
+sentence-transformers==3.1.1
+torch==2.4.1
+
+# Document Ingestion
+unstructured[pdf,docx,xlsx]==0.15.13
+pypdf==5.0.1
+python-docx==1.1.2
+
+# Data Validation
+pydantic==2.9.2
+pydantic-settings==2.5.2
+
+# Evaluation
+ragas==0.2.1
+datasets==3.0.1
+
+# Utilities
+python-dotenv==1.0.1
+tenacity==9.0.0
+httpx==0.27.2
+numpy==1.26.4
