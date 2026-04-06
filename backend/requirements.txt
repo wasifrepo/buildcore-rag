@@ -7,7 +7,7 @@ python-multipart==0.0.9
 openai==1.51.0
 
 # Vector Store
-chromadb==0.5.15
+chromadb==0.4.24
 
 # Sparse Retrieval
 rank-bm25==0.2.2
@@ -17,7 +17,8 @@ sentence-transformers==3.1.1
 torch==2.4.1
 
 # Document Ingestion
-unstructured[pdf,docx,xlsx]==0.15.13
+# Replace with:
+unstructured==0.15.13
 pypdf==5.0.1
 python-docx==1.1.2
 

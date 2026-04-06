@@ -57,3 +57,9 @@ export async function getTrace(traceId) {
   const res = await fetch(`${BASE_URL}/traces/${traceId}`);
   return res.json();
 }
+
+export async function getLatestEval() {
+  const res = await fetch(`${BASE_URL}/evaluate/latest`);
+  if (res.status === 404) return null;
+  return res.json();
+}

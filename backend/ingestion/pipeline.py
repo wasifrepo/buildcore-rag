@@ -50,8 +50,10 @@ logger = logging.getLogger(__name__)
 # Resolved project root: backend/ingestion/pipeline.py → three levels up
 _PROJECT_ROOT: Path = Path(__file__).parent.parent.parent
 
-# Default corpus directory; overridden by the data_dir argument to run_ingestion
-_DEFAULT_DATA_DIR: Path = _PROJECT_ROOT / "data" / "raw"
+# Default corpus directory; overridden by the data_dir argument to run_ingestion.
+# DATA_DIR env var takes precedence so the Docker container can point to /app/data/raw
+# without relying on the project-root path resolution above.
+_DEFAULT_DATA_DIR: Path = Path(os.environ["DATA_DIR"]) if "DATA_DIR" in os.environ else _PROJECT_ROOT / "data" / "raw"
 
 # Number of chunks sent in a single OpenAI embeddings API call.
 # Kept well below the 2 048-input hard limit to bound memory and latency.
