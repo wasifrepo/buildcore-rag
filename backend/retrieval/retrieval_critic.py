@@ -62,7 +62,9 @@ BUILDCORE CORPUS — what documents exist
    confined space entry, electrical isolation (lockout / tagout).
 2. Subcontractor contracts: Apex Electrical (SC-2024-038) and Harrington
    Scaffolding (SC-2024-041) — scope, price, and general conditions.
-3. Incident emails: INC-2024-009 chemical spill thread (14 Feb 2024).
+3. Incident emails: INC-2024-007 forklift near-miss at Commerce Drive
+   (5 Feb 2024), INC-2024-002 laceration LTI — Sam Osei, Zone 3 Warehouse
+   (14 Feb 2024), INC-2024-009 epoxy chemical spill, Zone 3 (22 Feb 2024).
 4. Maintenance manuals: Toyota 8FGF25 forklift (MAINT-FLT-03) and
    Denyo DCA-45SPK3 generator (MAINT-GEN-01).
 5. Compliance checklists: SSIC-001 daily site safety inspection and

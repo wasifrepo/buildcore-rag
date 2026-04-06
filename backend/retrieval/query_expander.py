@@ -39,7 +39,8 @@ The corpus contains five document types:
   • Subcontractor contracts (Apex Electrical SC-2024-038, Harrington
     Scaffolding SC-2024-041) with scope schedules, price schedules, and
     general conditions
-  • Incident emails (INC-2024-009 chemical spill thread)
+  • Incident emails (INC-2024-007 forklift near-miss, INC-2024-002 laceration
+    LTI, INC-2024-009 epoxy chemical spill)
   • Maintenance manuals (Toyota 8FGF25 forklift, Denyo DCA-45SPK3 generator)
   • Compliance checklists (daily site safety inspection, subcontractor
     pre-mobilisation checklist)

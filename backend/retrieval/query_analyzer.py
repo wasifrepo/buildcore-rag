@@ -40,8 +40,10 @@ The corpus contains five document categories:
 * **Contracts** — subcontractor services agreements for Apex Electrical
   (SC-2024-038) and Harrington Scaffolding (SC-2024-041), including schedules
   for scope, price, and general conditions.
-* **Incident emails** — email thread for incident INC-2024-009 (chemical spill
-  at Lakeside Industrial Park), capturing timeline, actions, and follow-ups.
+* **Incident emails** — three incident threads: INC-2024-007 (forklift near-miss
+  at Commerce Drive site, 5 February 2024), INC-2024-002 (laceration LTI — Sam
+  Osei, Zone 3 Warehouse, 14 February 2024), INC-2024-009 (epoxy chemical spill,
+  Zone 3, 22 February 2024).
 * **Maintenance manuals** — Toyota 8FGF25 forklift (MAINT-FLT-03) and
   Denyo DCA-45SPK3 generator (MAINT-GEN-01) service and operating procedures.
 * **Compliance checklists** — SSIC-001 daily site safety inspection checklist
@@ -88,10 +90,13 @@ BUILDCORE CORPUS — what documents exist
    - SC-2024-041: Harrington Scaffolding Solutions — scaffolding scope,
      schedule of rates, 6-clause general conditions
 
-3. INCIDENT EMAILS (1 thread)
-   - INC-2024-009: Chemical spill incident at Lakeside Industrial Park
-     (14 February 2024). Thread captures initial report, investigation
-     actions, regulatory notification, and corrective measures.
+3. INCIDENT EMAILS (3 threads)
+   - INC-2024-007: Forklift near-miss at Commerce Drive site
+     (5 February 2024).
+   - INC-2024-002: Laceration LTI — Sam Osei, Zone 3 Warehouse
+     (14 February 2024).
+   - INC-2024-009: Epoxy chemical spill, Zone 3
+     (22 February 2024).
 
 4. MAINTENANCE MANUALS (2 documents)
    - MAINT-FLT-03: Toyota 8FGF25 forklift — pre-operation checks,
