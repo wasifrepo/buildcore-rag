@@ -1,0 +1,127 @@
+From: Tom Nguyen <t.nguyen@buildcore.com.au>
+To: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+CC: Daniel Kowalski <d.kowalski@buildcore.com.au>
+Date: Wednesday, 14 February 2024, 11:06 AM
+Subject: INCIDENT REPORT — LTI, Laceration, Zone 3 Warehouse, Commerce Drive
+
+Jason,
+
+Reporting a Lost Time Injury from this morning.
+
+Worker: Sam Osei, BuildCore labourer (Employee ID: EMP-0441)
+Time: Approximately 09:20, Wednesday 14 February 2024
+Location: Zone 3 Warehouse, Commerce Drive site
+
+What happened: Sam was cutting strapping from a delivered pallet of conduit
+using a retractable box cutter. The blade slipped and he lacerated the palm
+of his left hand. The cut was approximately 5cm long and deep enough to require
+stitches. Site first aider (Denise Park) assessed the wound immediately and
+applied a pressure bandage. Sam was taken by his foreman (Brendan Walsh) to
+Lakeside Medical Centre at approximately 09:45. He received 6 stitches and
+was told he should not perform manual duties with his left hand for 7-10 days.
+Sam is right-handed so there may be alternate duties available — I'll need HR
+input on this.
+
+The box cutter used was a standard retractable utility knife from the site
+tool store. It was not defective. Sam confirmed he was not wearing cut-resistant
+gloves at the time — he said he hadn't been given them and wasn't aware it was
+a requirement for strapping removal.
+
+This is a Lost Time Injury (LTI). Sam will not be on site for at least the
+remainder of this week.
+
+Immediate actions:
+- Sam transported to medical centre and is now at home resting
+- Incident area not disturbed, photos taken
+- Box cutter secured for investigation
+- Foreman Brendan Walsh briefed; Zone 3 crew given toolbox talk re: PPE
+  requirements for cutting tasks
+
+Need a formal investigation report by COB Friday.
+
+Tom
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Rachel Okonkwo <r.okonkwo@buildcore.com.au>
+To: Tom Nguyen <t.nguyen@buildcore.com.au>
+CC: Jason Hargreaves <j.hargreaves@buildcore.com.au>; Daniel Kowalski <d.kowalski@buildcore.com.au>
+Date: Wednesday, 14 February 2024, 12:33 PM
+Subject: RE: INCIDENT REPORT — LTI, Laceration, Zone 3 Warehouse, Commerce Drive
+
+Tom,
+
+A few things from my end:
+
+WorkSafe notification: This is a recordable injury (medical treatment beyond
+first aid). It does not meet the threshold for immediate WorkSafe notification
+(that would require hospitalisation, amputation, or serious injury). However,
+we need to record it in our injury register (Form WC-001) today.
+
+Alternate duties: Sam is right-handed, which helps. I'll call him this afternoon
+once he's had time to rest and get a proper medical certificate from the treating
+doctor. The certificate will specify any restrictions. Possible alternate duties
+depending on restrictions: document control, traffic flagging (if medical clears),
+delivery checking. I'll come back to you once I have the medical clearance.
+
+Workers Comp: I'll lodge the WorkCover claim today. Our insurer is QBE. Sam
+will receive weekly payments during any incapacity period. Brendan Walsh needs
+to complete the employer section of the WorkCover claim form — I'll email that
+to him directly.
+
+One thing that stands out: if Sam wasn't aware that cut-resistant gloves were
+required for strapping removal, was this task included in his induction or any
+SWMS? I'd want to know whether the PPE requirement existed in writing before
+this incident.
+
+Rachel
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+To: Tom Nguyen <t.nguyen@buildcore.com.au>; Daniel Kowalski <d.kowalski@buildcore.com.au>
+CC: Rachel Okonkwo <r.okonkwo@buildcore.com.au>
+Date: Friday, 16 February 2024, 15:22 PM
+Subject: RE: INCIDENT REPORT — LTI, Laceration, Zone 3 Warehouse, Commerce Drive
+
+All,
+
+LTI Investigation Report (Form LTI-2024-002) submitted to safety file.
+Summary below.
+
+ROOT CAUSES:
+1. PPE gap — The site PPE matrix (Document PPE-Matrix-Rev4) does not include
+   cut-resistant gloves as a requirement for strapping and packaging removal
+   tasks. This is an oversight. The task is routine but the box cutter risk
+   is real and should have been addressed.
+2. Supervision gap — Brendan Walsh confirmed Sam had been performing strapping
+   removal tasks since his first week on site. No one identified the PPE gap
+   during that period.
+
+CONTRIBUTING FACTORS:
+- The tool store does stock cut-resistant gloves (Level B, ANSI/ISEA 105)
+  but they are not labelled for specific tasks — workers select gloves
+  ad hoc, which means they may not know which glove is appropriate for which task.
+- Sam had not been given a task-specific induction for strapping removal.
+  The SWMS for "General Labouring" (SWMS-GL-003) does not specifically
+  cover strapping / packaging removal.
+
+CORRECTIVE ACTIONS:
+1. Update PPE Matrix to include cut-resistant gloves (Level B minimum) for
+   all cutting and strapping removal tasks — Jason / 21 Feb 2024
+2. Update SWMS-GL-003 to include strapping/packaging removal as a specific task
+   with PPE requirements — Jason / 21 Feb 2024
+3. Label tool store glove rack with task guidance — Tom / 19 Feb 2024
+4. Conduct PPE awareness toolbox talk with all labourers — Brendan Walsh / 19 Feb 2024
+5. All labourers to acknowledge updated SWMS-GL-003 in writing before returning
+   to cutting/strapping tasks — Tom / ongoing
+
+Sam Osei update: Sam has been cleared for alternate duties (document control,
+clerical) from Monday 19 February. Full return to manual duties pending
+medical review on 22 February.
+
+This is our second LTI in 14 months. I'd recommend a review of our SWMS library
+to check for similar gaps across other routine labouring tasks. I can schedule
+that for the week of 26 February if Daniel agrees.
+
+Jason

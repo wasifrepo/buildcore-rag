@@ -1,0 +1,168 @@
+BUILDCORE OPERATIONS
+DAILY SITE SAFETY INSPECTION CHECKLIST
+
+Form No.:         SSIC-001
+Project:          Greenfield Industrial Expansion — Stage 2
+Site Address:     14 Commerce Drive, Lakeside Industrial Park
+Inspector Name:   ________________________________
+Inspector Role:   ________________________________
+Date:             ________________________________
+Shift:            [ ] Morning (06:00–14:00)    [ ] Afternoon (14:00–22:00)
+Weather:          ________________________________
+Temperature:      ______ °C
+
+Instructions: Inspect each item listed. Mark each item PASS (P), FAIL (F),
+or NOT APPLICABLE (N/A). For any FAIL, record details in the Notes column
+and complete a Corrective Action on the reverse of this form.
+An item marked FAIL must be rectified before work in that area proceeds.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION A — SITE ACCESS AND TRAFFIC MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item  Description                                          Result    Notes
+────  ──────────────────────────────────────────────────  ────────  ──────────────────
+A01   Site entry/exit gates secured and sign-posted        P/F/N/A
+A02   Visitor sign-in register available at gatehouse      P/F/N/A
+A03   Speed limit signs (10 km/h) visible at site entry    P/F/N/A
+A04   Traffic management plan displayed at site office     P/F/N/A
+A05   Pedestrian and vehicle pathways clearly separated    P/F/N/A
+A06   Exclusion zone line markings visible and legible     P/F/N/A
+A07   Exclusion zone bollards/barriers in place            P/F/N/A
+A08   Emergency access routes clear of obstruction         P/F/N/A
+A09   No vehicles parked in emergency access lanes         P/F/N/A
+A10   Signage for reversing zones visible                  P/F/N/A
+
+SECTION A RESULT:  [ ] PASS (all P or N/A)   [ ] FAIL (one or more F)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION B — HOUSEKEEPING AND GENERAL SITE CONDITIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item  Description                                          Result    Notes
+────  ──────────────────────────────────────────────────  ────────  ──────────────────
+B01   Work areas clear of unnecessary material/debris      P/F/N/A
+B02   Walkways and access paths free of trip hazards       P/F/N/A
+B03   Materials stored safely (stacked, banded, secured)   P/F/N/A
+B04   Waste bins/skips in place and not overflowing        P/F/N/A
+B05   Flammable materials stored in designated cage        P/F/N/A
+B06   Chemical storage area tidy, SDS binder accessible    P/F/N/A
+B07   No food or drink in work areas                       P/F/N/A
+B08   Site amenities (toilets, lunchroom) clean            P/F/N/A
+
+SECTION B RESULT:  [ ] PASS    [ ] FAIL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION C — FALL PROTECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item  Description                                          Result    Notes
+────  ──────────────────────────────────────────────────  ────────  ──────────────────
+C01   All floor openings covered or guarded                P/F/N/A
+C02   Opening covers marked "HOLE — DO NOT REMOVE"         P/F/N/A
+C03   Roof perimeter guardrails in place where applicable  P/F/N/A
+C04   Leading edge fall protection in place                P/F/N/A
+C05   Workers at height wearing correct harness/lanyard    P/F/N/A
+C06   Fall arrest anchorage points visible and tagged      P/F/N/A
+C07   Rescue plan and rescue equipment available on site   P/F/N/A
+
+SECTION C RESULT:  [ ] PASS    [ ] FAIL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION D — SCAFFOLDING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item  Description                                          Result    Notes
+────  ──────────────────────────────────────────────────  ────────  ──────────────────
+D01   All scaffolds inspected by Competent Person today    P/F/N/A
+D02   Scaffold tags (green/red) current on all scaffolds   P/F/N/A
+D03   Guardrails and toeboards present on all scaffolds    P/F/N/A
+D04   Access ladders or stair frames provided              P/F/N/A
+D05   No materials stored on scaffold exceeding load limit P/F/N/A
+D06   Scaffold base plates and mudsills visible, in place  P/F/N/A
+
+SECTION D RESULT:  [ ] PASS    [ ] FAIL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION E — PLANT AND EQUIPMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item  Description                                          Result    Notes
+────  ──────────────────────────────────────────────────  ────────  ──────────────────
+E01   All plant pre-start checks completed and logged      P/F/N/A
+E02   No plant tagged OUT OF SERVICE in use                P/F/N/A
+E03   Operator licences sighted for high-risk plant        P/F/N/A
+E04   LPG storage cage locked; no damaged cylinders        P/F/N/A
+E05   Power tools inspected and tagged (test & tag current)P/F/N/A
+E06   RCDs (safety switches) in use on all 240V equipment  P/F/N/A
+E07   Extension cords not running across traffic areas     P/F/N/A
+E08   Crane or EWP — daily inspection log sighted          P/F/N/A
+
+SECTION E RESULT:  [ ] PASS    [ ] FAIL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION F — PERSONAL PROTECTIVE EQUIPMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item  Description                                          Result    Notes
+────  ──────────────────────────────────────────────────  ────────  ──────────────────
+F01   All workers wearing hard hat on site                 P/F/N/A
+F02   All workers wearing high-visibility vest             P/F/N/A
+F03   Appropriate footwear (steel-capped boots) observed   P/F/N/A
+F04   Task-specific PPE observed (gloves, eye, hearing)    P/F/N/A
+F05   No workers observed with damaged/non-compliant PPE   P/F/N/A
+
+SECTION F RESULT:  [ ] PASS    [ ] FAIL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION G — EMERGENCY PREPAREDNESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item  Description                                          Result    Notes
+────  ──────────────────────────────────────────────────  ────────  ──────────────────
+G01   First aid kit inspected; fully stocked               P/F/N/A
+G02   First aider on site and available                    P/F/N/A
+G03   Nearest hospital/medical centre posted at site office P/F/N/A
+G04   Emergency contact list current and posted            P/F/N/A
+G05   Fire extinguishers present, tagged, and unobstructed P/F/N/A
+G06   Fire extinguisher service tags current (within 6 mo) P/F/N/A
+G07   Muster point sign visible; clear of obstruction      P/F/N/A
+G08   Spill kit available and stocked                      P/F/N/A
+
+SECTION G RESULT:  [ ] PASS    [ ] FAIL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OVERALL INSPECTION RESULT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Section  Result      No. of FAILs
+  ───────  ──────────  ────────────
+  A        P / F
+  B        P / F
+  C        P / F
+  D        P / F
+  E        P / F
+  F        P / F
+  G        P / F
+  ───────  ──────────  ────────────
+  TOTAL FAILs:
+
+[ ] SITE PASS — No fails recorded. Work may proceed.
+[ ] SITE FAIL — One or more fails recorded. Corrective actions required.
+    Affected areas must not be used until corrective actions are complete.
+
+Inspector Signature: ________________________   Date: ______________
+
+Reviewed by Site Manager: ___________________   Date: ______________
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CORRECTIVE ACTION LOG (complete for each FAIL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item   Description of Fail           Action Required       Owner     Due       Complete
+─────  ────────────────────────────  ────────────────────  ────────  ────────  ────────
+       
+       
+       
+       
+       

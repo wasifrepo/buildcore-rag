@@ -1,0 +1,130 @@
+From: Brendan Walsh <b.walsh@buildcore.com.au>
+To: Tom Nguyen <t.nguyen@buildcore.com.au>
+Date: Thursday, 22 February 2024, 08:14 AM
+Subject: Chemical Spill — Zone 3, Epoxy Primer
+
+Tom,
+
+Heads up — we had a chemical spill about 20 minutes ago in Zone 3.
+
+One of the painting subcontractor's workers (Bright Coat Services) knocked over
+a 20L drum of two-part epoxy primer while moving materials. The drum was not
+sealed properly. Estimate about 12-15 litres went onto the concrete floor.
+
+The area has been evacuated. I've put out the spill kit but the kit in Zone 3
+only has absorbent pads for oil/water — the kit card doesn't say anything about
+epoxy. I didn't want to start cleanup without confirming it's the right approach.
+Dave Chen from Bright Coat says he thinks it's fine to use the oil pads but he's
+not certain.
+
+No injuries. The fumes aren't too bad with the roller door open but a couple of
+the nearby workers are saying it smells strong.
+
+What do you need me to do?
+
+Brendan
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Tom Nguyen <t.nguyen@buildcore.com.au>
+To: Brendan Walsh <b.walsh@buildcore.com.au>
+CC: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+Date: Thursday, 22 February 2024, 08:29 AM
+Subject: RE: Chemical Spill — Zone 3, Epoxy Primer
+
+Brendan,
+
+Good call stopping and checking. Do the following right now:
+
+1. Keep Zone 3 evacuated — expand the exclusion area to 10m from the spill.
+2. Open ALL roller doors and any other ventilation in Zone 3 immediately.
+3. Do NOT use the Zone 3 spill kit yet — wait for Jason's confirmation.
+4. Get the SDS for the epoxy primer from Bright Coat's site supervisor (Dave Chen).
+   The SDS will be in their chemical binder or on their phone/tablet.
+   Specifically look at Section 6 (spill response) and Section 8 (PPE).
+5. Call me directly on 0412 888 341.
+
+Jason — I need you on site ASAP if you can. Bright Coat should have the SDS
+but I want you to verify the cleanup approach and check whether this needs
+to be reported as an environmental incident.
+
+Tom
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+To: Tom Nguyen <t.nguyen@buildcore.com.au>
+CC: Brendan Walsh <b.walsh@buildcore.com.au>; Daniel Kowalski <d.kowalski@buildcore.com.au>
+Date: Thursday, 22 February 2024, 09:48 AM
+Subject: RE: Chemical Spill — Zone 3, Epoxy Primer
+
+All,
+
+On site now. Spill has been cleaned up safely. Summary:
+
+PRODUCT: Sika Poxitar F Two-Part Epoxy Primer (Bright Coat Services)
+SDS confirmed: Section 6 — use inert absorbent material (sand, dry earth, or
+vermiculite). Oil-only pads are NOT appropriate. We used the dry sand from the
+Zone 1 spill kit, which is rated for this type of product.
+
+PPE for cleanup: Nitrile gloves (minimum 0.3mm thickness), safety goggles,
+and P2 respirator due to solvent vapour. Brendan and Dave Chen both wore
+appropriate PPE for the cleanup — they did well.
+
+QUANTITY: Approximately 14 litres recovered. Contained fully on concrete —
+no drainage entry, no soil contact. Not an environmental incident requiring
+external reporting.
+
+WHAT WENT WRONG:
+1. The 20L drum was not re-sealed after morning use. The Bright Coat crew had
+   been working from the drum all morning and the lid was finger-tight only.
+   Their SWMS for painting (BC-SWMS-04) specifies drums must be fully sealed
+   when not actively in use. This was not followed.
+2. The Zone 3 spill kit does not include sand or vermiculite — only oil-absorbent
+   pads. This is a gap. Epoxy is used across Zones 2, 3, and 4 on this project.
+
+CORRECTIVE ACTIONS:
+1. All Bright Coat workers re-briefed on drum sealing requirements (BC-SWMS-04)
+   before returning to painting tasks — Dave Chen / today
+2. Spill kits in Zones 2, 3, and 4 to be supplemented with 10kg dry sand in
+   a sealed bucket, labelled for epoxy/solvent spills — Tom Nguyen / 26 Feb 2024
+3. BuildCore to review Bright Coat's SWMS BC-SWMS-04 with them to confirm
+   understanding and re-sign — Jason / 27 Feb 2024
+4. Add "drum sealing" as an observation item in the daily site inspection
+   checklist (SSIC-001) — Jason / 27 Feb 2024
+
+WASTE DISPOSAL: Contaminated absorbent sand has been bagged, labelled as
+chemical waste, and placed in the site chemical waste storage area pending
+licensed waste contractor collection (Enviro Collect, booked for Friday 1 March).
+
+Incident report (IR-2024-009) submitted to safety file.
+
+Jason
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Daniel Kowalski <d.kowalski@buildcore.com.au>
+To: Jason Hargreaves <j.hargreaves@buildcore.com.au>; Tom Nguyen <t.nguyen@buildcore.com.au>
+Date: Thursday, 22 February 2024, 11:15 AM
+Subject: RE: Chemical Spill — Zone 3, Epoxy Primer
+
+Jason, Tom,
+
+Thanks for the quick response on this. A few things from my end:
+
+1. Can you confirm by end of day that Bright Coat has been formally notified
+   of the safety breach (drum sealing) and that it's been documented? If this
+   happens again I want grounds to issue a formal warning under their agreement.
+
+2. The gap in the spill kit contents concerns me. Can you do a full audit of
+   all spill kits on site against the current chemical inventory? I want to
+   know every kit is actually matched to the chemicals in its zone.
+
+3. This is our third incident in 7 weeks (forklift near-miss, Sam's laceration,
+   now this). Not all serious, but the frequency is a pattern I don't like.
+   Jason — can you prepare a 1-page summary of all three for our next board
+   safety report? The board meeting is 14 March.
+
+Daniel Kowalski
+General Manager Operations
+BuildCore Operations

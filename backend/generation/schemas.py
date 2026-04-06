@@ -3,6 +3,16 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+class DocumentType(str, Enum):
+    """The five document categories present in the BuildCore corpus."""
+
+    SAFETY_SOP = "safety_sop"
+    CONTRACT = "contract"
+    INCIDENT_EMAIL = "incident_email"
+    MAINTENANCE_MANUAL = "maintenance_manual"
+    COMPLIANCE_CHECKLIST = "compliance_checklist"
+
+
 class QueryType(str, Enum):
     FACTUAL = "factual"
     PROCEDURAL = "procedural"

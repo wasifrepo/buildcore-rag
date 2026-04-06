@@ -1,0 +1,131 @@
+BUILDCORE OPERATIONS
+SUBCONTRACTOR PRE-MOBILISATION COMPLIANCE CHECKLIST
+
+Form No.:         SC-PMCL-001
+Project:          Greenfield Industrial Expansion — Stage 2
+Site Address:     14 Commerce Drive, Lakeside Industrial Park
+
+Subcontractor Company:    ________________________________
+Trade / Scope:            ________________________________
+Agreement No.:            ________________________________
+Mobilisation Date:        ________________________________
+BuildCore Site Manager:   ________________________________
+
+Instructions: This checklist must be completed by the BuildCore Site Manager
+before any subcontractor personnel are permitted to commence work on site.
+All items marked REQUIRED must be received and verified before tick-off.
+Items marked CONDITIONAL apply only where stated. A subcontractor that fails
+to provide any REQUIRED item must not commence work until the item is supplied.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — LEGAL AND INSURANCE COMPLIANCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item   Requirement                                   Type        Received    Expiry      OK?
+─────  ──────────────────────────────────────────    ─────────   ─────────   ─────────   ───
+1.01   Signed Subcontractor Services Agreement       REQUIRED    ________    N/A         [ ]
+1.02   ABN verification (ASIC or ATO)                REQUIRED    ________    N/A         [ ]
+1.03   Public Liability Insurance ($20M minimum)     REQUIRED    ________    ________    [ ]
+1.04   Workers Compensation Certificate of Currency  REQUIRED    ________    ________    [ ]
+1.05   Contract Works Insurance (if applicable)      CONDITIONAL ________    ________    [ ]
+1.06   Professional Indemnity (if design involved)   CONDITIONAL ________    ________    [ ]
+1.07   Completed Subcontractor questionnaire (SC-Q01) REQUIRED   ________    N/A         [ ]
+
+SECTION 1 RESULT:   [ ] COMPLETE    [ ] INCOMPLETE — do not mobilise
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — SAFETY DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item   Requirement                                   Type        Received    Reviewed    OK?
+─────  ──────────────────────────────────────────    ─────────   ─────────   ─────────   ───
+2.01   Safe Work Method Statement (all HRCW tasks)   REQUIRED    ________    ________    [ ]
+2.02   SWMS reviewed and accepted by Safety Manager  REQUIRED    N/A         ________    [ ]
+2.03   Subcontractor Safety Management Plan          REQUIRED    ________    ________    [ ]
+2.04   Chemical inventory (all hazardous chemicals)  REQUIRED    ________    N/A         [ ]
+2.05   SDS provided for all chemicals on inventory   REQUIRED    ________    N/A         [ ]
+2.06   Emergency contact list (sub's own contacts)   REQUIRED    ________    N/A         [ ]
+
+SECTION 2 RESULT:   [ ] COMPLETE    [ ] INCOMPLETE — do not mobilise
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — WORKER CREDENTIALS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This section must be completed for each worker the subcontractor intends
+to place on site. Attach additional sheets if more than 5 workers.
+
+Worker Name          Licence Type        Licence No.       Expiry      Verified    OK?
+──────────────────   ─────────────────   ───────────────   ─────────   ─────────   ───
+________________     ________________    ________________  ________    ________    [ ]
+________________     ________________    ________________  ________    ________    [ ]
+________________     ________________    ________________  ________    ________    [ ]
+________________     ________________    ________________  ________    ________    [ ]
+________________     ________________    ________________  ________    ________    [ ]
+
+High-risk work licences required by trade (mark those applicable):
+
+  [ ] Forklift (LF)            [ ] Scaffolding — Basic (SB)
+  [ ] Scaffolding — Intermediate (SI)   [ ] Scaffolding — Advanced (SA)
+  [ ] Crane — tower (CT)       [ ] Crane — non-slewing (CV)
+  [ ] Dogging (DG)             [ ] Rigging — Basic (RB)
+  [ ] Explosive power tools (EE)        [ ] Boilermaking / pressure equipment
+
+SECTION 3 RESULT:   [ ] COMPLETE    [ ] INCOMPLETE — affected workers must not commence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — SITE INDUCTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item   Requirement                                         Status      Date        OK?
+─────  ──────────────────────────────────────────────────  ─────────   ─────────   ───
+4.01   BuildCore Site Induction completed (all workers)    ________    ________    [ ]
+4.02   Induction includes traffic management & zones       ________    N/A         [ ]
+4.03   Induction includes site exclusion zone map          ________    N/A         [ ]
+4.04   Emergency procedures briefed                        ________    N/A         [ ]
+4.05   Signed induction records filed (Form IND-001)       ________    ________    [ ]
+4.06   Site-specific SWMS briefing conducted               ________    ________    [ ]
+4.07   Workers confirmed understanding of SWMS in writing  ________    ________    [ ]
+
+SECTION 4 RESULT:   [ ] COMPLETE    [ ] INCOMPLETE — workers must not commence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — PLANT AND EQUIPMENT (if subcontractor is bringing plant)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Item   Requirement                                         Type        Received    OK?
+─────  ──────────────────────────────────────────────────  ─────────   ─────────   ───
+5.01   Plant register submitted (description, rego, ID)    COND        ________    [ ]
+5.02   Current registration for all registered plant       COND        ________    [ ]
+5.03   Plant maintenance records available on request      COND        ________    [ ]
+5.04   Pre-start check procedure available for each plant  COND        ________    [ ]
+
+SECTION 5 RESULT:   [ ] COMPLETE    [ ] INCOMPLETE    [ ] N/A (no plant)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OVERALL RESULT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Section   Result
+  ────────  ──────────────────────────────
+  1         [ ] COMPLETE    [ ] INCOMPLETE
+  2         [ ] COMPLETE    [ ] INCOMPLETE
+  3         [ ] COMPLETE    [ ] INCOMPLETE
+  4         [ ] COMPLETE    [ ] INCOMPLETE
+  5         [ ] COMPLETE    [ ] N/A
+  ────────  ──────────────────────────────
+
+[ ] APPROVED TO MOBILISE — all sections complete
+[ ] NOT APPROVED — outstanding items listed below:
+
+Outstanding items:
+1. _____________________________________________________________
+2. _____________________________________________________________
+3. _____________________________________________________________
+
+BuildCore Site Manager Signature: ___________________    Date: __________
+
+BuildCore Safety Manager Signature: _________________    Date: __________
+
+Note: This checklist must be retained in the project safety file for the
+duration of the project plus 7 years.

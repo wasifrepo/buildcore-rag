@@ -1,0 +1,138 @@
+SUBCONTRACTOR SERVICES AGREEMENT
+
+Agreement No.:    SC-2024-038
+Project:          Greenfield Industrial Expansion — Stage 2
+Project Location: 14 Commerce Drive, Lakeside Industrial Park
+Client:           BuildCore Operations Pty Ltd
+                  ABN 47 823 104 992
+                  Level 4, 88 Collins Street, Melbourne VIC 3000
+
+Subcontractor:    Apex Plumbing & Drainage Pty Ltd
+                  ABN 28 114 553 017
+                  9 Hydrant Way, Braybrook VIC 3019
+
+Execution Date:   08 February 2024
+Commencement:     15 February 2024
+Practical Completion: 28 June 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE A — SCOPE OF WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Apex Plumbing & Drainage Pty Ltd ("Subcontractor") shall provide all
+labour, materials, plant, and supervision to complete the following
+plumbing and drainage works:
+
+A1. Stormwater Drainage
+  - Install 280 linear metres of PVC stormwater drainage, 150mm–300mm
+    diameter, as per drawing P-201 (Rev B)
+  - Supply and install 8 x pit and grate assemblies
+  - Connection to existing council stormwater network at pit SP-01
+
+A2. Sanitary Drainage
+  - Install internal sanitary drainage to amenities block (Zones 6 & 7)
+  - Install all floor wastes, floor drains, and cleanouts
+  - All drainage to comply with AS/NZS 3500.2
+
+A3. Hot and Cold Water Services
+  - Supply and install hot and cold water reticulation throughout
+    amenities block and lunch room
+  - Instantaneous gas hot water system (Rinnai or approved equivalent)
+  - All pipework to comply with AS/NZS 3500.1
+
+A4. Fire Hydrant and Hose Reel System
+  - Extension of existing fire hydrant ring main — 40 linear metres
+    of Class D galvanised steel pipe (65mm)
+  - Installation of 2 x fire hose reel cabinets (Zones 2 and 3)
+  - Hydraulic test of completed system at 1800 kPa for 60 minutes
+
+A5. Backflow Prevention
+  - Install testable double check valve assembly at water meter
+  - Register with local council and arrange initial test
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE B — CONTRACT SUM AND PAYMENT TERMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+B1. Contract Sum
+
+  Item                                      Amount (AUD excl. GST)
+  ──────────────────────────────────────────────────────────────────
+  A1 — Stormwater Drainage                     $54,200.00
+  A2 — Sanitary Drainage                       $38,500.00
+  A3 — Hot and Cold Water Services             $29,800.00
+  A4 — Fire Hydrant and Hose Reel              $41,600.00
+  A5 — Backflow Prevention                      $4,900.00
+  Provisional Sum — Council Fees               $5,000.00
+  ──────────────────────────────────────────────────────────────────
+  SUBTOTAL (excl. GST)                        $174,000.00
+  GST (10%)                                    $17,400.00
+  ──────────────────────────────────────────────────────────────────
+  TOTAL CONTRACT SUM (incl. GST)              $191,400.00
+
+B2. Progress Claims
+
+  Progress claims submitted by 25th of each month.
+  Assessment within 10 business days; payment within 15 business days.
+
+  Milestone Payment Schedule:
+
+  Milestone                                 Claim Amount (excl. GST)
+  ──────────────────────────────────────────────────────────────────
+  Mobilisation (10%)                           $17,400.00
+  Stormwater drainage rough-in (25%)           $43,500.00
+  Sanitary and water services rough-in (25%)   $43,500.00
+  Fit-off and commissioning (25%)              $43,500.00
+  Testing, certification, and handover (15%)   $26,100.00
+  ──────────────────────────────────────────────────────────────────
+  TOTAL                                       $174,000.00
+
+B3. Retention
+  5% retained from each progress claim.
+  50% released at Practical Completion; 50% at end of Defects Liability Period.
+
+B4. Defects Liability Period
+  12 months from date of Practical Completion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE C — LICENCE AND COMPLIANCE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+All plumbing works must be performed by a licensed plumber holding a
+current Victorian Plumbing Licence (Limited or Full as applicable).
+Fire protection works require a separate Plumbing Licence (Fire Protection).
+
+Approved Site Supervisor:   Colin Maguire, Plumbing Licence No. PL-29943
+Fire Protection Supervisor: Sandra Yee, Plumbing Licence No. PL-41102 (FP)
+
+A Certificate of Compliance (Form PL-CertComp) must be issued for all
+plumbing works on completion and submitted to BuildCore before final
+retention payment is released.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE D — INSURANCE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Insurance Type                    Minimum Cover
+  ──────────────────────────────────────────────────────────────────
+  Public & Products Liability       $20,000,000 per occurrence
+  Workers Compensation              As required by law (VIC)
+  Contract Works                    $250,000
+  ──────────────────────────────────────────────────────────────────
+
+GENERAL CONDITIONS: As per BuildCore Standard Subcontractor Terms
+and Conditions (Rev 6, January 2024), which are incorporated into
+this Agreement by reference. In the event of conflict, the Schedules
+above take precedence over the Standard Terms.
+
+Liquidated Damages: $1,500 per calendar day for failure to achieve
+Practical Completion by the agreed date due to Subcontractor causes.
+
+EXECUTED as an Agreement:
+
+BuildCore Operations Pty Ltd          Apex Plumbing & Drainage Pty Ltd
+
+Signed: _______________________       Signed: _______________________
+Name:   Daniel Kowalski               Name:   Colin Maguire
+Title:  General Manager Operations   Title:  Managing Director
+Date:   08 February 2024             Date:   08 February 2024

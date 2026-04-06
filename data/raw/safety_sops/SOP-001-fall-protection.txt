@@ -1,0 +1,266 @@
+BUILDCORE OPERATIONS
+STANDARD OPERATING PROCEDURE
+
+Document ID:    SOP-001
+Title:          Fall Protection Program
+Version:        3.2
+Effective Date: 01 March 2024
+Review Date:    01 March 2025
+Owner:          Site Safety Manager
+Approved By:    Director of Operations
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. PURPOSE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This Standard Operating Procedure establishes the requirements for fall
+protection at all BuildCore Operations construction and facilities
+management sites. It defines the minimum standards for identifying fall
+hazards, selecting appropriate fall protection systems, and ensuring all
+personnel are trained and equipped before working at heights.
+
+This SOP applies to all employees, subcontractors, and visitors working
+at any BuildCore site where a fall hazard of 1.8 metres (6 feet) or
+greater exists.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. SCOPE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This procedure covers all work activities involving potential fall hazards,
+including but not limited to:
+
+  - Rooftop work and maintenance
+  - Scaffold erection and dismantling
+  - Ladder use (portable and fixed)
+  - Work near floor openings, wall openings, and excavations
+  - Steel erection
+  - Leading edge work
+  - Elevated platforms and mezzanines
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. REFERENCES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - OSHA 29 CFR 1926.502 — Fall Protection Systems Criteria and Practices
+  - OSHA 29 CFR 1926.503 — Training Requirements
+  - ANSI/ASSE Z359.1 — Safety Requirements for Personal Fall Arrest Systems
+  - BuildCore Safety Policy SP-100 (Master Safety Policy)
+  - BuildCore SOP-005 (Scaffold Safety)
+  - BuildCore SOP-012 (Ladder Safety)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. DEFINITIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Anchorage Point
+  A secure point of attachment for lifelines, lanyards, or deceleration
+  devices. Must support at least 5,000 lbs (22.2 kN) per attached worker.
+
+Free Fall Distance
+  The vertical displacement of the fall arrest attachment point from its
+  static position to the point where the system begins to apply fall
+  arrest forces. Must not exceed 1.8 m (6 ft).
+
+Personal Fall Arrest System (PFAS)
+  A system used to arrest an employee in a fall from a working level.
+  Consists of an anchorage, connectors, a body harness, and may include
+  a lanyard, deceleration device, lifeline, or suitable combinations.
+
+Leading Edge
+  The unprotected side and edge of a floor, roof, or formwork that changes
+  location as additional floor, roof, decking, or formwork sections are
+  placed, formed, or constructed.
+
+Competent Person
+  An individual capable of identifying existing and predictable fall hazards
+  and who has authority to take prompt corrective action to eliminate them.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. RESPONSIBILITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5.1 Site Safety Manager
+  - Develop and maintain this SOP
+  - Conduct site-specific fall hazard assessments prior to work commencement
+  - Ensure all fall protection equipment is inspected and certified
+  - Investigate all fall-related incidents and near-misses
+  - Maintain training records for all personnel
+
+5.2 Supervisors and Foremen
+  - Conduct daily pre-task planning to identify fall hazards
+  - Ensure workers under their supervision are trained and equipped
+  - Stop work immediately if fall protection is inadequate
+  - Report any defective equipment to the Safety Manager
+
+5.3 Workers
+  - Inspect personal fall protection equipment before each use
+  - Use fall protection as required by this SOP
+  - Report fall hazards, near-misses, and equipment defects to their supervisor
+  - Never disable, remove, or bypass fall protection systems
+
+5.4 Subcontractors
+  - Comply with all BuildCore fall protection requirements
+  - Provide documentation of worker training upon request
+  - Ensure their own equipment meets ANSI Z359.1 standards
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. FALL PROTECTION REQUIREMENTS BY WORK TYPE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+6.1 General Requirement
+  Fall protection is mandatory whenever a worker is exposed to a fall
+  of 1.8 m (6 ft) or greater to a lower level. The hierarchy of fall
+  protection controls must be applied in this order:
+
+    1. Elimination — redesign the work to remove the fall hazard
+    2. Passive systems — guardrail systems, safety net systems
+    3. Active systems — personal fall arrest systems (PFAS)
+    4. Administrative controls — warning line systems, safety monitors
+       (only permitted where other controls are not feasible)
+
+6.2 Rooftop Work
+  6.2.1 Guardrail System (preferred)
+    - Top rail height: 42 inches (± 3 inches) above walking surface
+    - Mid rail: at the midpoint between top rail and walking surface
+    - Capable of withstanding 200 lbs of outward or downward force
+    - All roof perimeters must be guarded before workers access the roof
+
+  6.2.2 Personal Fall Arrest System (alternative)
+    - Full-body harness mandatory — no body belts permitted
+    - Lanyard must be self-retracting or shock-absorbing type
+    - Anchorage point must be above the D-ring of the harness
+    - Total fall distance including deceleration must not exceed 18.5 ft
+    - Workers must be able to be rescued within 20 minutes of arrest
+
+  6.2.3 Prohibited on rooftops
+    - Work during wind speeds exceeding 50 km/h
+    - Work on wet or icy surfaces without anti-slip measures
+    - Use of body belts as fall arrest (positioning only)
+
+6.3 Scaffolding (see also SOP-005)
+  - Scaffold platforms must have guardrails on all open sides and ends
+  - Toeboards minimum 3.5 inches high on all sides
+  - Scaffold must be inspected by a Competent Person each shift
+  - Workers on scaffolds over 10 ft must use PFAS if guardrails are absent
+
+6.4 Ladders (see also SOP-012)
+  - Three points of contact maintained at all times
+  - No carrying of materials that impair grip or balance
+  - Extension ladders must extend 3 ft above the landing point
+  - Ladder feet must be secured or held by a second person
+
+6.5 Floor and Wall Openings
+  - All floor openings must be covered or guarded immediately upon creation
+  - Covers must be marked "HOLE — DO NOT REMOVE" and capable of supporting
+    twice the intended load
+  - Wall openings 30 inches or more in height and 18 inches or more in
+    width at 6 ft or more above grade require guardrails
+
+6.6 Excavations
+  - Workers entering excavations greater than 4 ft deep require access
+    and egress within 25 ft of lateral travel
+  - Trenches and excavations must be protected per SOP-019 (Excavation Safety)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. EQUIPMENT INSPECTION PROCEDURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7.1 Pre-Use Inspection (Worker Responsibility — Before Every Use)
+
+  7.1.1 Full-Body Harness
+    Step 1: Hold harness by the back D-ring and shake. Let the harness
+            unfold to its proper position.
+    Step 2: Check all webbing for cuts, burns, abrasion, fraying, or
+            chemical damage. Run fingers along all webbing.
+    Step 3: Check all hardware (buckles, D-rings) for deformation,
+            cracks, corrosion, or sharp edges.
+    Step 4: Check stitching on all load-bearing points — no broken or
+            missing stitches permitted.
+    Step 5: Check labels — ANSI Z359.1 compliance label must be legible.
+    Step 6: If any defect is found, tag the harness OUT OF SERVICE and
+            return to the Safety Manager immediately.
+
+  7.1.2 Lanyards and Self-Retracting Lifelines (SRLs)
+    Step 1: Inspect snaphooks — gate must open freely and lock positively.
+    Step 2: Check energy absorber — if deployment indicator shows red
+            or orange, the lanyard has been shock-loaded and must be
+            removed from service immediately.
+    Step 3: Check lifeline for cuts, kinks, abrasion, or chemical damage.
+    Step 4: For SRLs — pull out 12 inches of cable and release. The SRL
+            should retract smoothly. Tug sharply — the lock must engage.
+
+7.2 Annual Inspection
+  All fall protection equipment must be inspected annually by a
+  Competent Person and documented on Form SF-009 (Equipment Inspection Log).
+  Equipment that fails annual inspection must be destroyed — not stored.
+
+7.3 Post-Arrest Inspection
+  Any equipment involved in a fall arrest event must be immediately
+  removed from service and inspected by the manufacturer or a certified
+  inspector before return to use. Equipment with visible damage after
+  arrest must be destroyed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. TRAINING REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+8.1 Initial Training
+  All workers exposed to fall hazards must complete BuildCore Fall
+  Protection Training (Course FP-100) before working at heights.
+  Training must cover:
+    - Fall hazard recognition
+    - Selection and use of fall protection systems
+    - Correct donning, doffing, and inspection of harnesses
+    - Rescue procedures following a fall arrest
+
+8.2 Retraining
+  Retraining is required when:
+    - A worker is observed using fall protection incorrectly
+    - A near-miss or incident involving fall protection occurs
+    - New equipment or procedures are introduced
+    - More than 2 years have elapsed since last training
+
+8.3 Documentation
+  Training records must be retained for the duration of employment
+  plus 3 years. Records are maintained by the Safety Manager on
+  Form HR-022 (Training Record).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. RESCUE PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A rescue plan must be in place before any work requiring PFAS begins.
+The plan must address:
+
+  - How a suspended worker will be retrieved within 20 minutes
+  - Suspension trauma risk — workers must not remain suspended
+    passively — orthostatic intolerance (suspension trauma) can
+    cause loss of consciousness within minutes
+  - Rescue equipment available on site (rescue ladder, descent device)
+  - Names and contacts of trained rescue personnel on site
+
+Post-rescue: All workers involved in a fall arrest must be assessed
+by a medical professional before returning to work.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. RECORDKEEPING AND REPORTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - All fall incidents and near-misses must be reported to the Site
+    Safety Manager within 1 hour of occurrence
+  - Incidents resulting in hospitalisation must be reported to OSHA
+    within 24 hours per 29 CFR 1904.39
+  - Completed inspection forms (SF-009) retained for 5 years
+  - Training records (HR-022) retained for employment duration + 3 years
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DOCUMENT REVISION HISTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Version   Date              Author              Change Summary
+3.2       01 Mar 2024       J. Hargreaves       Added SRL inspection step 4;
+                                                updated rescue window to 20 min
+3.1       14 Sep 2023       J. Hargreaves       Aligned with ANSI Z359.1-2023
+3.0       02 Jan 2023       R. Okonkwo          Full revision; added Section 9
+2.4       18 Jun 2022       R. Okonkwo          Minor corrections to Section 6.2

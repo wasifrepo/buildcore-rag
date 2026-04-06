@@ -1,0 +1,231 @@
+BUILDCORE OPERATIONS
+EQUIPMENT MAINTENANCE MANUAL
+
+Equipment:        LPG Counterbalance Forklift
+Unit ID:          FLT-03
+Make/Model:       Toyota 8FGF25 (2.5 tonne capacity)
+Serial No.:       8FGF25-71483
+Year:             2021
+Owner:            BuildCore Operations Pty Ltd
+Manual Ref:       MAINT-FLT-03
+Version:          2.0
+Last Updated:     01 November 2023
+Next Review:      01 November 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMPORTANT SAFETY NOTICE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Only trained and licensed forklift operators may operate FLT-03.
+All maintenance beyond daily pre-start checks must be performed by
+BuildCore's approved forklift service technician (Liftmaster Services Pty Ltd,
+Contact: 03 9312 4400).
+
+Do not operate a forklift that has failed any pre-start check item.
+Tag the unit OUT OF SERVICE and notify the Site Manager immediately.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — DAILY PRE-START CHECK PROCEDURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The pre-start check must be completed before the first use of each
+operating shift. Use Form PSCH-FLT-03 and retain completed forms for
+12 months.
+
+Estimated time: 10–15 minutes.
+
+Before beginning the check, ensure:
+  - The forklift is parked on level ground with forks lowered
+  - The engine is OFF
+  - The parking brake is engaged
+
+STEP 1 — LPG Cylinder Inspection
+  1.1 Check the LPG cylinder gauge. If below 20% capacity, swap the
+      cylinder before starting the shift. Spare cylinders are stored
+      in the designated LPG cage at the site compound.
+  1.2 Inspect the cylinder for dents, corrosion, or valve damage.
+      Do not use a damaged cylinder.
+  1.3 Check the LPG hose connection at the cylinder and at the engine.
+      Apply soapy water to connections — any bubbling indicates a gas
+      leak. Do not start the engine if a leak is detected. Tag out and
+      notify the Site Manager immediately.
+  1.4 Ensure the cylinder is secured in its mount and the strap or chain
+      retainer is fastened.
+
+STEP 2 — Fluid Levels (Engine Off)
+  2.1 Engine oil — remove dipstick, wipe clean, re-insert, remove and read.
+      Level must be between MIN and MAX marks.
+      Top up with SAE 10W-30 if below MIN.
+  2.2 Coolant — check overflow reservoir. Level must be between LOW and FULL.
+      Do NOT open the radiator cap when the engine is hot.
+  2.3 Hydraulic oil — check sight glass on the hydraulic reservoir (right side
+      of unit). Level must be visible in the glass. Top up with Dexron III ATF.
+  2.4 Brake fluid — check reservoir under the floorboard access panel.
+      Level must be between MIN and MAX.
+
+STEP 3 — Tyres
+  3.1 Inspect all four tyres for:
+      - Cuts, gouges, or embedded objects
+      - Excessive wear (tread depth below 3mm — replace)
+      - Chunking or cracking on solid tyres
+  3.2 Drive tyres (rear): check tyre pressure — correct pressure is 100 psi
+      (690 kPa). Use the tyre gauge in the site tool store.
+  3.3 Steer tyres (front): FLT-03 has solid steer tyres — check for wear
+      and physical damage only.
+
+STEP 4 — Mast, Forks, and Carriage
+  4.1 Inspect both forks for:
+      - Cracks or fractures, especially at the heel and blade
+      - Bend — place a straight edge along the blade. Any visible bow means
+        remove from service immediately
+      - Fork spread — measure from outside face of left fork to outside face
+        of right fork. Must match the rated spread (±0.5%)
+      - Wear at the heel — thickness must not be less than 90% of original
+  4.2 Check fork locking pins are present and secured.
+  4.3 Inspect mast chains — no broken links, kinking, corrosion, or
+      elongation. Chains must be lubricated (light chain lube).
+  4.4 Check mast rollers and carriage rollers for wear or missing rollers.
+
+STEP 5 — Operator Controls (Engine Running)
+  Start the engine and allow to idle for 2 minutes before performing checks.
+
+  5.1 Horn — press horn button. Must be audible at 10m.
+  5.2 Travel alarm — engage reverse. Audible reverse alarm must sound.
+  5.3 Seat belt — fasten and unfasten. Buckle must engage cleanly.
+  5.4 Lights — if working in reduced light: check headlights, tail lights,
+      and beacon.
+  5.5 Lift function — raise and lower forks through full range.
+      Movement must be smooth with no jerking or hesitation.
+  5.6 Tilt function — tilt mast forward and backward. Must move freely.
+  5.7 Service brake — drive slowly forward and apply brakes. Unit must
+      stop straight without pulling to one side.
+  5.8 Parking brake — with engine running in neutral, apply parking brake
+      and attempt to move forward at low speed. Unit must not move.
+
+STEP 6 — General Visual
+  6.1 Check for fluid leaks under the unit — oil, coolant, or hydraulic
+      fluid on the ground.
+  6.2 Check overhead guard is secure — no cracks, missing bolts, or deformation.
+  6.3 Check seat and restraint belt are not damaged.
+  6.4 Ensure data plate is legible (rated capacity at full mast height must
+      be visible at all times).
+
+If any check item FAILS: Do not operate. Attach OUT OF SERVICE tag to
+steering wheel. Complete the pre-start form, mark the failed item, and
+notify the Site Manager.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — WEEKLY MAINTENANCE (OPERATOR)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The following items are checked weekly by the allocated operator in
+addition to the daily pre-start. Record on Form WPSCH-FLT-03.
+
+STEP 1 — Radiator
+  Inspect radiator fins for blockage by dust or debris.
+  If blocked, blow out with compressed air (engine cold, from inside out).
+
+STEP 2 — Battery (Engine Starting Battery)
+  Check terminal connections — must be tight and free of corrosion.
+  Clean corrosion with a baking soda and water solution if present.
+
+STEP 3 — Air Filter
+  Remove air filter element cover. Inspect element for excessive dust loading.
+  Tap gently to dislodge loose dust. If element is torn or heavily loaded,
+  replace with Toyota 8FGF25 OEM element (Part No. 17700-23330-71).
+
+STEP 4 — Chain Lubrication
+  Apply a light coat of chain lubricant to both mast lift chains.
+  Do not use heavy grease — attracts debris and accelerates wear.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — SCHEDULED SERVICE INTERVALS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+All scheduled services must be performed by Liftmaster Services Pty Ltd.
+BuildCore is responsible for logging service hours and scheduling service
+in advance. Current service hour meter: record at each pre-start.
+
+  Service Interval          Items                         Notes
+  ─────────────────────────────────────────────────────────────────────
+  250 hours / 3 months      Engine oil and filter          Whichever occurs first
+  (whichever first)         Air filter replacement
+                            Spark plug inspection
+                            LPG system safety check
+
+  500 hours / 6 months      Hydraulic oil filter
+                            Transmission fluid check
+                            Brake adjustment check
+                            Mast bearing inspection
+                            Fork inspection (formal)
+                            Cooling system flush
+
+  1000 hours / 12 months    Full hydraulic oil change      Annual service
+                            Transmission oil change        Contact Liftmaster
+                            Brake fluid change             to schedule
+                            Chain stretch measurement
+                            Overhead guard structural check
+                            Full safety test and inspection
+  ─────────────────────────────────────────────────────────────────────
+
+Current service history for FLT-03:
+
+  Date            Hours     Service Type        Technician
+  ──────────────────────────────────────────────────────────────────
+  14 Nov 2023     812       250-hour service    T. Regan, Liftmaster
+  18 Aug 2023     604       500-hour service    T. Regan, Liftmaster
+  22 May 2023     398       250-hour service    T. Regan, Liftmaster
+  03 Feb 2023     201       250-hour service    T. Regan, Liftmaster
+  12 Jan 2023     0         Pre-delivery inspection         Toyota dealer
+  ──────────────────────────────────────────────────────────────────
+
+Next service due: 1000-hour / annual — due approx. February 2024 (1,000 hours).
+Contact Liftmaster Services to schedule. Do not exceed 1,050 hours without service.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — COMMON FAULTS AND FIRST-LINE RESPONSES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The following table outlines common faults, their likely causes, and
+the appropriate first-line response for the operator. All faults beyond
+those marked "Operator can resolve" must be referred to Liftmaster.
+
+  Symptom                        Likely Cause              Action
+  ─────────────────────────────────────────────────────────────────────
+  Engine will not start          Low LPG                   Swap cylinder
+                                 Ignition fault            Tag out, call Liftmaster
+  Engine starts, stalls at idle  LPG pressure fault        Tag out, call Liftmaster
+  Forks slow to lift             Low hydraulic fluid       Top up (operator)
+                                 Hydraulic pump wear       Call Liftmaster
+  Forks will not lift at all     Hydraulic system fault    Tag out, call Liftmaster
+  Unit pulls left/right braking  Brake adjustment needed   Tag out, call Liftmaster
+  Reverse alarm not sounding     Blown fuse or sensor      Tag out, call Liftmaster
+                                 fault — DO NOT OPERATE
+  LPG smell during operation     Gas leak                  Shut down immediately,
+                                                           evacuate, call Site Manager
+  ─────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — EMERGENCY PROCEDURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5.1 Forklift Tip-Over
+  DO NOT JUMP. If a tip-over occurs:
+  Step 1: Grip the steering wheel firmly with both hands.
+  Step 2: Brace feet on the floor.
+  Step 3: Lean away from the direction of fall and hold on.
+  The overhead guard is designed to protect the operator.
+  Jumping increases injury risk significantly.
+
+5.2 LPG Fire
+  Step 1: Shut off the LPG cylinder valve immediately if safe to do so.
+  Step 2: Evacuate the area — 15m minimum exclusion zone.
+  Step 3: Call 000. Do not attempt to fight an LPG fire.
+  Step 4: Notify the Site Manager.
+
+5.3 Pedestrian Strike
+  Step 1: Stop the forklift immediately.
+  Step 2: Call 000 if any injury has occurred.
+  Step 3: Do not move the forklift until directed by emergency services
+          or the Site Manager.
+  Step 4: Preserve the scene. The forklift is evidence.

@@ -1,0 +1,471 @@
+{
+  "version": "1.0",
+  "description": "BuildCore RAG evaluation suite — 50 hand-crafted Q&A pairs grounded in the BuildCore corpus. Covers factual recall, procedural reasoning, multi-document synthesis, and out-of-scope refusal.",
+  "document_ids": [
+    "SOP-001-fall-protection",
+    "SOP-005-scaffold-safety",
+    "SOP-007-hazard-communication",
+    "SC-2024-038-apex-plumbing",
+    "SC-2024-041-harrington-electrical",
+    "MAINT-FLT-03-forklift-toyota-8fgf25",
+    "MAINT-GEN-01-denyo-generator",
+    "INC-2024-002-laceration-lti",
+    "INC-2024-007-forklift-near-miss",
+    "INC-2024-009-epoxy-spill",
+    "SC-PMCL-001-subcontractor-premobilisation",
+    "SSIC-001-daily-site-safety-inspection"
+  ],
+  "items": [
+
+    {
+      "id": "factual_01",
+      "difficulty": "factual",
+      "question": "What is the liquidated damages rate per calendar day in the Harrington Electrical contract (SC-2024-041)?",
+      "expected_answer": "$2,500 per calendar day. This is stated in Clause 5 (Liquidated Damages) of the General Conditions of SC-2024-041: 'If the Works are not practically complete by the date specified in this Agreement due to causes attributable to the Subcontractor, liquidated damages of $2,500 per calendar day will apply.'",
+      "source_documents": ["SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must state $2,500 per calendar day and attribute it to SC-2024-041 Clause 5. Must not confuse with the Apex Plumbing rate ($1,500/day)."
+    },
+
+    {
+      "id": "factual_02",
+      "difficulty": "factual",
+      "question": "What is the total contract sum including GST for the Apex Plumbing & Drainage agreement SC-2024-038?",
+      "expected_answer": "$191,400.00 including GST. The subtotal excluding GST is $174,000.00, and GST (10%) adds $17,400.00, bringing the total to $191,400.00. This is documented in Schedule B1 of SC-2024-038.",
+      "source_documents": ["SC-2024-038-apex-plumbing"],
+      "evaluation_notes": "Must state $191,400 (incl. GST). Acceptable to also mention $174,000 excl. GST. Must not confuse with the Harrington Electrical contract sum."
+    },
+
+    {
+      "id": "factual_03",
+      "difficulty": "factual",
+      "question": "What is the rated power output of the Denyo generator GEN-01?",
+      "expected_answer": "The Denyo DCA-45SPK3 generator (GEN-01) has a rated output of 45 kVA / 36 kW. Its standby output is 49.5 kVA / 39.6 kW. These specifications are in Section 1 of MAINT-GEN-01.",
+      "source_documents": ["MAINT-GEN-01-denyo-generator"],
+      "evaluation_notes": "Must state 45 kVA and/or 36 kW. Mentioning the standby figures is a bonus but not required. Must not say DCA-60 — the actual model is DCA-45SPK3."
+    },
+
+    {
+      "id": "factual_04",
+      "difficulty": "factual",
+      "question": "Which form must be completed before operating FLT-03 each shift, and how long must completed forms be retained?",
+      "expected_answer": "Form PSCH-FLT-03 (Pre-Start Check, FLT-03) must be completed before the first use of each operating shift. Completed forms must be retained for 12 months. This is stated at the beginning of Section 1 of MAINT-FLT-03.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must name Form PSCH-FLT-03 specifically. Must state 12-month retention period. Both elements required."
+    },
+
+    {
+      "id": "factual_05",
+      "difficulty": "factual",
+      "question": "At what wind speed must workers stop performing rooftop work according to SOP-001?",
+      "expected_answer": "Rooftop work is prohibited during wind speeds exceeding 50 km/h. This is listed in Section 6.2.3 (Prohibited on rooftops) of SOP-001 (Fall Protection Program, Version 3.2).",
+      "source_documents": ["SOP-001-fall-protection"],
+      "evaluation_notes": "Must state 50 km/h. Must not confuse with the scaffold use limit of 65 km/h from SOP-005."
+    },
+
+    {
+      "id": "factual_06",
+      "difficulty": "factual",
+      "question": "Who was the injured worker in incident INC-2024-002, what was the injury, and how many stitches did they receive?",
+      "expected_answer": "The injured worker was Sam Osei (Employee ID: EMP-0441), a BuildCore labourer. He lacerated the palm of his left hand with a retractable box cutter while cutting strapping from a pallet of conduit. The cut was approximately 5 cm long and required 6 stitches at Lakeside Medical Centre. The incident occurred at approximately 09:20 on Wednesday 14 February 2024 in Zone 3 Warehouse at the Commerce Drive site.",
+      "source_documents": ["INC-2024-002-laceration-lti"],
+      "evaluation_notes": "Must name Sam Osei. Must state 6 stitches. Mentioning EMP-0441, left hand, 5 cm, or Zone 3 Warehouse adds quality but minimum is name and stitch count."
+    },
+
+    {
+      "id": "factual_07",
+      "difficulty": "factual",
+      "question": "What is the Defects Liability Period under the Apex Plumbing contract SC-2024-038?",
+      "expected_answer": "The Defects Liability Period is 12 months from the date of Practical Completion. This is stated in clause B4 of Schedule B of SC-2024-038. Practical Completion is scheduled for 28 June 2024, so the DLP would run until approximately 28 June 2025.",
+      "source_documents": ["SC-2024-038-apex-plumbing"],
+      "evaluation_notes": "Must state 12 months from Practical Completion. Mentioning the 28 June 2024 completion date adds quality. Must not confuse with the retention release schedule."
+    },
+
+    {
+      "id": "factual_08",
+      "difficulty": "factual",
+      "question": "At what LPG cylinder fill level should the operator swap the cylinder before starting FLT-03?",
+      "expected_answer": "The operator must swap the LPG cylinder if the gauge shows below 20% capacity. Spare cylinders are stored in the designated LPG cage at the site compound. This is specified in Step 1.1 of Section 1 (Daily Pre-Start Check Procedure) of MAINT-FLT-03.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must state below 20% capacity. Mentioning the LPG cage location adds quality."
+    },
+
+    {
+      "id": "factual_09",
+      "difficulty": "factual",
+      "question": "Who is the approved site supervisor for the Harrington Electrical contract, and what is their licence number?",
+      "expected_answer": "The approved site supervisor is Marcus Thornton, holding Victorian Electrical Worker Licence No. EW-48821. The nominated alternate is Priya Subramaniam, Licence No. EW-61334. These details are in Schedule C of SC-2024-041.",
+      "source_documents": ["SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must name Marcus Thornton and state licence EW-48821. Mentioning the alternate Priya Subramaniam is a bonus."
+    },
+
+    {
+      "id": "factual_10",
+      "difficulty": "factual",
+      "question": "Which section of a Safety Data Sheet covers accidental release and spill response procedures, according to SOP-007?",
+      "expected_answer": "Section 6 of a Safety Data Sheet covers Accidental Release Measures, including spill response procedures. Per SOP-007 (Hazard Communication Program), Section 3.3, workers must be able to locate Section 6 for spill response guidance. Section 4 covers First Aid and Section 8 covers Exposure Controls and PPE requirements.",
+      "source_documents": ["SOP-007-hazard-communication"],
+      "evaluation_notes": "Must state Section 6 for spill response. Mentioning other critical SDS sections (2, 4, 8, 14) adds quality. Answer must be grounded in SOP-007 specifically."
+    },
+
+    {
+      "id": "factual_11",
+      "difficulty": "factual",
+      "question": "What product was spilled in incident INC-2024-009, and approximately how much was recovered?",
+      "expected_answer": "The product was Sika Poxitar F Two-Part Epoxy Primer (belonging to the painting subcontractor Bright Coat Services). Approximately 12–15 litres were spilled when a 20L drum was knocked over; approximately 14 litres were recovered, fully contained on concrete with no drainage entry or soil contact. This is confirmed in Jason Hargreaves's investigation update in INC-2024-009.",
+      "source_documents": ["INC-2024-009-epoxy-spill"],
+      "evaluation_notes": "Must name Sika Poxitar F (or describe it as a two-part epoxy primer). Must state approximately 14 litres recovered. Must mention it was contained on concrete."
+    },
+
+    {
+      "id": "factual_12",
+      "difficulty": "factual",
+      "question": "What is the fuel consumption of GEN-01 at 75% load and at 100% load?",
+      "expected_answer": "GEN-01 (Denyo DCA-45SPK3) consumes 8.6 litres per hour at 75% load and 11.4 litres per hour at 100% load. The fuel tank capacity is 105 litres. These figures appear in the Technical Specifications table in Section 1 of MAINT-GEN-01.",
+      "source_documents": ["MAINT-GEN-01-denyo-generator"],
+      "evaluation_notes": "Must state both 8.6 L/hr (75%) and 11.4 L/hr (100%). Mentioning 105L tank capacity adds quality."
+    },
+
+    {
+      "id": "factual_13",
+      "difficulty": "factual",
+      "question": "What is the version number and effective date of SOP-001 (Fall Protection Program)?",
+      "expected_answer": "SOP-001 (Fall Protection Program) is Version 3.2, effective 01 March 2024. It was authored by J. Hargreaves and approved by the Director of Operations. The review date is 01 March 2025.",
+      "source_documents": ["SOP-001-fall-protection"],
+      "evaluation_notes": "Must state Version 3.2 and effective date 01 March 2024. Both elements required."
+    },
+
+    {
+      "id": "factual_14",
+      "difficulty": "factual",
+      "question": "What retention percentage is withheld from each progress claim in the Harrington Electrical contract, and when is the retention released?",
+      "expected_answer": "A retention of 5% is withheld from each progress claim. It is released in two tranches: 50% upon Practical Completion of the Works, and the remaining 50% upon expiry of the 12-month Defects Liability Period. This is specified in Schedule B3 of SC-2024-041.",
+      "source_documents": ["SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must state 5% retention. Must describe the two-tranche release (50% at PC, 50% at DLP expiry). Both elements required."
+    },
+
+    {
+      "id": "factual_15",
+      "difficulty": "factual",
+      "question": "Under the Harrington Electrical contract, how must variations to scope be authorised, and on which form must variation claims be submitted?",
+      "expected_answer": "Under Clause 2 (Variations) of the General Conditions of SC-2024-041, no variation to the scope of works will be recognised unless authorised in writing by BuildCore's Project Manager prior to the variation work being carried out. Verbal authorisations are explicitly not accepted. Variation claims must be submitted on Form VO-001.",
+      "source_documents": ["SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must state written authorisation required BEFORE work begins. Must name Form VO-001. Must state verbal authorisations are not accepted."
+    },
+
+    {
+      "id": "procedural_01",
+      "difficulty": "procedural",
+      "question": "What are the complete steps for inspecting a full-body harness before each use, as specified in SOP-001?",
+      "expected_answer": "Section 7.1.1 of SOP-001 specifies six steps for pre-use harness inspection: Step 1 — Hold the harness by the back D-ring and shake to let it unfold to its proper position. Step 2 — Check all webbing for cuts, burns, abrasion, fraying, or chemical damage by running fingers along all webbing. Step 3 — Check all hardware (buckles, D-rings) for deformation, cracks, corrosion, or sharp edges. Step 4 — Check stitching on all load-bearing points — no broken or missing stitches are permitted. Step 5 — Check labels — the ANSI Z359.1 compliance label must be legible. Step 6 — If any defect is found, tag the harness OUT OF SERVICE and return it to the Safety Manager immediately.",
+      "source_documents": ["SOP-001-fall-protection"],
+      "evaluation_notes": "Must cover all 6 steps in roughly correct order. Must mention D-ring, webbing inspection, hardware check, stitching check, compliance label, and OUT OF SERVICE tagging. Missing any step is a partial failure."
+    },
+
+    {
+      "id": "procedural_02",
+      "difficulty": "procedural",
+      "question": "What is the complete startup procedure for the Denyo generator GEN-01, including all pre-start checks and the starting sequence?",
+      "expected_answer": "The startup procedure in Section 2 of MAINT-GEN-01 consists of seven steps: Step 1 (Site Positioning) — confirm GEN-01 is on a firm level surface, minimum 6m from doors/windows/air intakes, exhaust directed away from work areas, and unit within the barricaded compound. Step 2 (Fuel) — check gauge; refuel if below 25% (~26 litres); diesel only; close and lock fuel cap. Step 3 (Engine Oil) — use yellow dipstick; level must be between MIN and MAX; top up with SAE 15W-40 if low. Step 4 (Coolant) — check overflow reservoir (left side); between LOW and FULL; top up with pre-mixed 50/50 ethylene glycol coolant; never open radiator cap when warm. Step 5 (Visual Inspection) — check for fluid leaks, panel doors closed, exhaust clear, output cables undamaged, cable glands secure. Step 6 (Control Panel) — set AUTO/MANUAL switch to MANUAL, confirm output circuit breaker is OFF, confirm EMERGENCY STOP button is released. Step 7 (Starting) — set choke to COLD START if ambient is below 10°C; turn key to START, hold maximum 10 seconds (if no start, wait 30 seconds, maximum 3 attempts); idle 2 minutes before applying load; return choke to RUN after 30 seconds if used; confirm oil pressure light extinguishes within 5 seconds; confirm coolant temperature reaches 70–90°C within 5 minutes; close the output circuit breaker to apply load.",
+      "source_documents": ["MAINT-GEN-01-denyo-generator"],
+      "evaluation_notes": "Must cover: 6m CO clearance requirement, refuel threshold of 25%, SAE 15W-40 oil, MANUAL switch setting, max 3 start attempts, 2-minute warm-up idle, oil pressure light check (5 seconds), coolant temp range (70-90°C), and closing the output circuit breaker. A correct answer must include the 6m CO clearance and the oil pressure warning check."
+    },
+
+    {
+      "id": "procedural_03",
+      "difficulty": "procedural",
+      "question": "What immediate actions must all workers take when a chemical spill is discovered on site, according to SOP-007?",
+      "expected_answer": "Section 7.1 of SOP-007 (Spill Response — Immediate Actions, All Workers) specifies four steps: Step 1 — Alert others in the area and evacuate the immediate spill zone. Step 2 — Identify the chemical by checking the label or SDS Section 6. Step 3 — Do NOT attempt to clean up if the chemical is unknown, highly toxic, or flammable, or if you are not trained to handle it. Step 4 — Call the Site Safety Manager immediately. Only trained personnel or the Safety Manager may proceed with cleanup under Section 7.2.",
+      "source_documents": ["SOP-007-hazard-communication"],
+      "evaluation_notes": "Must cover all 4 steps: evacuate, identify chemical via SDS Section 6, do not attempt cleanup if untrained/unknown, call Safety Manager. The prohibition on untrained cleanup (Step 3) is critical."
+    },
+
+    {
+      "id": "procedural_04",
+      "difficulty": "procedural",
+      "question": "How must an operator test FLT-03's LPG connections for gas leaks during the pre-start check?",
+      "expected_answer": "Step 1.3 of the FLT-03 Daily Pre-Start Check (Section 1 of MAINT-FLT-03) specifies: check the LPG hose connection at the cylinder and at the engine by applying soapy water to the connections. Any bubbling indicates a gas leak. If a leak is detected, do not start the engine — tag the unit out and notify the Site Manager immediately.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must describe applying soapy water to connections. Must state that bubbling = gas leak. Must state the response (do not start, tag out, notify Site Manager). The soapy water test method is a key detail."
+    },
+
+    {
+      "id": "procedural_05",
+      "difficulty": "procedural",
+      "question": "What are the steps for installing scaffold platform planks according to SOP-005?",
+      "expected_answer": "Section 4.5 of SOP-005 specifies four steps for platform planking: Step 1 — Planks must be scaffold-grade or equivalent structural lumber. Step 2 — Planks must extend 6 to 18 inches beyond their supports. Step 3 — Planks must overlap at least 12 inches over supports. Step 4 — Planks must be secured to prevent displacement. These requirements ensure planks cannot shift, tip, or create gaps under load.",
+      "source_documents": ["SOP-005-scaffold-safety"],
+      "evaluation_notes": "Must state: scaffold-grade lumber, 6–18 inch overhang, minimum 12-inch overlap, and secured against displacement. The overhang (6–18 inches) and overlap (12 inches minimum) dimensions are specific and required."
+    },
+
+    {
+      "id": "procedural_06",
+      "difficulty": "procedural",
+      "question": "What is the correct emergency procedure if the Toyota 8FGF25 forklift (FLT-03) tips over?",
+      "expected_answer": "Section 5.1 of MAINT-FLT-03 describes the tip-over procedure with an explicit warning: DO NOT JUMP. If a tip-over occurs: Step 1 — Grip the steering wheel firmly with both hands. Step 2 — Brace your feet on the floor. Step 3 — Lean away from the direction of fall and hold on. The overhead guard is specifically designed to protect the operator in a tip-over. Jumping from a tipping forklift significantly increases the risk of injury as the operator may be struck by the overhead guard or the machine.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must state DO NOT JUMP as the primary instruction. Must describe the three-step response: grip wheel, brace feet, lean away. Missing the 'do not jump' instruction is a critical failure."
+    },
+
+    {
+      "id": "procedural_07",
+      "difficulty": "procedural",
+      "question": "What are the steps for cleaning up a minor chemical spill, per SOP-007? Who is authorised to perform this cleanup?",
+      "expected_answer": "Section 7.2 of SOP-007 specifies that minor spill cleanup is restricted to the Safety Manager or trained personnel only. The five steps are: Step 1 — Don appropriate PPE as specified in the SDS Section 8 for the specific chemical. Step 2 — Contain the spill using absorbent materials from the spill kit; do not wash spills into drains. Step 3 — Collect all contaminated absorbent material in a labelled waste container for hazardous waste disposal. Step 4 — Ventilate the area until vapour levels are confirmed safe. Step 5 — Complete Incident Report Form IR-001 within 24 hours.",
+      "source_documents": ["SOP-007-hazard-communication"],
+      "evaluation_notes": "Must state that only trained personnel / Safety Manager may perform cleanup. Must cover all 5 steps including: PPE per SDS, no drain disposal, labelled waste container, ventilate, and IR-001 within 24 hours."
+    },
+
+    {
+      "id": "procedural_08",
+      "difficulty": "procedural",
+      "question": "What is the complete shutdown procedure for GEN-01?",
+      "expected_answer": "Section 3 of MAINT-GEN-01 specifies six steps for normal shutdown: Step 1 — Open the output circuit breaker to remove the load from connected equipment. Step 2 — Allow GEN-01 to run at idle (no load) for 3 minutes to cool down. Step 3 — Turn the key to the OFF position. Step 4 — Confirm the engine has stopped completely before leaving the unit. Step 5 — Record run hours from the hour meter in the fuel/run log (Form FL-GEN-01). Step 6 — Lock the fuel cap and close all panel doors. For emergency stop: press the red EMERGENCY STOP button on the control panel; after an emergency stop, investigate the cause before restarting and record the incident in the maintenance log.",
+      "source_documents": ["MAINT-GEN-01-denyo-generator"],
+      "evaluation_notes": "Must cover: remove load first (open circuit breaker), 3-minute no-load idle, turn key off, confirm stopped, log run hours on FL-GEN-01, lock and close. The 3-minute cool-down period and Form FL-GEN-01 are key specifics."
+    },
+
+    {
+      "id": "procedural_09",
+      "difficulty": "procedural",
+      "question": "How should a self-retracting lifeline (SRL) be inspected before use, according to SOP-001?",
+      "expected_answer": "Section 7.1.2 of SOP-001 specifies four steps for SRL inspection: Step 1 — Inspect snaphooks — the gate must open freely and lock positively. Step 2 — Check the energy absorber — if the deployment indicator shows red or orange, the lanyard has been shock-loaded and must be removed from service immediately. Step 3 — Check the lifeline itself for cuts, kinks, abrasion, or chemical damage. Step 4 — Pull out 12 inches of cable and release; the SRL should retract smoothly. Then tug the cable sharply — the lock must engage immediately.",
+      "source_documents": ["SOP-001-fall-protection"],
+      "evaluation_notes": "Must describe all 4 steps. Key specifics: red/orange indicator means shock-loaded (remove from service), the 12-inch pull-and-retract test, and the sharp-tug lock engagement test. The shock-load indicator check is a safety-critical step."
+    },
+
+    {
+      "id": "procedural_10",
+      "difficulty": "procedural",
+      "question": "What are the pre-erection planning steps that must be completed before scaffold erection begins, per SOP-005?",
+      "expected_answer": "Section 4.1 of SOP-005 specifies four pre-erection planning steps: Step 1 — Review the site plan and confirm the scaffold footprint does not obstruct emergency exits, fire equipment, or traffic lanes. Step 2 — Confirm ground bearing capacity; soft or uneven ground requires mudsills (minimum 2 × 10 lumber, 18 inches long). Step 3 — Check overhead hazards — electrical lines must be de-energised or have minimum clearances per OSHA 1926.416. Step 4 — Barricade the erection zone with barrier tape; no unauthorised personnel are permitted within 6 ft of erection activity.",
+      "source_documents": ["SOP-005-scaffold-safety"],
+      "evaluation_notes": "Must cover all 4 steps. Key details: mudsills specification (2×10, 18 inches), overhead electrical line requirement, and 6 ft barricade exclusion zone. The mudsill dimensions are specific corpus details."
+    },
+
+    {
+      "id": "procedural_11",
+      "difficulty": "procedural",
+      "question": "What must Harrington Electrical Services complete before any worker commences work on the BuildCore site, according to Schedule E of their contract?",
+      "expected_answer": "Schedule E2 of SC-2024-041 states that the Subcontractor must not commence work on site until two conditions are met: (a) A Safe Work Method Statement (SWMS) for all high-risk construction work has been submitted to and accepted by BuildCore's Safety Manager; and (b) A Site-Specific Safety Induction has been completed by all workers. Additionally, Schedule C requires that copies of all worker licences be provided to BuildCore's Site Manager within 48 hours of each worker commencing. Failure to comply with safety requirements (Schedule E4) may result in immediate suspension of works without compensation.",
+      "source_documents": ["SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must state: SWMS accepted before work commences, and site-specific induction for all workers. Mentioning the 48-hour licence submission requirement from Schedule C adds quality."
+    },
+
+    {
+      "id": "procedural_12",
+      "difficulty": "procedural",
+      "question": "How is FLT-03's service brake tested during the daily pre-start check?",
+      "expected_answer": "Step 5.7 of Section 1 of MAINT-FLT-03 describes the service brake test: drive the forklift slowly forward and then apply the brakes. The unit must stop straight without pulling to one side. This test is performed with the engine running as part of the operator controls check (Step 5 of the pre-start procedure), after allowing the engine to idle for 2 minutes.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must state: drive slowly forward and apply brakes; must stop straight without pulling to one side. Must correctly place this in the engine-running section of the pre-start check."
+    },
+
+    {
+      "id": "procedural_13",
+      "difficulty": "procedural",
+      "question": "What are the steps FLT-03's operator must follow if an LPG fire occurs on or near the forklift?",
+      "expected_answer": "Section 5.2 of MAINT-FLT-03 specifies four steps for LPG fire response: Step 1 — Shut off the LPG cylinder valve immediately if it is safe to do so. Step 2 — Evacuate the area with a minimum 15-metre exclusion zone. Step 3 — Call 000. Do not attempt to fight an LPG fire. Step 4 — Notify the Site Manager. The manual emphasises that attempting to fight an LPG fire is prohibited.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must state: shut off cylinder valve (if safe), 15m exclusion zone, call 000, do not fight LPG fire, notify Site Manager. The 15m exclusion distance and the 'do not fight' prohibition are critical details."
+    },
+
+    {
+      "id": "procedural_14",
+      "difficulty": "procedural",
+      "question": "What is the weekly maintenance procedure for the FLT-03 radiator, and what is the correct technique?",
+      "expected_answer": "Section 2 Step 1 of MAINT-FLT-03 (Weekly Maintenance) describes the radiator procedure: inspect the radiator fins for blockage by dust or debris. If blocked, blow out with compressed air. The critical technique detail is that compressed air must be applied with the engine cold, and the air must be directed from inside the radiator to the outside (i.e., the reverse of normal airflow direction) to push debris outward.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must state: inspect fins for blockage, use compressed air if blocked, engine must be cold, and blow from inside out (not outside in). The direction of airflow (inside to out) is the key procedural detail."
+    },
+
+    {
+      "id": "procedural_15",
+      "difficulty": "procedural",
+      "question": "What is the hierarchy of fall protection controls that must be applied per SOP-001, and in what order must they be considered?",
+      "expected_answer": "Section 6.1 of SOP-001 specifies that the hierarchy of fall protection controls must be applied in the following order: 1. Elimination — redesign the work to remove the fall hazard entirely. 2. Passive systems — guardrail systems or safety net systems. 3. Active systems — personal fall arrest systems (PFAS). 4. Administrative controls — warning line systems or safety monitors. Administrative controls are the least preferred option and are only permitted where other controls are not feasible. The threshold for applying this hierarchy is any fall hazard of 1.8 metres (6 ft) or greater.",
+      "source_documents": ["SOP-001-fall-protection"],
+      "evaluation_notes": "Must list all 4 levels in correct order. Must state the 1.8m threshold. Must note that administrative controls are last resort only. The ordering is critical — answering with incorrect order fails."
+    },
+
+    {
+      "id": "multi_hop_01",
+      "difficulty": "multi_hop",
+      "question": "The forklift near-miss in INC-2024-007 involved FLT-03. According to the maintenance manual, what should happen if FLT-03's reverse alarm is not sounding — and was this fault present on the day of the incident?",
+      "expected_answer": "According to MAINT-FLT-03 Section 4 (Common Faults), if the reverse alarm is not sounding the fault is classified as 'Blown fuse or sensor fault — DO NOT OPERATE.' The operator must tag the unit out and call Liftmaster Services. Per INC-2024-007 (Rachel Okonkwo's message), FLT-03's pre-start check on the morning of Monday 5 February 2024 was completed by Rick Dominguez and the travel alarm was recorded as OPERATIONAL. The fault was therefore not present on the day of the near-miss. However, Jason Hargreaves's investigation note states that the noise level in Zone B (caused by an Apex Plumbing concrete saw operating nearby) may have masked the alarm from Pete Carmichael's perspective, even though the alarm was functioning.",
+      "source_documents": ["INC-2024-007-forklift-near-miss", "MAINT-FLT-03-forklift-toyota-8fgf25"],
+      "evaluation_notes": "Must state: (1) MAINT-FLT-03 says DO NOT OPERATE if reverse alarm fails; (2) the alarm was operational per the morning pre-start check in INC-2024-007; (3) the concrete saw may have masked the alarm. Answer must draw on both documents."
+    },
+
+    {
+      "id": "multi_hop_02",
+      "difficulty": "multi_hop",
+      "question": "Both subcontractor contracts on the Greenfield Industrial Expansion project require Public Liability Insurance. Do they require the same minimum coverage? What are the key differences in insurance requirements between the two agreements?",
+      "expected_answer": "Both contracts require Public Liability Insurance of $20,000,000 per occurrence — the same minimum. Key differences: (1) Contract Works cover: SC-2024-038 (Apex Plumbing) requires $250,000; SC-2024-041 (Harrington Electrical) requires $500,000 and additionally requires BuildCore to be noted as an interested party on the policy. (2) Professional Indemnity: required only in SC-2024-041 at $2,000,000 (if design is involved); not required in SC-2024-038. (3) Workers Compensation: both require it as per law (VIC). The higher Contract Works and additional PI requirement in SC-2024-041 reflects the greater value and design component of the electrical contract ($366,795 vs $191,400).",
+      "source_documents": ["SC-2024-038-apex-plumbing", "SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must confirm both require $20M Public Liability. Must identify: Contract Works difference ($250k vs $500k), Professional Indemnity in SC-2024-041 only ($2M), and the interested party requirement in SC-2024-041. All three differences required for full credit."
+    },
+
+    {
+      "id": "multi_hop_03",
+      "difficulty": "multi_hop",
+      "question": "The epoxy spill response in INC-2024-009 required PPE including nitrile gloves and a P2 respirator. Does SOP-007's spill response procedure specify these items, or does it delegate PPE selection to another source?",
+      "expected_answer": "SOP-007 Section 7.2 Step 1 states only 'Don appropriate PPE per the SDS (Section 8)' — it does not specify nitrile gloves, respirator type, or any other PPE by name. The chemical-specific PPE requirements (nitrile gloves minimum 0.3mm thickness, safety goggles, P2 respirator) were determined by reading Section 8 of the Sika Poxitar F SDS, as confirmed in Jason Hargreaves's investigation report for INC-2024-009. This is the correct approach per SOP-007's design: the procedure intentionally defers to the SDS for PPE selection because requirements vary by chemical. SOP-007 Section 6.3 adds that respiratory protection is selected per SOP-014 (Respiratory Protection Program) when inhalation is a risk.",
+      "source_documents": ["INC-2024-009-epoxy-spill", "SOP-007-hazard-communication"],
+      "evaluation_notes": "Must state SOP-007 delegates PPE to SDS Section 8 rather than naming specific items. Must confirm the P2 respirator requirement came from the product SDS in INC-2024-009. Must explain why this design is correct (chemical-specific PPE varies)."
+    },
+
+    {
+      "id": "multi_hop_04",
+      "difficulty": "multi_hop",
+      "question": "The SC-PMCL-001 pre-mobilisation checklist requires Public Liability Insurance of at least $20M (item 1.03). Is this consistent with what both active subcontractor contracts actually require, and would both Apex Plumbing and Harrington Electrical pass this checklist item?",
+      "expected_answer": "Yes, both contracts are consistent with SC-PMCL-001 item 1.03. SC-2024-038 (Apex Plumbing) requires Public & Products Liability of $20,000,000 per occurrence. SC-2024-041 (Harrington Electrical) also requires Public & Products Liability of $20,000,000 per occurrence. Both exactly meet the $20M minimum specified in SC-PMCL-001 and would pass item 1.03. The checklist minimum appears to have been set to align with the contractual standard applied to both active subcontractors on the Greenfield project.",
+      "source_documents": ["SC-PMCL-001-subcontractor-premobilisation", "SC-2024-038-apex-plumbing", "SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must confirm all three documents specify $20M. Must conclude that both subcontractors would pass item 1.03. Answer must cite all three document sources."
+    },
+
+    {
+      "id": "multi_hop_05",
+      "difficulty": "multi_hop",
+      "question": "Jason Hargreaves proposed adding 'drum sealing' as a new observation item to the SSIC-001 daily checklist following the epoxy spill. Looking at the current SSIC-001, which section and existing item is most logically related to chemical storage and handling, and what does it currently check?",
+      "expected_answer": "The most logically related section in SSIC-001 is Section B — Housekeeping and General Site Conditions, specifically item B06: 'Chemical storage area tidy, SDS binder accessible.' There is also item B05: 'Flammable materials stored in designated cage.' The proposed drum sealing check would extend the scope of Section B or B06, since proper sealing of chemical drums relates to chemical storage safety. Currently, neither B06 nor any other SSIC-001 item explicitly checks that chemical containers/drums are properly sealed when not in active use — this is the gap identified in INC-2024-009.",
+      "source_documents": ["INC-2024-009-epoxy-spill", "SSIC-001-daily-site-safety-inspection"],
+      "evaluation_notes": "Must identify Section B (Housekeeping) as the relevant section. Must cite item B06 (chemical storage area tidy, SDS binder accessible) as the closest existing item. Must note the gap: no current item checks drum sealing specifically."
+    },
+
+    {
+      "id": "multi_hop_06",
+      "difficulty": "multi_hop",
+      "question": "Which subcontractor contract has the higher liquidated damages rate, and by how much? If a subcontractor caused a 10-day delay to Practical Completion, what would be the total LD exposure under each contract?",
+      "expected_answer": "SC-2024-041 (Harrington Electrical) has the higher liquidated damages rate at $2,500 per calendar day (Clause 5), compared to SC-2024-038 (Apex Plumbing) at $1,500 per calendar day. The difference is $1,000 per day. For a 10-day delay: Apex Plumbing LD exposure = $1,500 × 10 = $15,000. Harrington Electrical LD exposure = $2,500 × 10 = $25,000. The higher rate in the Harrington contract reflects the larger contract value ($366,795 vs $191,400) and likely the greater programme risk of electrical works delay.",
+      "source_documents": ["SC-2024-038-apex-plumbing", "SC-2024-041-harrington-electrical"],
+      "evaluation_notes": "Must correctly identify SC-2024-041 ($2,500) as higher than SC-2024-038 ($1,500). Must calculate 10-day totals correctly: $15,000 and $25,000. The correct rates are a critical check — confusing the two contracts fails."
+    },
+
+    {
+      "id": "multi_hop_07",
+      "difficulty": "multi_hop",
+      "question": "Both GEN-01 and FLT-03 show 812 hours as their most recent logged service entry. Which unit is more overdue for its next scheduled service as of the last log entry, and what type of service does each need?",
+      "expected_answer": "Both units require their 1,000-hour/annual service next. MAINT-FLT-03 states the next service is due approximately February 2024 and warns not to exceed 1,050 hours without service; at 812 hours as of 14 November 2023, this was approaching imminently. MAINT-GEN-01 states the next service is due approximately March 2024; at 812 hours as of the last log entry (20 October 2023). FLT-03's service was due roughly one month earlier than GEN-01 (February vs March 2024), making FLT-03 marginally more urgently due. Both units' 1,000-hour services must be performed by their respective authorised contractors: Liftmaster Services (03 9312 4400) for FLT-03, and Denyo Australia (1800 336 963) for GEN-01.",
+      "source_documents": ["MAINT-FLT-03-forklift-toyota-8fgf25", "MAINT-GEN-01-denyo-generator"],
+      "evaluation_notes": "Must correctly state both need 1,000-hour/annual service. Must note FLT-03 is due February and GEN-01 March 2024. Must name the service contractors. The 1,050-hour hard limit for FLT-03 is an important safety detail."
+    },
+
+    {
+      "id": "multi_hop_08",
+      "difficulty": "multi_hop",
+      "question": "SOP-001 sets a 50 km/h wind speed limit for rooftop work. SOP-005 sets a 65 km/h limit for scaffold use. If workers are performing rooftop work from a scaffold, which limit applies and why?",
+      "expected_answer": "The more restrictive limit of 50 km/h from SOP-001 applies when scaffolding is used to access a rooftop for rooftop work. SOP-001 Section 6.2.3 explicitly prohibits rooftop work during wind speeds exceeding 50 km/h as a safety control specific to rooftop exposure. SOP-005 Section 6 sets a 65 km/h limit for scaffold use generally (for any scaffold work, not specifically rooftop). When both SOPs apply simultaneously — as when scaffold provides access to a roof — the more protective standard governs. SOP-001 itself cross-references SOP-005 (Section 6.3), confirming that both documents are intended to work together, with SOP-001 providing the more specific rooftop controls.",
+      "source_documents": ["SOP-001-fall-protection", "SOP-005-scaffold-safety"],
+      "evaluation_notes": "Must correctly identify the conflict: 50 km/h (SOP-001 rooftop) vs 65 km/h (SOP-005 scaffold). Must conclude that 50 km/h applies (more restrictive). Must explain the hierarchy principle (more protective standard governs). This is a nuanced multi-hop reasoning question."
+    },
+
+    {
+      "id": "multi_hop_09",
+      "difficulty": "multi_hop",
+      "question": "Daniel Kowalski noted in INC-2024-009 that BuildCore had experienced three incidents in seven weeks. Using the three incident email threads, list all three incidents in chronological order with their dates, types, and whether each resulted in an injury.",
+      "expected_answer": "In chronological order: (1) INC-2024-007 — Forklift near-miss, Monday 5 February 2024. Pete Carmichael (Apex Plumbing) walked into the FLT-03 operating zone in Zone B without a high-vis vest or spotter while Rick Dominguez was operating the forklift with a load. No injuries — Pete jumped back, Rick braked. Near-Miss Investigation Report NM-2024-007. (2) INC-2024-002 — LTI (Lost Time Injury) laceration, Wednesday 14 February 2024. Sam Osei cut his left palm with a box cutter while removing strapping in Zone 3 Warehouse; 6 stitches; off duties for at least the rest of the week. LTI form LTI-2024-002. (3) INC-2024-009 — Epoxy chemical spill, Thursday 22 February 2024. A Bright Coat Services worker knocked over a 20L drum of Sika Poxitar F epoxy primer in Zone 3. No injuries; approximately 14 litres contained on concrete. Incident Report IR-2024-009. All three occurred at the Greenfield Industrial Expansion — Stage 2 site on Commerce Drive.",
+      "source_documents": ["INC-2024-007-forklift-near-miss", "INC-2024-002-laceration-lti", "INC-2024-009-epoxy-spill"],
+      "evaluation_notes": "Must list all three incidents in correct date order (7 Feb, 14 Feb, 22 Feb). Must correctly classify: near-miss (no injury), LTI (Sam Osei, 6 stitches), chemical spill (no injury). Must cite all three incident report IDs. Chronological order is required."
+    },
+
+    {
+      "id": "multi_hop_10",
+      "difficulty": "multi_hop",
+      "question": "Pete Carmichael was an Apex Plumbing employee who completed a BuildCore site induction (IND-2024-0089) on 22 January 2024. The forklift near-miss investigation found the induction was inadequate. Does the SC-PMCL-001 pre-mobilisation checklist require the type of specific exclusion zone information that was found to be missing from Pete's induction?",
+      "expected_answer": "Yes. SC-PMCL-001 Section 4 (Site Induction) requires specific induction content including: item 4.02 'Induction includes traffic management and zones' and item 4.03 'Induction includes site exclusion zone map.' The near-miss investigation in INC-2024-007 found that Pete Carmichael's induction (completed 22 January 2024 per Induction ID IND-2024-0089) covered 'marked exclusion zones' generally but did NOT include a site map identifying specific zones by name or number — meaning item 4.03 was effectively not met. Corrective action #3 in the INC-2024-007 investigation was to update the subcontractor induction to include a site exclusion zone map, which directly aligns with what SC-PMCL-001 item 4.03 already requires. The SC-PMCL-001 requirement existed; the induction delivery failed to meet it.",
+      "source_documents": ["INC-2024-007-forklift-near-miss", "SC-PMCL-001-subcontractor-premobilisation"],
+      "evaluation_notes": "Must cite SC-PMCL-001 items 4.02 and/or 4.03 specifically. Must connect these to the induction gap identified in INC-2024-007. Must conclude the SC-PMCL-001 requirement existed but the induction delivery did not fulfil it. Citing IND-2024-0089 adds quality."
+    },
+
+    {
+      "id": "out_of_scope_01",
+      "difficulty": "out_of_scope",
+      "question": "What are the penalty amounts under the Australian Work Health and Safety Act 2011 for a person conducting a business that fails to ensure a safe workplace?",
+      "expected_answer": "REFUSAL. This question asks about Australian federal or state WHS legislation — specifically penalty provisions of the WHS Act 2011. While the BuildCore SOPs reference OSHA standards (US) and the contracts reference Victorian law, the corpus does not contain or reproduce the text of any Australian WHS legislation, its penalty schedules, or any authoritative commentary on it. BuildCore RAG can only answer questions grounded in its own internal documents.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. A correct refusal states the WHS Act is not in the corpus. Any attempt to cite WHS Act penalty amounts from general knowledge is a hallucination and must be flagged as a failure."
+    },
+
+    {
+      "id": "out_of_scope_02",
+      "difficulty": "out_of_scope",
+      "question": "What is the current OSHA fine for a willful safety violation on a US construction site?",
+      "expected_answer": "REFUSAL. The BuildCore corpus references OSHA standards by number (e.g., OSHA 29 CFR 1926.502 in SOP-001) but does not contain OSHA penalty schedules, fine amounts, or enforcement information. The OSHA citation references are used as technical benchmarks, not as regulatory compliance documents. This question is out of scope.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. OSHA penalty amounts are not in the corpus. Citing the regulatory standard numbers (like 29 CFR 1926.502) while refusing is acceptable and shows correct corpus awareness."
+    },
+
+    {
+      "id": "out_of_scope_03",
+      "difficulty": "out_of_scope",
+      "question": "How much does a new Toyota 8FGF25 forklift cost to purchase in Australia?",
+      "expected_answer": "REFUSAL. The BuildCore corpus includes a maintenance manual for the Toyota 8FGF25 forklift (unit FLT-03, MAINT-FLT-03) but does not contain any information about the purchase price, retail pricing, or market valuation of the unit. Equipment pricing is outside the scope of the BuildCore document corpus.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. The corpus knows the forklift model but not its price. A good refusal acknowledges the forklift exists in the corpus (MAINT-FLT-03) but correctly states pricing is not available."
+    },
+
+    {
+      "id": "out_of_scope_04",
+      "difficulty": "out_of_scope",
+      "question": "Under which Victorian legislation are electrical worker licences regulated, and what are the conditions for obtaining a Class A licence?",
+      "expected_answer": "REFUSAL. While the Harrington Electrical contract (SC-2024-041, Schedule C) references that workers must hold a current Victorian Electrical Worker Licence (Class A or Class B), the corpus does not contain the text of the relevant Victorian legislation (the Electricity Safety Act or similar), the licensing conditions, or the requirements for obtaining a Class A licence. This is a legislative/regulatory question outside the BuildCore corpus.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. The corpus mentions the licence type (Class A/B) in SC-2024-041 but does not reproduce the enabling legislation or licensing requirements. A good refusal notes the licence is referenced in the contract."
+    },
+
+    {
+      "id": "out_of_scope_05",
+      "difficulty": "out_of_scope",
+      "question": "What are the minimum wages for a licensed plumber under the relevant Australian industrial award?",
+      "expected_answer": "REFUSAL. The BuildCore corpus contains a subcontractor agreement for Apex Plumbing & Drainage (SC-2024-038) that references plumbing licence requirements but does not contain industrial award rates, wage schedules, or any Fair Work Act information. Wages and award conditions are outside the scope of this corpus.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. No wage or award information exists in the corpus. Mentioning SC-2024-038 as the source of plumbing-related content (while correctly refusing) is acceptable."
+    },
+
+    {
+      "id": "out_of_scope_06",
+      "difficulty": "out_of_scope",
+      "question": "What is the market rate per square metre for commercial electrical fit-out work in Melbourne as of 2024?",
+      "expected_answer": "REFUSAL. The corpus includes the Harrington Electrical contract (SC-2024-041) which specifies the agreed contract sum for a specific electrical scope at the Greenfield Industrial Expansion project, but it does not contain market rate benchmarks, industry pricing surveys, or any comparative pricing data. BuildCore RAG cannot provide general construction market pricing.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. The contract value ($333,450 excl. GST) exists in the corpus but using it to derive a market rate would be hallucination. The system must not attempt to calculate or infer a rate per m2."
+    },
+
+    {
+      "id": "out_of_scope_07",
+      "difficulty": "out_of_scope",
+      "question": "What are the requirements of AS/NZS 1891.1 (Australian Standard for industrial fall-arrest equipment) regarding inspection intervals for safety harnesses?",
+      "expected_answer": "REFUSAL. SOP-001 (Fall Protection Program) references ANSI/ASSE Z359.1 (a US standard) for personal fall arrest systems and specifies BuildCore's own annual inspection requirement, but it does not reference or reproduce AS/NZS 1891.1 (the Australian Standard). The AS/NZS standard's specific requirements are not contained in the BuildCore corpus.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. SOP-001 does contain inspection requirements (annual, Form SF-009) but these are BuildCore's internal requirements, not the AS/NZS standard. A good refusal notes the difference between the corpus content (ANSI Z359.1 reference) and the requested standard (AS/NZS 1891.1)."
+    },
+
+    {
+      "id": "out_of_scope_08",
+      "difficulty": "out_of_scope",
+      "question": "What is the ATO's depreciation rate for construction plant and equipment under the tax effective life schedule?",
+      "expected_answer": "REFUSAL. The BuildCore corpus covers construction site operations, safety procedures, equipment maintenance, contracts, and incident management. It does not contain any taxation, accounting, or ATO depreciation schedule information. This question is entirely outside the scope of the corpus.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse with no hedging. There is zero corpus content related to taxation or depreciation. A confident, clear refusal is expected."
+    },
+
+    {
+      "id": "out_of_scope_09",
+      "difficulty": "out_of_scope",
+      "question": "What brand of cut-resistant gloves provides the best protection for strapping removal tasks on construction sites?",
+      "expected_answer": "REFUSAL. While INC-2024-002 (the laceration LTI investigation) references cut-resistant gloves and specifies that Level B ANSI/ISEA 105 gloves are stocked in the BuildCore tool store and were added to the PPE matrix for cutting tasks, the corpus does not contain product comparisons, brand recommendations, or procurement guidance. Selecting specific glove brands is outside the scope of BuildCore RAG.",
+      "source_documents": [],
+      "evaluation_notes": "System must refuse. INC-2024-002 does mention Level B ANSI/ISEA 105 gloves, which is legitimate corpus content, but the question asks for brand recommendations which is not in the corpus. The refusal should acknowledge what the corpus does say (glove level standard) while refusing the brand recommendation."
+    },
+
+    {
+      "id": "out_of_scope_10",
+      "difficulty": "out_of_scope",
+      "question": "What is the WorkSafe Victoria threshold for mandatory notification of a workplace injury, and within what time frame must notification occur?",
+      "expected_answer": "REFUSAL. INC-2024-002 briefly mentions WorkSafe notification thresholds in context (Rachel Okonkwo's message notes Sam's injury does not meet the threshold for immediate WorkSafe notification, which 'would require hospitalisation, amputation, or serious injury'), but this is described conversationally in an email, not as a definitive statement of the regulatory threshold or time frame. The BuildCore corpus does not contain the text of the Workplace Injury Rehabilitation and Compensation Act or WorkSafe Victoria's notification regulations. For authoritative WorkSafe notification requirements, consult the relevant Victorian legislation.",
+      "source_documents": [],
+      "evaluation_notes": "This is the hardest out-of-scope case because INC-2024-002 contains a partial reference to WorkSafe thresholds. A correct answer must refuse to state the regulatory threshold definitively while acknowledging the email reference. Quoting Rachel's email description verbatim as a definitive regulatory answer is insufficient — must flag it is informal email content, not official regulatory text."
+    }
+
+  ]
+}

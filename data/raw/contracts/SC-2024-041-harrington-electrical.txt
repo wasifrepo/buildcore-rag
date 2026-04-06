@@ -1,0 +1,199 @@
+SUBCONTRACTOR SERVICES AGREEMENT
+
+Agreement No.:    SC-2024-041
+Project:          Greenfield Industrial Expansion — Stage 2
+Project Location: 14 Commerce Drive, Lakeside Industrial Park
+Client:           BuildCore Operations Pty Ltd
+                  ABN 47 823 104 992
+                  Level 4, 88 Collins Street, Melbourne VIC 3000
+
+Subcontractor:    Harrington Electrical Services Pty Ltd
+                  ABN 63 091 774 208
+                  22 Volta Avenue, Sunshine VIC 3020
+
+Execution Date:   12 February 2024
+Commencement:     19 February 2024
+Practical Completion: 30 June 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE A — SCOPE OF WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Harrington Electrical Services Pty Ltd ("Subcontractor") shall provide all
+labour, materials, plant, and supervision necessary to carry out the following
+electrical works at the Project site ("Works"):
+
+A1. Primary Switchboard and Distribution
+  - Supply, install, and commission one (1) main switchboard (MSB-01)
+    rated 800A, 415V three-phase, with integral metering
+  - Supply, install, and commission six (6) distribution boards (DB-01
+    through DB-06) as per drawings E-101 through E-106 (Rev C)
+  - All cable trays, conduits, and containment systems between MSB-01
+    and distribution boards
+
+A2. Power Outlets and Small Power
+  - Install 320 x double GPO (10A) throughout Zones 1–4
+  - Install 48 x three-phase outlets (32A) in Zones 2 and 3 (warehouse)
+  - Install 12 x EV charging outlets (32A, Type 2) in car park Zone 5
+
+A3. Lighting
+  - Supply and install LED lighting to all internal areas as per
+    lighting schedule (Document EL-Schedule-Rev2)
+  - Emergency and exit lighting throughout — minimum 90-minute duration
+  - External façade and car park lighting
+
+A4. Fire Indicator Panel Interface
+  - Interface with fire contractor's FIP (Contractor: Axiom Fire Systems)
+  - Supply all cable between FIP and electrical equipment requiring
+    monitored shutdown on fire alarm
+
+A5. Testing and Commissioning
+  - Test and tag all electrical installations
+  - Thermographic inspection of all switchboards and distribution boards
+  - Submit test results on Form TC-E-001
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE B — CONTRACT SUM AND PAYMENT TERMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+B1. Contract Sum
+
+  Item                                      Amount (AUD excl. GST)
+  ──────────────────────────────────────────────────────────────────
+  A1 — Primary Switchboard & Distribution     $148,500.00
+  A2 — Power Outlets & Small Power             $62,400.00
+  A3 — Lighting                                $89,750.00
+  A4 — FIP Interface                           $18,200.00
+  A5 — Testing & Commissioning                 $14,600.00
+  ──────────────────────────────────────────────────────────────────
+  SUBTOTAL (excl. GST)                        $333,450.00
+  GST (10%)                                    $33,345.00
+  ──────────────────────────────────────────────────────────────────
+  TOTAL CONTRACT SUM (incl. GST)              $366,795.00
+
+B2. Progress Claims
+
+  Progress claims must be submitted by the 25th of each month.
+  BuildCore will assess and certify claims within 10 business days.
+  Payment will be made within 15 business days of certification.
+  Claims submitted late will be assessed in the following month.
+
+  Milestone Payment Schedule:
+
+  Milestone                                 Claim Amount (excl. GST)
+  ──────────────────────────────────────────────────────────────────
+  Mobilisation (10%)                           $33,345.00
+  Rough-in complete — Zones 1 & 2 (20%)        $66,690.00
+  Rough-in complete — Zones 3 & 4 (20%)        $66,690.00
+  MSB-01 and DB installation complete (20%)    $66,690.00
+  Lighting and small power fit-off (15%)        $50,017.50
+  Testing, commissioning, and handover (15%)   $50,017.50
+  ──────────────────────────────────────────────────────────────────
+  TOTAL                                       $333,450.00
+
+B3. Retention
+  A retention of 5% will be withheld from each progress claim.
+  Retention will be released as follows:
+    - 50% upon Practical Completion of the Works
+    - 50% upon expiry of the Defects Liability Period
+
+B4. Defects Liability Period
+  12 months from the date of Practical Completion of the Works.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE C — APPROVED PERSONNEL AND LICENCE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+All electrical works must be performed by licensed electricians holding
+a current Victorian Electrical Worker Licence (Class A or Class B as
+appropriate to the work). Apprentices must be under direct supervision
+of a licensed tradesperson at all times.
+
+Approved Site Supervisor: Marcus Thornton, Licence No. EW-48821
+Nominated Alternate:      Priya Subramaniam, Licence No. EW-61334
+
+Subcontractor must provide copies of all worker licences to BuildCore's
+Site Manager within 48 hours of each worker commencing on site. Work by
+unlicensed personnel will result in immediate removal from site and may
+result in termination of this Agreement.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE D — INSURANCE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The Subcontractor must hold and maintain throughout the duration of
+this Agreement:
+
+  Insurance Type                    Minimum Cover
+  ──────────────────────────────────────────────────────────────────
+  Public & Products Liability       $20,000,000 per occurrence
+  Workers Compensation              As required by law (VIC)
+  Contract Works / Plant & Equipment $500,000
+  Professional Indemnity            $2,000,000 (if design is involved)
+  ──────────────────────────────────────────────────────────────────
+
+Certificates of Currency for all required insurance must be provided
+to BuildCore before work commences and upon request at any time.
+BuildCore must be noted as an interested party on the Contract Works policy.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCHEDULE E — SAFETY OBLIGATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+E1. The Subcontractor acknowledges receipt of BuildCore's Site Safety
+    Management Plan (SSMP) and agrees to comply with all requirements
+    contained therein and in BuildCore's Safety SOPs.
+
+E2. The Subcontractor must not commence work on site until:
+    - A Safe Work Method Statement (SWMS) for all high-risk construction
+      work has been submitted to and accepted by BuildCore's Safety Manager
+    - A Site-Specific Safety Induction has been completed by all workers
+
+E3. All incidents and near-misses must be reported to the BuildCore
+    Site Manager within 1 hour of occurrence.
+
+E4. Failure to comply with safety requirements may result in immediate
+    suspension of works without compensation.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GENERAL CONDITIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Clause 1 — Governing Law
+  This Agreement is governed by the laws of the State of Victoria,
+  Australia.
+
+Clause 2 — Variations
+  No variation to the scope of works will be recognised unless
+  authorised in writing by BuildCore's Project Manager prior to the
+  variation work being carried out. Verbal authorisations will not
+  be accepted. Variation claims must be submitted on Form VO-001.
+
+Clause 3 — Subcontracting
+  The Subcontractor must not further subcontract any part of the Works
+  without prior written approval from BuildCore.
+
+Clause 4 — Termination for Convenience
+  BuildCore may terminate this Agreement for convenience by giving
+  14 days written notice. The Subcontractor will be entitled to payment
+  for work satisfactorily completed to the date of termination plus
+  reasonable demobilisation costs. No further compensation will be payable.
+
+Clause 5 — Liquidated Damages
+  If the Works are not practically complete by the date specified in
+  this Agreement due to causes attributable to the Subcontractor,
+  liquidated damages of $2,500 per calendar day will apply.
+
+Clause 6 — Dispute Resolution
+  Disputes must first be referred to the respective parties' project
+  managers for resolution. If unresolved within 10 business days,
+  disputes will be referred to mediation before any legal proceedings.
+
+EXECUTED as an Agreement:
+
+BuildCore Operations Pty Ltd          Harrington Electrical Services Pty Ltd
+
+Signed: _______________________       Signed: _______________________
+Name:   Daniel Kowalski               Name:   James Harrington
+Title:  General Manager Operations   Title:  Director
+Date:   12 February 2024             Date:   12 February 2024

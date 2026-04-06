@@ -1,0 +1,177 @@
+BUILDCORE OPERATIONS
+STANDARD OPERATING PROCEDURE
+
+Document ID:    SOP-005
+Title:          Scaffold Erection, Use, and Inspection
+Version:        4.0
+Effective Date: 10 February 2024
+Review Date:    10 February 2025
+Owner:          Site Safety Manager
+Approved By:    Director of Operations
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. PURPOSE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To establish minimum requirements for the safe erection, use, inspection,
+alteration, and dismantling of scaffolding systems at BuildCore sites in
+compliance with OSHA 29 CFR 1926 Subpart Q.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. SCAFFOLD CLASSIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BuildCore sites use the following scaffold types. Each type requires
+the specific controls noted.
+
+  Type A — Tube and Coupler Scaffolding
+    Max load: 25 psf. Requires engineer sign-off for heights over 125 ft.
+    Inspection frequency: Every shift.
+
+  Type B — Frame / Fabricated Scaffolding (most common on BuildCore sites)
+    Max load: 25 psf light duty; 50 psf medium duty; 75 psf heavy duty.
+    Pre-tagged with load rating by supplier. Tag must remain visible.
+    Inspection frequency: Every shift.
+
+  Type C — Suspended Scaffolding (swing stage)
+    Requires separate engineering design. Not covered by this SOP.
+    Refer to SOP-005A (Suspended Scaffold).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. COMPETENT PERSON REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Only a designated Competent Person may:
+  - Supervise scaffold erection and dismantling
+  - Conduct pre-shift inspections and authorise scaffold for use
+  - Determine when a scaffold is unsafe and must be taken out of service
+
+The Competent Person must hold a current BuildCore Scaffold Competency
+Certificate (renewed every 2 years). List of certified personnel is
+maintained by the Safety Manager (Form SC-001).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. ERECTION PROCEDURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4.1 Pre-Erection Planning
+  Step 1: Review site plan and confirm scaffold footprint does not
+          obstruct emergency exits, fire equipment, or traffic lanes.
+  Step 2: Confirm ground bearing capacity. Soft or uneven ground
+          requires mudsills (minimum 2 x 10 lumber, 18 inches long).
+  Step 3: Check overhead hazards — electrical lines must be de-energised
+          or have minimum clearances per OSHA 1926.416.
+  Step 4: Barricade the erection zone with barrier tape. No unauthorised
+          personnel within 6 ft of erection activity.
+
+4.2 Base and Foundation
+  Step 1: Place mudsills flat on compacted ground.
+  Step 2: Position base plates centred on mudsills.
+  Step 3: Install screw jacks — extension must not exceed 12 inches.
+          If ground is not level, adjust jacks before proceeding.
+
+4.3 Frame Installation
+  Step 1: Erect first level frames and connect with cross braces.
+          Braces must be locked on both ends.
+  Step 2: Check plumb and level before adding the second level.
+          Maximum out-of-plumb: 1 inch per 10 feet of height.
+  Step 3: Install coupling pins between stacked frames.
+          Coupling pins must be secured with a pin or clip.
+  Step 4: Repeat for each level, checking plumb at every second level.
+
+4.4 Guardrails and Toeboards
+  Step 1: Install top guardrail at 38-45 inches above platform.
+  Step 2: Install midrail at the midpoint of top rail and platform.
+  Step 3: Install toeboards (minimum 3.5 inches) on all open sides.
+  Step 4: All open sides and ends of the platform must be guarded.
+
+4.5 Platform Planking
+  Step 1: Planks must be scaffold-grade or equivalent structural lumber.
+  Step 2: Planks must extend 6-18 inches beyond supports.
+  Step 3: Planks must overlap at least 12 inches over supports.
+  Step 4: Planks must be secured to prevent displacement.
+
+4.6 Access
+  Ladders or stairway frames must be provided.
+  Climbing on cross-braces is prohibited.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. PRE-SHIFT INSPECTION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The Competent Person must complete Form SC-002 (Scaffold Pre-Shift
+Inspection) before each shift. The scaffold must NOT be used until the
+inspection is complete and the scaffold is signed off as SAFE.
+
+Inspection items — mark PASS / FAIL / N/A:
+
+  FOUNDATION
+  [ ] Mudsills and base plates in place, no settlement or movement
+  [ ] Screw jack extensions within 12-inch limit
+  [ ] Ground beneath scaffold has not changed (soft spots, erosion)
+
+  FRAMES AND BRACING
+  [ ] All frames upright, no visible bends or deformation
+  [ ] All cross braces locked at both ends
+  [ ] Coupling pins secured on all stacked frames
+  [ ] Scaffold plumb within 1 inch per 10 feet
+
+  PLATFORM
+  [ ] Planks free of cracks, knots, rot, or damage
+  [ ] Planks overlap minimum 12 inches at supports
+  [ ] No gaps greater than 1 inch between planks
+  [ ] Platform free of debris, tools, or excess materials
+
+  GUARDRAILS AND TOEBOARDS
+  [ ] Top rail at 38-45 inches, no deflection under 200 lb load
+  [ ] Midrail present and secure
+  [ ] Toeboards minimum 3.5 inches on all open sides
+
+  ACCESS
+  [ ] Ladder or stair access present and secure
+  [ ] No climbing on braces observed
+
+  TAGS AND SIGNAGE
+  [ ] Load rating tag visible and legible
+  [ ] Scaffold tag (green = safe, red = do not use) current
+
+  If any item FAILS: scaffold must be tagged RED (Do Not Use) and
+  Competent Person must notify the Site Safety Manager immediately.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. USE RESTRICTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - Do not exceed rated load capacity (shown on load tag)
+  - Do not use scaffold during electrical storms or winds over 65 km/h
+  - Do not move a scaffold while workers are on it (mobile scaffolds only
+    permitted to be moved if properly designed for movement with workers)
+  - Do not use scaffold as a support point for hoisting equipment unless
+    specifically designed and approved in writing by a professional engineer
+  - Do not alter, remove, or modify any scaffold component without
+    authorisation from the Competent Person
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. DISMANTLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Dismantling is the reverse of erection but carries additional risk.
+
+  - Barricade the dismantling zone — no unauthorised access
+  - Remove tools, materials, and debris from platform before dismantling
+  - Dismantle from the top down — never remove lower components first
+  - Lower materials to the ground using ropes or mechanical means —
+    do not throw or drop components
+  - Damaged or defective components must be tagged and segregated
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DOCUMENT REVISION HISTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Version   Date              Author            Change Summary
+4.0       10 Feb 2024       J. Hargreaves     Added Type C scaffold note;
+                                              updated wind speed limit to 65 km/h
+3.2       22 Aug 2023       J. Hargreaves     Added Section 7 (Dismantling)
+3.1       04 Apr 2022       R. Okonkwo        Added pre-shift checklist Section 5
+3.0       01 Jan 2021       R. Okonkwo        Full revision; aligned with OSHA
+                                              29 CFR 1926 Subpart Q

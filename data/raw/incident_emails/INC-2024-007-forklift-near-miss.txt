@@ -1,0 +1,143 @@
+From: Tom Nguyen <t.nguyen@buildcore.com.au>
+To: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+CC: Daniel Kowalski <d.kowalski@buildcore.com.au>
+Date: Tuesday, 6 February 2024, 07:52 AM
+Subject: INCIDENT REPORT — Near Miss, Forklift Zone B, Commerce Drive Site
+
+Jason,
+
+Reporting a near miss from yesterday afternoon (Monday 5 February, approx. 14:40).
+
+What happened: One of the Apex Plumbing workers, Pete Carmichael, walked into
+the forklift operating zone in Zone B without a spotter or high-vis vest. Rick
+Dominguez was operating the LPG forklift (Unit FLT-03) and had a full load of
+conduit bundles on the forks — about 1.2m high. He didn't see Pete until he
+was roughly 4 metres away. Rick braked and the load shifted but didn't fall.
+Pete jumped back and was not injured. Rick stopped the machine immediately.
+
+I spoke to both workers at the time. Pete said he didn't realise he was entering
+a restricted zone — he said the exclusion zone markings on that side of Zone B
+aren't visible because someone drove over the painted lines and they've faded.
+Rick was visibly shaken. He's been operating forklifts for 11 years and said
+this was the closest call he's had.
+
+Immediate actions taken:
+- Area barricaded with physical barriers while investigation continues
+- Both workers stood down from their tasks for the rest of the day
+- Pete retrained in site pedestrian safety rules before leaving site
+- No injuries, no property damage
+
+I need you to do a formal near-miss investigation and submit the report by COB
+Thursday. Please also check whether Zone B exclusion zone markings need repainting
+across the whole area — I think this is a bigger issue than just the one faded patch.
+
+Tom Nguyen
+Site Manager — Commerce Drive
+BuildCore Operations
+M: 0412 888 341
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+To: Tom Nguyen <t.nguyen@buildcore.com.au>
+CC: Daniel Kowalski <d.kowalski@buildcore.com.au>; Rachel Okonkwo <r.okonkwo@buildcore.com.au>
+Date: Tuesday, 6 February 2024, 09:14 AM
+Subject: RE: INCIDENT REPORT — Near Miss, Forklift Zone B, Commerce Drive Site
+
+Tom,
+
+Received. I'll be on site this afternoon to start the investigation.
+
+Adding Rachel to this thread — Rachel, can you pull Pete Carmichael's site
+induction records? I want to confirm he completed the forklift exclusion zone
+component of the induction. Also need Rick Dominguez's forklift operator
+certification and the last pre-start check for FLT-03.
+
+A few questions I'll need answered during the investigation:
+1. Was FLT-03's travel alarm (reversing beeper) functioning at time of incident?
+2. Was the spotter requirement for Zone B communicated in the subcontractor
+   induction that Apex workers completed?
+3. Who is responsible for maintaining the exclusion zone markings in Zone B?
+   When were they last inspected?
+
+Can you have Rick and Pete available for interviews at 2pm today?
+
+Jason
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Rachel Okonkwo <r.okonkwo@buildcore.com.au>
+To: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+CC: Tom Nguyen <t.nguyen@buildcore.com.au>; Daniel Kowalski <d.kowalski@buildcore.com.au>
+Date: Tuesday, 6 February 2024, 10:03 AM
+Subject: RE: INCIDENT REPORT — Near Miss, Forklift Zone B, Commerce Drive Site
+
+Jason,
+
+Records pulled:
+
+Pete Carmichael (Apex Plumbing employee):
+- Completed BuildCore site induction on 22 January 2024 (Induction ID: IND-2024-0089)
+- Induction included Section 4 (Traffic Management and Exclusion Zones) — Pete signed off
+- Induction did NOT specifically name Zone B as a forklift operating zone — the induction
+  refers to "marked exclusion zones" generally. This is a gap we need to close.
+
+Rick Dominguez (BuildCore employee):
+- Forklift Operator Certification: High Risk Work Licence VIC, Licence No. HRW-77432,
+  expiry 14 August 2025 — current
+- FLT-03 Pre-Start Check: Last completed Monday 5 February 2024 (morning shift by
+  Rick Dominguez). Travel alarm: ticked as OPERATIONAL.
+
+I'd recommend we update the subcontractor induction to include a site map with
+all exclusion zones specifically named and marked, not just a general reference.
+Happy to draft the update if you want.
+
+Rachel Okonkwo
+HR & Safety Administration
+BuildCore Operations
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From: Jason Hargreaves <j.hargreaves@buildcore.com.au>
+To: Tom Nguyen <t.nguyen@buildcore.com.au>; Daniel Kowalski <d.kowalski@buildcore.com.au>
+CC: Rachel Okonkwo <r.okonkwo@buildcore.com.au>
+Date: Thursday, 8 February 2024, 16:45 PM
+Subject: RE: INCIDENT REPORT — Near Miss, Forklift Zone B, Commerce Drive Site
+
+All,
+
+Investigation complete. Near-Miss Investigation Report (Form NM-2024-007)
+has been submitted to the safety file. Summary of findings:
+
+ROOT CAUSES:
+1. Inadequate exclusion zone marking — Zone B western boundary markings had
+   faded to the point of being indistinguishable. Last formal inspection of
+   line markings was November 2023 (3 months prior). Inspection frequency
+   should be monthly, not quarterly.
+2. Induction gap — Subcontractor induction refers to "marked exclusion zones"
+   but does not provide a site map identifying specific zones by name or number.
+   Pete Carmichael passed induction in good faith but had insufficient information
+   to identify Zone B as a restricted area.
+
+CONTRIBUTING FACTORS:
+- FLT-03 travel alarm was operational (confirmed via pre-start log and physical
+  inspection post-incident). However, the noise level in Zone B during the incident
+  (Apex Plumbing running a concrete saw nearby) may have masked the alarm.
+- No physical barriers (bollards or barriers) on the Zone B western boundary —
+  line markings alone are not adequate control for an active forklift zone.
+
+CORRECTIVE ACTIONS (owner / due date):
+1. Repaint all Zone B exclusion zone markings — Tom Nguyen / 13 Feb 2024
+2. Install 6 x removable bollards with chain on Zone B western boundary — Tom / 20 Feb 2024
+3. Update subcontractor induction to include site exclusion zone map — Rachel / 15 Feb 2024
+4. Change line marking inspection frequency to monthly, add to Site Safety Inspection
+   checklist — Jason / 15 Feb 2024
+5. Brief all Apex Plumbing workers on corrective actions before they return to Zone B
+   areas — Tom / 13 Feb 2024
+
+FLT-03 is cleared to return to service. Rick Dominguez cleared to return to normal duties.
+
+Jason Hargreaves
+Site Safety Manager
+BuildCore Operations
+M: 0419 244 871

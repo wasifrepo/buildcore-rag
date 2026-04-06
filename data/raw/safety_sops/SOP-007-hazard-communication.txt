@@ -1,0 +1,185 @@
+BUILDCORE OPERATIONS
+STANDARD OPERATING PROCEDURE
+
+Document ID:    SOP-007
+Title:          Hazard Communication (HazCom) Program
+Version:        2.1
+Effective Date: 15 January 2024
+Review Date:    15 January 2025
+Owner:          Site Safety Manager
+Approved By:    Director of Operations
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. PURPOSE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This SOP establishes BuildCore's Hazard Communication Program in compliance
+with OSHA 29 CFR 1910.1200 (HazCom 2012 / GHS). It ensures all employees
+are informed about the hazardous chemicals they may be exposed to, and that
+appropriate controls are in place to protect their health and safety.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. SCOPE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Applies to all BuildCore employees and subcontractors who may be exposed to
+hazardous chemicals in the course of their work, including but not limited to:
+  - Paints, coatings, and solvents
+  - Adhesives, sealants, and epoxies
+  - Concrete and masonry products
+  - Cleaning and degreasing agents
+  - Fuels, lubricants, and hydraulic fluids
+  - Welding fumes and gases
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. SAFETY DATA SHEETS (SDS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3.1 Availability
+  An SDS must be available for every hazardous chemical present on site.
+  SDS documents are maintained in two locations:
+    a) Physical binder: Site office / Safety Manager's desk
+    b) Digital: BuildCore SharePoint > Safety > SDS Library
+
+  SDS must be accessible to workers at all times during their shift.
+  If an SDS is missing for a chemical on site, work involving that
+  chemical must stop until the SDS is obtained.
+
+3.2 Obtaining SDS
+  - New chemicals: Supplier must provide SDS before first shipment
+  - Subcontractor chemicals: Subcontractor must submit SDS to Safety
+    Manager before bringing any hazardous chemical on site
+  - SDS older than 3 years must be verified with the manufacturer
+
+3.3 16-Section SDS Format (GHS)
+  Workers must be able to locate the following critical sections:
+
+  Section 2  — Hazard Identification (signal words, pictograms)
+  Section 4  — First Aid Measures
+  Section 6  — Accidental Release Measures (spill response)
+  Section 7  — Handling and Storage
+  Section 8  — Exposure Controls / PPE requirements
+  Section 14 — Transport Information
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. CHEMICAL LABELLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4.1 Manufacturer Labels
+  All chemicals must remain in their original labelled containers.
+  Labels must include:
+    - Product identifier
+    - Signal word (DANGER or WARNING)
+    - Hazard statements
+    - Precautionary statements
+    - GHS pictograms
+    - Supplier information
+
+4.2 Secondary Container Labels
+  Chemicals transferred to secondary containers must be labelled
+  with at minimum:
+    - Product name
+    - Primary hazard(s) (e.g., "FLAMMABLE", "CORROSIVE")
+    - Relevant GHS pictograms
+
+  NOTE: Portable containers used by a single worker during a single
+  shift do not require a secondary label, provided the worker retains
+  the SDS and original container nearby.
+
+4.3 Prohibited Practices
+  - Removing or defacing any chemical label
+  - Using unlabelled containers for any hazardous substance
+  - Storing chemicals in food or beverage containers
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. CHEMICAL INVENTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The Site Safety Manager maintains a current Chemical Inventory (Form CH-001)
+updated at minimum monthly. The inventory records:
+  - Chemical name and product identifier
+  - Supplier / manufacturer
+  - Location on site
+  - Approximate quantity
+  - SDS version date
+
+Subcontractors must submit their own chemical inventory to the Safety
+Manager within 48 hours of mobilisation on site.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. EXPOSURE CONTROLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+6.1 Hierarchy of Controls
+  Controls must be applied in the following order of preference:
+    1. Substitution — replace hazardous chemical with a less hazardous one
+    2. Engineering controls — ventilation, enclosure, local exhaust
+    3. Administrative controls — work scheduling, rotation, signage
+    4. PPE — gloves, respirators, eye protection (last resort)
+
+6.2 Permissible Exposure Limits (PELs)
+  BuildCore adopts OSHA PELs as the minimum standard. Where ACGIH
+  Threshold Limit Values (TLVs) are more protective, TLVs apply.
+  Site Safety Manager maintains a list of chemicals with PELs relevant
+  to current site activities.
+
+6.3 Respiratory Protection
+  Where inhalation exposure is a risk, respiratory protection is
+  selected per SOP-014 (Respiratory Protection Program).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. SPILL RESPONSE PROCEDURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7.1 Immediate Actions (All Workers)
+  Step 1: Alert others in the area and evacuate the immediate spill zone.
+  Step 2: Identify the chemical — check label or SDS (Section 6).
+  Step 3: Do NOT attempt to clean up if the chemical is unknown,
+          highly toxic, flammable, or if you are not trained.
+  Step 4: Call the Site Safety Manager immediately.
+
+7.2 Minor Spills (Safety Manager or Trained Personnel Only)
+  Step 1: Don appropriate PPE per the SDS (Section 8).
+  Step 2: Contain the spill using absorbent materials from the spill kit.
+          Do not wash spills into drains.
+  Step 3: Collect all contaminated absorbent material in a labelled
+          waste container for hazardous waste disposal.
+  Step 4: Ventilate the area until vapour levels are safe.
+  Step 5: Complete Incident Report Form IR-001 within 24 hours.
+
+7.3 Major Spills / Unknown Chemicals
+  Evacuate, secure the area, and call emergency services (911).
+  Do not re-enter until cleared by emergency responders.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. TRAINING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+8.1 Initial HazCom Training (Course HC-100)
+  Required before any worker may be exposed to hazardous chemicals.
+  Covers:
+    - How to read a GHS label
+    - How to locate and use an SDS
+    - Physical and health hazards of site chemicals
+    - Protective measures and PPE
+    - Spill response procedures
+
+8.2 Chemical-Specific Training
+  When new hazardous chemicals are introduced, all potentially
+  exposed workers must receive specific training before first use.
+
+8.3 Retraining
+  Required when a new hazard is introduced, or when a worker
+  demonstrates inadequate knowledge of HazCom requirements.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DOCUMENT REVISION HISTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Version   Date              Author            Change Summary
+2.1       15 Jan 2024       J. Hargreaves     Updated SDS digital location;
+                                              added subcontractor submission
+                                              requirement (Section 5)
+2.0       03 Mar 2022       R. Okonkwo        Full rewrite to align with
+                                              GHS / HazCom 2012 final rule
+1.2       11 Nov 2020       D. Walsh          Minor corrections

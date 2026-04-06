@@ -1,0 +1,192 @@
+BUILDCORE OPERATIONS
+EQUIPMENT MAINTENANCE MANUAL
+
+Equipment:        Diesel Generator — Temporary Power Supply
+Unit ID:          GEN-01
+Make/Model:       Denyo DCA-45SPK3 (45 kVA)
+Serial No.:       DCA45-SP-24819
+Year:             2020
+Owner:            BuildCore Operations Pty Ltd
+Manual Ref:       MAINT-GEN-01
+Version:          1.2
+Last Updated:     15 September 2023
+Next Review:      15 September 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SAFETY WARNINGS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WARNING — CARBON MONOXIDE HAZARD
+GEN-01 produces carbon monoxide (CO), a colourless, odourless, and
+potentially fatal gas. Never operate GEN-01 indoors, in a partially
+enclosed space, or within 6 metres of any door, window, or air intake.
+
+WARNING — ELECTRICAL HAZARD
+GEN-01 produces 415V three-phase and 240V single-phase power. All
+electrical connections to GEN-01 must be made by a licensed electrician.
+Never connect GEN-01 to a fixed installation without an approved isolation
+device to prevent backfeed to the grid.
+
+WARNING — FIRE HAZARD
+Diesel fuel is flammable. Do not refuel while GEN-01 is running or hot.
+No smoking within 6 metres of GEN-01 during refuelling.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — TECHNICAL SPECIFICATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Parameter                   Value
+  ─────────────────────────────────────────────────────
+  Rated Output                45 kVA / 36 kW
+  Standby Output              49.5 kVA / 39.6 kW
+  Voltage Output              415V (3-phase) / 240V (1-phase)
+  Frequency                   50 Hz
+  Engine Make/Model           Kubota V3307-DI-TE4B
+  Displacement                3.331 litres
+  Engine Oil Capacity         9.5 litres
+  Coolant Capacity            9.0 litres
+  Fuel Tank Capacity          105 litres
+  Fuel Consumption at 75%     8.6 litres/hour
+  Fuel Consumption at 100%    11.4 litres/hour
+  Noise Level at 7m           65 dB(A)
+  Weight                      1,060 kg
+  Dimensions (L x W x H)     2,350 x 870 x 1,450 mm
+  ─────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — DAILY PRE-START CHECK PROCEDURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Complete Form PSCH-GEN-01 before each day of operation.
+Estimated time: 10 minutes. Perform with generator OFF.
+
+STEP 1 — Site Positioning Check
+  1.1 Confirm GEN-01 is positioned on a firm, level surface.
+  1.2 Confirm minimum 6m clearance from all doors, windows, and air intakes.
+  1.3 Confirm exhaust outlet is directed away from work areas and site offices.
+  1.4 Confirm GEN-01 is within the fenced/barricaded generator compound area.
+      Unauthorised access to the compound must be prevented at all times.
+
+STEP 2 — Fuel Level
+  2.1 Check fuel gauge on the instrument panel.
+  2.2 If fuel is below 25% (approximately 26 litres), refuel before starting.
+  2.3 Use diesel fuel only — filling with petrol will cause serious engine damage.
+  2.4 After refuelling, ensure the fuel cap is fully closed and locked.
+  2.5 Record fuel used and added in the GEN-01 fuel log (Form FL-GEN-01).
+
+STEP 3 — Engine Oil
+  3.1 Locate dipstick (yellow handle, right side of engine compartment).
+  3.2 Wipe dipstick clean, re-insert fully, remove and read.
+  3.3 Oil level must be between the MIN and MAX marks.
+  3.4 If below MIN: top up with SAE 15W-40 diesel engine oil.
+      Do not overfill — overfilling causes oil seal damage.
+
+STEP 4 — Coolant Level
+  4.1 Check the coolant overflow reservoir (translucent tank, left side).
+  4.2 Level must be between the LOW and FULL marks.
+  4.3 Top up with pre-mixed 50/50 coolant (green, ethylene glycol based).
+  4.4 Never open the radiator cap when the engine is warm.
+
+STEP 5 — Visual Inspection
+  5.1 Check for any fluid leaks (oil, coolant, diesel) on the ground beneath
+      GEN-01. Investigate and rectify any leak before starting.
+  5.2 Check all panel doors are closed and latched.
+  5.3 Check exhaust system — no blockages, no loose connections.
+  5.4 Check output cables — no damage, kinks, or exposed conductors.
+  5.5 Check all cable glands on the output panel are secure.
+
+STEP 6 — Control Panel Check (before start)
+  6.1 Set the AUTO/MANUAL switch to MANUAL.
+  6.2 Confirm the output circuit breaker is in the OFF position.
+  6.3 Confirm the EMERGENCY STOP button is released (turn clockwise to release).
+
+STEP 7 — Starting Procedure
+  7.1 Set choke to COLD START position if ambient temperature is below 10°C.
+  7.2 Turn the key to START. Hold until engine fires (maximum 10 seconds).
+      If engine does not start within 10 seconds, release key and wait 30 seconds
+      before attempting again. Maximum 3 attempts.
+  7.3 Allow engine to idle for 2 minutes before applying load.
+  7.4 Return choke to RUN position after 30 seconds if used.
+  7.5 Check oil pressure warning light — must extinguish within 5 seconds of start.
+      If light remains on, shut down immediately. Do not operate.
+  7.6 Check coolant temperature gauge — must reach operating range (70-90°C)
+      within 5 minutes of startup.
+  7.7 Close the output circuit breaker to apply load to connected equipment.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — SHUTDOWN PROCEDURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Open the output circuit breaker to remove load.
+STEP 2: Allow GEN-01 to run at idle (no load) for 3 minutes to cool down.
+STEP 3: Turn key to OFF position.
+STEP 4: Confirm the engine has stopped completely before leaving the unit.
+STEP 5: Record run hours from the hour meter in the fuel/run log (Form FL-GEN-01).
+STEP 6: Lock the fuel cap and close all panel doors.
+
+EMERGENCY STOP: Press the red EMERGENCY STOP button on the control panel.
+Use only in an emergency. After an emergency stop, investigate the cause
+before restarting. Record the incident in the maintenance log.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — SCHEDULED SERVICE INTERVALS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+All scheduled services must be performed by an authorised Denyo service
+technician. Contact Denyo Australia: 1800 336 963.
+
+  Interval              Service Items
+  ─────────────────────────────────────────────────────────────────
+  First 50 hours        Engine oil and filter change (break-in service)
+  (one time only)
+
+  Every 250 hours       Engine oil and oil filter change
+  or 3 months           Air filter inspection / cleaning
+  (whichever first)     Fuel filter inspection
+                        Belt tension check
+                        Battery terminals — clean and tighten
+
+  Every 500 hours       Air filter replacement
+  or 6 months           Fuel filter replacement
+                        Coolant system flush
+                        Valve clearance check
+                        Injector inspection
+
+  Every 1,000 hours     Full engine service (Denyo authorised technician)
+  or 12 months          Alternator inspection
+                        Cooling system pressure test
+                        All belts replacement
+                        Load bank test (full rated output for 2 hours)
+  ─────────────────────────────────────────────────────────────────
+
+GEN-01 Service History:
+
+  Date            Hours    Service              Technician
+  ──────────────────────────────────────────────────────────────────
+  20 Oct 2023     744      500-hour service     Denyo Australia (P. Lim)
+  15 Jun 2023     490      250-hour service     Denyo Australia (P. Lim)
+  02 Mar 2023     244      250-hour service     Denyo Australia (P. Lim)
+  12 Jan 2023     50       Break-in service     Denyo Australia (P. Lim)
+  ──────────────────────────────────────────────────────────────────
+
+Current hours (as at last log entry): 812 hours
+Next service due: 1,000-hour annual — due approx. March 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — FAULT DIAGNOSIS TABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Symptom                    Likely Cause               Operator Action
+  ─────────────────────────────────────────────────────────────────────
+  Will not start             Low fuel                   Refuel
+                             Battery flat               Call service tech
+                             ESTOP pressed              Release ESTOP button
+  Oil pressure light stays   Low oil level              Add oil; if still on,
+  on after start                                        shut down, call tech
+  High coolant temp alarm    Low coolant                Top up coolant
+                             Blocked radiator fins      Clean fins (engine cold)
+  Overload alarm             Load exceeds 45 kVA        Reduce load
+  Output voltage low         Alternator fault           Call service technician
+  Excessive black smoke      Dirty air filter           Clean/replace filter
+  Generator trips off load   Earth fault in circuit     Call licensed electrician
+  ─────────────────────────────────────────────────────────────────────
