@@ -40,7 +40,7 @@ from generation.schemas import Chunk, CriticVerdict
 
 # Maximum number of characters from each chunk included in the user message.
 # This caps token usage while still giving the critic enough text to judge.
-_MAX_CHUNK_CHARS: int = 800
+_MAX_CHUNK_CHARS: int = 2000
 
 # ---------------------------------------------------------------------------
 # System prompt
@@ -73,10 +73,14 @@ EVALUATION CRITERIA — be strict
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Mark sufficient=True ONLY when:
-  • The retrieved chunks contain the specific facts, steps, or clauses
-    needed to answer the query fully.
+  • The retrieved chunks contain enough information to construct a complete
+    and accurate answer, even if the exact phrasing differs from what the
+    user expects.
   • The answer can be grounded in the chunk text without inference or
     extrapolation beyond what is written.
+  • Maintenance manuals contain operational and emergency procedures that
+    are equally valid sources as SOPs. Do not mark insufficient just because
+    the source is a manual rather than an SOP.
 
 Mark sufficient=False when:
   • Key facts needed to answer the query are absent from the chunks.
