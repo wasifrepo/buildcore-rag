@@ -59,12 +59,13 @@ export function labelFromKey(key) {
 }
 
 /**
- * Return a Tailwind colour class for a 0–1 confidence / score value.
+ * Return a confidence descriptor object for a 0–1 score.
  * @param {number} score
- * @returns {string}
+ * @returns {{ label: string, color: string }}
  */
-export function scoreColour(score) {
-  if (score >= 0.8) return "text-green-400";
-  if (score >= 0.6) return "text-yellow-400";
-  return "text-red-400";
+export function formatConfidence(score) {
+  if (score == null) return { label: "Unknown", color: "var(--text-muted)" };
+  if (score > 0.75) return { label: "High confidence", color: "var(--success)" };
+  if (score >= 0.5) return { label: "Moderate confidence", color: "var(--warning)" };
+  return { label: "Low confidence", color: "var(--danger)" };
 }

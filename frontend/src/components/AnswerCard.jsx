@@ -67,9 +67,6 @@ function CitationRow({ citation, index }) {
         <span className="text-gray-300 font-medium">
           {citation.document_name ?? citation.document_id}
         </span>
-        <span className="text-gray-600 font-mono text-xs ml-auto truncate max-w-xs">
-          {citation.chunk_id}
-        </span>
       </div>
       {citation.excerpt && (
         <p className="text-gray-400 leading-relaxed line-clamp-3">

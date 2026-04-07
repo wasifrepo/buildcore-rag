@@ -3,60 +3,147 @@ import QueryPage from "./pages/QueryPage";
 import EvalPage from "./pages/EvalPage";
 import TracesPage from "./pages/TracesPage";
 
+function IconSearch() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconBarChart() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="2" y="9" width="3" height="5" rx="1" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="6.5" y="5" width="3" height="9" rx="1" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="11" y="2" width="3" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+function IconClock() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8 5V8L10 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const NAV_ITEMS = [
-  { to: "/query", label: "Query", icon: "🔍" },
-  { to: "/evaluation", label: "Evaluation", icon: "📊" },
-  { to: "/traces", label: "Traces", icon: "🗂️" },
+  { to: "/query", label: "Query", Icon: IconSearch },
+  { to: "/evaluation", label: "Evaluation", Icon: IconBarChart },
+  { to: "/traces", label: "Traces", Icon: IconClock },
 ];
+
+const sidebarStyle = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: 220,
+  height: "100vh",
+  background: "var(--surface)",
+  borderRight: "1px solid var(--border)",
+  display: "flex",
+  flexDirection: "column",
+  zIndex: 100,
+};
+
+const logoBlockStyle = {
+  padding: "24px",
+  display: "flex",
+  alignItems: "center",
+  gap: 12,
+};
+
+const logoMarkStyle = {
+  width: 16,
+  height: 16,
+  background: "var(--accent)",
+  borderRadius: 4,
+  flexShrink: 0,
+};
+
+const navStyle = {
+  flex: 1,
+  padding: "8px 0",
+};
+
+const sidebarFooterStyle = {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  padding: "20px",
+  fontSize: 11,
+  color: "var(--text-muted)",
+};
+
+const mainStyle = {
+  marginLeft: 220,
+  minHeight: "100vh",
+  padding: "48px",
+};
+
+const innerStyle = {
+  maxWidth: 860,
+};
 
 export default function App() {
   return (
-    <div className="flex h-screen bg-gray-950 text-gray-100 overflow-hidden">
-      {/* Sidebar */}
-      <aside className="w-56 flex-shrink-0 bg-gray-900 border-r border-gray-800 flex flex-col">
-        {/* Logo */}
-        <div className="px-5 py-5 border-b border-gray-800">
-          <div className="text-orange-500 font-bold text-lg leading-tight">
-            BuildCore
+    <>
+      <aside style={sidebarStyle}>
+        <div style={logoBlockStyle}>
+          <div style={logoMarkStyle} />
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 600, color: "var(--text-primary)" }}>
+              BuildCore
+            </div>
+            <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 1 }}>
+              Intelligence
+            </div>
           </div>
-          <div className="text-gray-500 text-xs mt-0.5">RAG Pipeline</div>
         </div>
 
-        {/* Nav links */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          {NAV_ITEMS.map(({ to, label, icon }) => (
+        <nav style={navStyle}>
+          {NAV_ITEMS.map(({ to, label, Icon }) => (
             <NavLink
               key={to}
               to={to}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-orange-500/20 text-orange-400"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-gray-800"
-                }`
-              }
+              style={({ isActive }) => ({
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "12px 20px",
+                fontSize: 14,
+                fontWeight: 500,
+                textDecoration: "none",
+                color: isActive ? "var(--accent-light)" : "var(--text-secondary)",
+                background: isActive ? "rgba(99,102,241,0.06)" : "transparent",
+                borderLeft: isActive ? "2px solid var(--accent)" : "2px solid transparent",
+                transition: "color 0.15s, background 0.15s",
+              })}
             >
-              <span className="text-base">{icon}</span>
+              <Icon />
               {label}
             </NavLink>
           ))}
         </nav>
 
-        {/* Footer */}
-        <div className="px-5 py-4 border-t border-gray-800 text-xs text-gray-600">
-          BuildCore Operations
-        </div>
+        <div style={sidebarFooterStyle}>Powered by GPT-4o</div>
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 overflow-y-auto">
-        <Routes>
-          <Route path="/" element={<Navigate to="/query" replace />} />
-          <Route path="/query" element={<QueryPage />} />
-          <Route path="/evaluation" element={<EvalPage />} />
-          <Route path="/traces" element={<TracesPage />} />
-        </Routes>
+      <main style={mainStyle}>
+        <div style={innerStyle}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/query" replace />} />
+            <Route path="/query" element={<QueryPage />} />
+            <Route path="/evaluation" element={<EvalPage />} />
+            <Route path="/traces" element={<TracesPage />} />
+          </Routes>
+        </div>
       </main>
-    </div>
+    </>
   );
 }

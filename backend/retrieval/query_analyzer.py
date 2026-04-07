@@ -33,7 +33,7 @@ Classification taxonomy
 
 BuildCore corpus summary (for routing decisions)
 -------------------------------------------------
-The corpus contains five document categories:
+The corpus contains six document categories:
 
 * **Safety SOPs** — internal procedures: chemical spill response, working at
   height, hot-works permit, confined space entry, electrical isolation.
@@ -48,9 +48,15 @@ The corpus contains five document categories:
   Denyo DCA-45SPK3 generator (MAINT-GEN-01) service and operating procedures.
 * **Compliance checklists** — SSIC-001 daily site safety inspection checklist
   and SC-PMCL-001 subcontractor pre-mobilisation compliance checklist.
+* **OSHA regulatory documents** — OSHA2236 (Materials Handling and Storage),
+  OSHA3071 (Job Hazard Analysis), OSHA3146 (Fall Protection in Construction),
+  OSHA3150 (Control of Hazardous Energy / Lockout-Tagout), OSHA3903 (Quick
+  Start Guide to Safety Programs).
 
 Any query that requires knowledge outside this corpus should be classified
-``out_of_scope``.
+``out_of_scope``. Queries about OSHA requirements, regulatory standards, or
+any of the specific topics covered by the OSHA documents above must NOT be
+classified as out_of_scope — those documents are part of the corpus.
 """
 
 import os
@@ -112,6 +118,16 @@ BUILDCORE CORPUS — what documents exist
    - SC-PMCL-001: Subcontractor pre-mobilisation compliance checklist
      (sections: legal & insurance, safety documentation, worker
      credentials, site induction, plant & equipment)
+
+6. OSHA REGULATORY DOCUMENTS (5 documents)
+   - OSHA2236: Materials Handling and Storage
+   - OSHA3071: Job Hazard Analysis
+   - OSHA3146: Fall Protection in Construction
+   - OSHA3150: Control of Hazardous Energy (Lockout/Tagout)
+   - OSHA3903: Quick Start Guide to Safety Programs
+   NOTE: Queries about OSHA requirements, regulatory standards, or any of
+   these specific topics must be classified as factual or procedural —
+   NOT out_of_scope — because these documents are part of the corpus.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CLASSIFICATION RULES

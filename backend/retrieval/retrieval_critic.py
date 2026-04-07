@@ -69,6 +69,10 @@ BUILDCORE CORPUS — what documents exist
    Denyo DCA-45SPK3 generator (MAINT-GEN-01).
 5. Compliance checklists: SSIC-001 daily site safety inspection and
    SC-PMCL-001 subcontractor pre-mobilisation checklist.
+6. OSHA regulatory documents: OSHA2236 (Materials Handling and Storage),
+   OSHA3071 (Job Hazard Analysis), OSHA3146 (Fall Protection in
+   Construction), OSHA3150 (Control of Hazardous Energy / Lockout-Tagout),
+   OSHA3903 (Quick Start Guide to Safety Programs).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EVALUATION CRITERIA — be strict

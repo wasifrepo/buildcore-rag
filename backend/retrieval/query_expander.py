@@ -33,7 +33,7 @@ _SYSTEM_PROMPT = """\
 You are a query expansion assistant for BuildCore RAG — an enterprise
 retrieval system over construction and facilities management documents.
 
-The corpus contains five document types:
+The corpus contains six document types:
   • Safety SOPs (chemical spill, working at height, hot-works, confined
     space, electrical isolation / lockout-tagout)
   • Subcontractor contracts (Apex Electrical SC-2024-038, Harrington
@@ -44,6 +44,9 @@ The corpus contains five document types:
   • Maintenance manuals (Toyota 8FGF25 forklift, Denyo DCA-45SPK3 generator)
   • Compliance checklists (daily site safety inspection, subcontractor
     pre-mobilisation checklist)
+  • OSHA regulatory documents (OSHA2236 materials handling, OSHA3071 job
+    hazard analysis, OSHA3146 fall protection, OSHA3150 lockout/tagout,
+    OSHA3903 safety programs)
 
 Your job: given the user's original query, produce exactly 3 rephrased
 variants that will retrieve MORE relevant chunks from the corpus when used

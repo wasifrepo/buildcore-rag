@@ -147,7 +147,7 @@ function ChunkList({ chunks, scoreKey, label }) {
       {chunks.slice(0, 5).map((c, i) => (
         <div key={i} className="flex items-center gap-2 font-mono">
           <span className="text-gray-600 w-4 text-right">{i + 1}.</span>
-          <span className="truncate flex-1">{c.document_id ?? c.chunk_id}</span>
+          <span className="truncate flex-1">{c.document_id}</span>
           {c[scoreKey] != null && (
             <span className="text-gray-500 flex-shrink-0">
               {label} {c[scoreKey].toFixed(3)}
