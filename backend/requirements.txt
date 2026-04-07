@@ -13,22 +13,23 @@ chromadb==0.4.24
 rank-bm25==0.2.2
 
 # Reranker
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.4.1+cpu
 sentence-transformers==3.1.1
-torch==2.4.1
 
 # Document Ingestion
 # Replace with:
-unstructured==0.15.13
+#unstructured==0.15.13
 pypdf==5.0.1
-python-docx==1.1.2
+#python-docx==1.1.2
 
 # Data Validation
 pydantic==2.9.2
 pydantic-settings==2.5.2
 
 # Evaluation
-ragas==0.2.1
-datasets==3.0.1
+#ragas==0.2.1
+#datasets==3.0.1
 
 # Utilities
 python-dotenv==1.0.1

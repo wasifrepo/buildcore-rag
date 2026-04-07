@@ -30,6 +30,7 @@ _FOLDER_MAP: dict[str, DocumentType] = {
     "incident_emails": DocumentType.INCIDENT_EMAIL,
     "maintenance_manuals": DocumentType.MAINTENANCE_MANUAL,
     "compliance_checklists": DocumentType.COMPLIANCE_CHECKLIST,
+    "regulatory_docs": DocumentType.REGULATORY_DOC,
 }
 
 # ---------------------------------------------------------------------------
@@ -43,6 +44,7 @@ _FILENAME_PATTERNS: list[tuple[re.Pattern[str], DocumentType]] = [
     (re.compile(r"^MAINT-", re.IGNORECASE), DocumentType.MAINTENANCE_MANUAL),
     (re.compile(r"^(SSIC|SC-PMCL)-", re.IGNORECASE), DocumentType.COMPLIANCE_CHECKLIST),
     (re.compile(r"^SC-\d{4}-\d{3}", re.IGNORECASE), DocumentType.CONTRACT),
+    (re.compile(r"^OSHA\d+", re.IGNORECASE), DocumentType.REGULATORY_DOC),
 ]
 
 
@@ -79,5 +81,5 @@ def classify_document(file_path: str | Path) -> DocumentType:
         f"Cannot determine document type for '{file_path}'. "
         "Ensure the file is located under a recognised corpus directory "
         "(safety_sops, contracts, incident_emails, maintenance_manuals, "
-        "compliance_checklists) or has a recognised filename prefix."
+        "compliance_checklists, regulatory_docs) or has a recognised filename prefix."
     )

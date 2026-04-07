@@ -8,9 +8,12 @@ Provides two public entry points:
     :class:`~generation.schemas.Chunk` objects.  No I/O to external services
     is performed — suitable for testing chunkers in isolation.
 
+    For ``.pdf`` files, text is extracted via ``pypdf.PdfReader`` before the
+    chunker is called.  For ``.txt`` files the file is read directly as UTF-8.
+
 ``run_ingestion``
-    Walks the full ``data/raw/`` directory tree, processes every ``.txt``
-    file via ``ingest_file``, embeds each chunk with OpenAI
+    Walks the full ``data/raw/`` directory tree, processes every ``.txt`` and
+    ``.pdf`` file via ``ingest_file``, embeds each chunk with OpenAI
     ``text-embedding-3-small``, and upserts the results into a ChromaDB
     persistent collection.  Idempotent: re-running against an unchanged
     corpus produces the same chunk IDs and ChromaDB silently skips
@@ -24,12 +27,14 @@ chunks, ``subsections`` in SOP chunks) are JSON-serialised to strings before
 upsert and must be deserialised by the retrieval layer if needed.
 """
 
+import hashlib
 import json
 import logging
 import os
 from pathlib import Path
 
 import chromadb
+import pypdf
 from openai import OpenAI
 
 from generation.schemas import Chunk, DocumentType
@@ -39,6 +44,7 @@ from ingestion.chunkers.checklist_chunker import ChecklistChunker
 from ingestion.chunkers.contract_chunker import ContractChunker
 from ingestion.chunkers.email_chunker import EmailChunker
 from ingestion.chunkers.manual_chunker import ManualChunker
+from ingestion.chunkers.regulatory_chunker import RegulatoryChunker
 from ingestion.chunkers.sop_chunker import SOPChunker
 
 logger = logging.getLogger(__name__)
@@ -68,6 +74,7 @@ _CHUNKER_MAP: dict[DocumentType, BaseChunker] = {
     DocumentType.INCIDENT_EMAIL: EmailChunker(),
     DocumentType.MAINTENANCE_MANUAL: ManualChunker(),
     DocumentType.COMPLIANCE_CHECKLIST: ChecklistChunker(),
+    DocumentType.REGULATORY_DOC: RegulatoryChunker(),
 }
 
 
@@ -89,7 +96,8 @@ def ingest_file(file_path: str | Path) -> list[Chunk]:
     corpus files.
 
     Args:
-        file_path: Absolute or relative path to the ``.txt`` document file.
+        file_path: Absolute or relative path to the ``.txt`` or ``.pdf``
+            document file.
 
     Returns:
         Ordered list of :class:`~generation.schemas.Chunk` objects, one or
@@ -99,10 +107,13 @@ def ingest_file(file_path: str | Path) -> list[Chunk]:
         ValueError: If the document type cannot be determined from the file
             path (propagated from :func:`~ingestion.classifier.classify_document`).
         FileNotFoundError: If the file does not exist at ``file_path``.
-        UnicodeDecodeError: If the file cannot be decoded as UTF-8.
+        UnicodeDecodeError: If a .txt file cannot be decoded as UTF-8.
     """
     path = Path(file_path)
-    content = path.read_text(encoding="utf-8")
+    if path.suffix.lower() == ".pdf":
+        content = _extract_pdf_text(path)
+    else:
+        content = path.read_text(encoding="utf-8")
 
     doc_type: DocumentType = classify_document(path)
     chunker: BaseChunker = _CHUNKER_MAP[doc_type]
@@ -124,7 +135,7 @@ def run_ingestion(
 ) -> dict[str, int]:
     """Walk the corpus directory, embed every chunk, and upsert into ChromaDB.
 
-    Processes all ``.txt`` files found anywhere under ``data_dir``.  For each
+    Processes all ``.txt`` and ``.pdf`` files found anywhere under ``data_dir``.  For each
     file, chunks are produced by :func:`ingest_file`, embedded in batches via
     the OpenAI Embeddings API, and upserted into the specified ChromaDB
     collection.  ChromaDB's ``upsert`` semantics make this operation
@@ -168,10 +179,12 @@ def run_ingestion(
         metadata={"hnsw:space": "cosine"},
     )
 
-    txt_files = sorted(resolved_data_dir.rglob("*.txt"))
+    corpus_files = sorted(
+        [*resolved_data_dir.rglob("*.txt"), *resolved_data_dir.rglob("*.pdf")]
+    )
     logger.info(
         "Starting ingestion: %d files found under '%s'",
-        len(txt_files),
+        len(corpus_files),
         resolved_data_dir,
     )
 
@@ -179,7 +192,7 @@ def run_ingestion(
     files_failed = 0
     chunks_upserted = 0
 
-    for file_path in txt_files:
+    for file_path in corpus_files:
         logger.info("Processing '%s'", file_path.name)
         try:
             chunks = ingest_file(file_path)
@@ -211,6 +224,58 @@ def run_ingestion(
 # ---------------------------------------------------------------------------
 
 
+# Character limit applied before sending text to the OpenAI embeddings API.
+# text-embedding-3-small accepts up to 8,192 tokens; at ~4 chars/token that is
+# ~32,768 characters, but we use a conservative 6,000-character ceiling to
+# stay well clear of the limit while keeping chunks semantically complete.
+_EMBED_MAX_CHARS: int = 6_000
+
+
+def _truncate_for_embedding(chunk: Chunk) -> str:
+    """Return the chunk content, truncated to ``_EMBED_MAX_CHARS`` if necessary.
+
+    Logs a warning when truncation occurs so that oversized chunks are visible
+    in ingestion logs without failing the entire pipeline.
+
+    Args:
+        chunk: The :class:`~generation.schemas.Chunk` whose content is to be
+            embedded.
+
+    Returns:
+        The original content string if it is within ``_EMBED_MAX_CHARS``,
+        otherwise the first ``_EMBED_MAX_CHARS`` characters.
+    """
+    text = chunk.content
+    if len(text) <= _EMBED_MAX_CHARS:
+        return text
+    logger.warning(
+        "Chunk '%s' from '%s' exceeds %d characters (%d); truncating for embedding.",
+        chunk.chunk_id,
+        chunk.document_id,
+        _EMBED_MAX_CHARS,
+        len(text),
+    )
+    return text[:_EMBED_MAX_CHARS]
+
+
+def _extract_pdf_text(path: Path) -> str:
+    """Extract and concatenate all page texts from a PDF file.
+
+    Uses ``pypdf.PdfReader`` to iterate over every page and join the extracted
+    text with newline separators.  Pages that yield no text (e.g. scanned
+    image pages) contribute an empty string and do not interrupt the join.
+
+    Args:
+        path: Filesystem path to the ``.pdf`` file.
+
+    Returns:
+        Concatenated plain text of all pages, separated by ``\\n``.
+    """
+    reader = pypdf.PdfReader(str(path))
+    pages = [page.extract_text() or "" for page in reader.pages]
+    return "\n".join(pages)
+
+
 def _upsert_chunks(
     chunks: list[Chunk],
     collection: chromadb.Collection,
@@ -234,7 +299,20 @@ def _upsert_chunks(
     """
     for batch_start in range(0, len(chunks), _EMBED_BATCH_SIZE):
         batch = chunks[batch_start : batch_start + _EMBED_BATCH_SIZE]
-        texts = [chunk.content for chunk in batch]
+        texts = [_truncate_for_embedding(chunk) for chunk in batch]
+
+        # Regenerate IDs for any chunk whose content was truncated.  The
+        # original chunk_id is derived from the full content hash, so two
+        # chunks from the same document that truncate to identical prefixes
+        # would collide.  Mixing in chunk_index breaks that symmetry.
+        ids = [
+            hashlib.sha256(
+                f"{chunk.chunk_id}::{chunk.metadata.get('chunk_index', 0)}".encode()
+            ).hexdigest()[:16]
+            if len(chunk.content) > _EMBED_MAX_CHARS
+            else chunk.chunk_id
+            for chunk in batch
+        ]
 
         response = openai_client.embeddings.create(
             model=embedding_model,
@@ -243,7 +321,7 @@ def _upsert_chunks(
         embeddings = [item.embedding for item in response.data]
 
         collection.upsert(
-            ids=[chunk.chunk_id for chunk in batch],
+            ids=ids,
             documents=texts,
             embeddings=embeddings,
             metadatas=[_flatten_metadata(chunk) for chunk in batch],
