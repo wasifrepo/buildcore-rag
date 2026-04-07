@@ -1,3 +1,5 @@
+![BuildCore Intelligence UI](docs/screenshot.png)
+
 # BuildCore Intelligence
 
 An enterprise-grade retrieval-augmented generation system for construction
@@ -178,6 +180,8 @@ source documents, citation presence, and refusal accuracy.
 | Citation presence | **80.0%** | **20.0%** | **+60.0pp** |
 | Refusal accuracy | 80.0% | 80.0% | 0.0pp |
 | **Overall** | **78.8%** | **55.6%** | **+23.2pp** |
+
+![Evaluation Dashboard](docs/evaluation.png)
 
 The citation presence result is the most significant finding. The naive
 baseline generates answers without citing sources 80% of the time. The
