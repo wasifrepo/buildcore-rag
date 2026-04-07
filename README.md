@@ -1,5 +1,3 @@
-![BuildCore Intelligence UI](docs/screenshot.png)
-
 # BuildCore Intelligence
 
 An enterprise-grade retrieval-augmented generation system for construction
@@ -7,6 +5,8 @@ and facilities management operations. Built to demonstrate what production
 RAG looks like beyond the tutorial — multi-layer retrieval architecture,
 document-type-aware ingestion, a self-correcting retrieval critic, and a
 built-in evaluation framework with measurable before/after results.
+
+![BuildCore Intelligence UI](docs/screenshot.png)
 
 ---
 
