@@ -218,7 +218,7 @@ no structured output or citation requirements.
 
 ```bash
 # 1. Clone and configure
-git clone https://github.com/YOUR_USERNAME/buildcore-rag.git
+git clone https://github.com/wasifrepo/buildcore-rag.git
 cd buildcore-rag
 cp .env.example .env
 # Edit .env and add your OPENAI_API_KEY
