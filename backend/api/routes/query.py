@@ -104,6 +104,32 @@ _reranker = CrossEncoderReranker()
 # retrieval_strategy string (e.g. "document_type=contract").
 _DOC_TYPE_FILTER_RE: re.Pattern[str] = re.compile(r"document_type=([a-z_]+)")
 
+# Multiplier applied to TOP_K_RERANKED for queries that need evidence from
+# more than one document, so a fixed 8-chunk cap doesn't get filled entirely
+# by one source document and starve out a second one the query also needs.
+_MULTI_HOP_RERANK_MULTIPLIER: int = 2
+
+
+def _resolve_rerank_top_k(query_analysis: QueryAnalysis) -> int | None:
+    """Widen the post-rerank chunk budget for multi-document queries.
+
+    Args:
+        query_analysis: The QueryAnalysis for the current query.
+
+    Returns:
+        An explicit top_k value (TOP_K_RERANKED doubled) when the query
+        requires cross-document reasoning, or None to let the reranker fall
+        back to its TOP_K_RERANKED env-var default for all other queries.
+    """
+    needs_wide_context = (
+        query_analysis.requires_multi_hop
+        or query_analysis.query_type.value == "cross_document"
+    )
+    if not needs_wide_context:
+        return None
+    base = int(os.environ.get("TOP_K_RERANKED", 8))
+    return base * _MULTI_HOP_RERANK_MULTIPLIER
+
 
 # ---------------------------------------------------------------------------
 # Request model
@@ -183,8 +209,9 @@ async def stream_query(request: QueryRequest) -> StreamingResponse:
             yield _sse("chunks_retrieved", _chunk_summaries(first_merged))
 
             # ── Step 4: Reranking (first pass) ────────────────────────────
+            rerank_top_k = _resolve_rerank_top_k(query_analysis)
             first_reranked = await asyncio.to_thread(
-                _reranker.rerank, request.question, first_merged
+                _reranker.rerank, request.question, first_merged, rerank_top_k
             )
             yield _sse("chunks_reranked", _chunk_summaries(first_reranked))
 
@@ -212,7 +239,7 @@ async def stream_query(request: QueryRequest) -> StreamingResponse:
                 )
                 merged2 = merge_results(dense2, sparse2, query_analysis)
                 reranked2 = await asyncio.to_thread(
-                    _reranker.rerank, refined_query, merged2
+                    _reranker.rerank, refined_query, merged2, rerank_top_k
                 )
                 # Re-assess the critic on second-pass results so the generator
                 # receives an accurate sufficiency signal.

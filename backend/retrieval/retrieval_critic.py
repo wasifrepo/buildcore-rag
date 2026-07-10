@@ -60,8 +60,9 @@ BUILDCORE CORPUS — what documents exist
 
 1. Safety SOPs: chemical spill response, working at height, hot-works permit,
    confined space entry, electrical isolation (lockout / tagout).
-2. Subcontractor contracts: Apex Electrical (SC-2024-038) and Harrington
-   Scaffolding (SC-2024-041) — scope, price, and general conditions.
+2. Subcontractor contracts: Apex Plumbing & Drainage (SC-2024-038) and
+   Harrington Electrical Services (SC-2024-041) — scope, price, and general
+   conditions.
 3. Incident emails: INC-2024-007 forklift near-miss at Commerce Drive
    (5 Feb 2024), INC-2024-002 laceration LTI — Sam Osei, Zone 3 Warehouse
    (14 Feb 2024), INC-2024-009 epoxy chemical spill, Zone 3 (22 Feb 2024).
@@ -100,7 +101,7 @@ When sufficient=False:
     corpus (based on the document inventory above), set refined_query to a
     concrete, retrieval-friendly query that targets the missing information.
     Example: instead of "tell me about the contract", write
-    "Apex Electrical SC-2024-038 payment terms and variation clause".
+    "Apex Plumbing & Drainage SC-2024-038 payment terms and variation clause".
   • If the query is genuinely out of scope for the BuildCore corpus, set
     refined_query to null and explain in reasoning.
 

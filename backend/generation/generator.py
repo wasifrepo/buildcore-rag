@@ -27,7 +27,9 @@ Citation format
 Each :class:`~generation.schemas.Citation` references:
 
 - ``chunk_id`` — the SHA-256-derived identifier of the source chunk
-- ``document_id`` — human-readable document stem (e.g. ``MAINT-FLT-03``)
+- ``document_id`` — human-readable document stem (e.g. ``MAINT-FLT-03``).
+  Snapped to the canonical id of a chunk actually shown to the model if the
+  model's own value is a shortened prefix (see ``_snap_citation_document_id``).
 - ``document_name`` — a display-friendly name derived from ``document_id``
   (underscores replaced with spaces, title-cased)
 - ``excerpt`` — a short verbatim sentence or phrase from the chunk that
@@ -205,9 +207,18 @@ def generate_answer(
 
     answer: GeneratedAnswer = completion.choices[0].message.parsed
 
-    # Ensure citation document_name is always populated from document_id,
-    # regardless of what the model produced.
-    answer.citations = [_normalise_citation(c) for c in answer.citations]
+    # Snap each citation's document_id to a real chunk's document_id before
+    # deriving the display name. The system prompt's own example ("According
+    # to SC-2024-038, ...") uses a shortened form that doesn't exactly match
+    # the canonical document_id (e.g. "SC-2024-038-apex-plumbing"), so the
+    # model sometimes cites correctly but with the wrong exact string —
+    # which downstream exact-match scoring (see evaluation/metrics.py) would
+    # otherwise count as an uncited claim.
+    valid_document_ids = [c.document_id for c in chunks]
+    answer.citations = [
+        _normalise_citation(_snap_citation_document_id(c, valid_document_ids))
+        for c in answer.citations
+    ]
 
     return answer
 
@@ -291,6 +302,41 @@ def _build_user_message(
     )
 
     return "\n".join(lines)
+
+
+def _snap_citation_document_id(
+    citation: Citation, valid_document_ids: list[str]
+) -> Citation:
+    """Correct a citation's document_id to match a chunk actually shown to the model.
+
+    If ``citation.document_id`` is not an exact match to any of
+    ``valid_document_ids``, looks for a valid id that the citation's value is
+    a prefix of (or vice versa) — e.g. the model wrote ``"SC-2024-038"`` but
+    the canonical id is ``"SC-2024-038-apex-plumbing"`` — and substitutes the
+    canonical id. Leaves the citation unchanged if no match is found.
+
+    Args:
+        citation: A Citation as produced by the structured output parser.
+        valid_document_ids: ``document_id`` values of the chunks that were
+            actually included in the generation prompt.
+
+    Returns:
+        A Citation with a corrected ``document_id``, or the original citation
+        if it already matches exactly or no plausible match exists.
+    """
+    if citation.document_id in valid_document_ids:
+        return citation
+
+    for real_id in valid_document_ids:
+        if real_id.startswith(citation.document_id) or citation.document_id.startswith(real_id):
+            return Citation(
+                chunk_id=citation.chunk_id,
+                document_id=real_id,
+                document_name=citation.document_name,
+                excerpt=citation.excerpt,
+            )
+
+    return citation
 
 
 def _normalise_citation(citation: Citation) -> Citation:

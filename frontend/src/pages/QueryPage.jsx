@@ -338,6 +338,7 @@ export default function QueryPage() {
   const answerPayload = stepsData["answer_generated"];
   const criticVerdict = stepsData["critic_verdict"];
   const secondPassPayload = stepsData["second_pass_triggered"];
+  const pipelineError = stepsData["error"];
 
   const hasActivity = steps.length > 0 || isStreaming;
 
@@ -423,7 +424,7 @@ export default function QueryPage() {
         </button>
       </form>
 
-      {error && (
+      {(error || pipelineError) && (
         <div style={{
           marginTop: 16,
           background: "rgba(239,68,68,0.08)",
@@ -433,7 +434,7 @@ export default function QueryPage() {
           fontSize: 13,
           color: "var(--danger)",
         }}>
-          {error}
+          {error || `${pipelineError.type}: ${pipelineError.message}`}
         </div>
       )}
 

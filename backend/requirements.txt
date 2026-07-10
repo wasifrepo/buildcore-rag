@@ -14,8 +14,12 @@ rank-bm25==0.2.2
 
 # Reranker
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.4.1+cpu
+torch==2.9.0
 sentence-transformers==3.1.1
+# Pinned alongside sentence-transformers: unpinned transformers resolves to
+# the latest 5.x-compatible release, whose meta-tensor model loading breaks
+# sentence-transformers 3.1.1's CrossEncoder loading path at runtime.
+transformers==4.44.2
 
 # Document Ingestion
 # Replace with:

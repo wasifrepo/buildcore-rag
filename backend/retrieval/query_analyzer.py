@@ -37,9 +37,9 @@ The corpus contains six document categories:
 
 * **Safety SOPs** — internal procedures: chemical spill response, working at
   height, hot-works permit, confined space entry, electrical isolation.
-* **Contracts** — subcontractor services agreements for Apex Electrical
-  (SC-2024-038) and Harrington Scaffolding (SC-2024-041), including schedules
-  for scope, price, and general conditions.
+* **Contracts** — subcontractor services agreements for Apex Plumbing &
+  Drainage (SC-2024-038) and Harrington Electrical Services (SC-2024-041),
+  including schedules for scope, price, and general conditions.
 * **Incident emails** — three incident threads: INC-2024-007 (forklift near-miss
   at Commerce Drive site, 5 February 2024), INC-2024-002 (laceration LTI — Sam
   Osei, Zone 3 Warehouse, 14 February 2024), INC-2024-009 (epoxy chemical spill,
@@ -90,11 +90,11 @@ BUILDCORE CORPUS — what documents exist
    - Electrical isolation (lockout / tagout)
 
 2. SUBCONTRACTOR CONTRACTS (2 documents)
-   - SC-2024-038: Apex Electrical Services — electrical fit-out scope,
-     lump-sum price schedule, general conditions (payment, variations,
-     insurance, termination)
-   - SC-2024-041: Harrington Scaffolding Solutions — scaffolding scope,
-     schedule of rates, 6-clause general conditions
+   - SC-2024-038: Apex Plumbing & Drainage — plumbing scope, lump-sum price
+     schedule, general conditions (payment, variations, insurance,
+     termination)
+   - SC-2024-041: Harrington Electrical Services — electrical scope,
+     schedule of rates, general conditions
 
 3. INCIDENT EMAILS (3 threads)
    - INC-2024-007: Forklift near-miss at Commerce Drive site
@@ -138,7 +138,7 @@ query_type — choose exactly one:
   factual         The answer is a specific fact, value, name, date, clause, or
                   definition from a single document. No multi-step reasoning
                   required.
-                  Examples: "What is the contract sum for Apex Electrical?",
+                  Examples: "What is the contract sum for Apex Plumbing?",
                   "Who sent the first email about the chemical spill?"
 
   procedural      The answer is a sequence of steps, a process, or a how-to

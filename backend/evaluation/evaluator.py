@@ -6,12 +6,14 @@ the naive baseline, scores every result, and returns a structured
 
 Pipeline used during evaluation
 ---------------------------------
-The evaluation pipeline mirrors the production pipeline in ``query.py`` with
-one deliberate difference: **no second retrieval pass**.  If the retrieval
-critic returns ``sufficient=False``, the evaluator proceeds directly to
-generation with the first-pass chunks.  This keeps evaluation fast — 50
-cases × 2 pipelines would take too long if every critic failure triggered
-a full second pass.
+The evaluation pipeline mirrors the production pipeline in ``query.py``
+exactly, including the second retrieval pass: if the first-pass retrieval
+critic returns ``sufficient=False`` and supplies a ``refined_query``, a full
+second dense + sparse + hybrid + rerank + critic cycle runs before
+generation, identical to the production behaviour.  This costs extra LLM
+calls only for the subset of items whose first-pass retrieval the critic
+actually flags as insufficient — evaluating against a weaker pipeline than
+production actually runs would understate the system's real quality.
 
 Module-level singletons
 ------------------------
@@ -69,6 +71,32 @@ _DOC_TYPE_FILTER_RE: re.Pattern[str] = re.compile(r"document_type=([a-z_]+)")
 
 # Path to test_suite.json, resolved relative to this file
 _TEST_SUITE_PATH: Path = Path(__file__).parent / "test_suite.json"
+
+# Multiplier applied to TOP_K_RERANKED for queries that need evidence from
+# more than one document, so a fixed 8-chunk cap doesn't get filled entirely
+# by one source document and starve out a second one the query also needs.
+_MULTI_HOP_RERANK_MULTIPLIER: int = 2
+
+
+def _resolve_rerank_top_k(query_analysis) -> int | None:
+    """Widen the post-rerank chunk budget for multi-document queries.
+
+    Args:
+        query_analysis: The QueryAnalysis for the current query.
+
+    Returns:
+        An explicit top_k value (TOP_K_RERANKED doubled) when the query
+        requires cross-document reasoning, or None to let the reranker fall
+        back to its TOP_K_RERANKED env-var default for all other queries.
+    """
+    needs_wide_context = (
+        query_analysis.requires_multi_hop
+        or query_analysis.query_type.value == "cross_document"
+    )
+    if not needs_wide_context:
+        return None
+    base = int(os.environ.get("TOP_K_RERANKED", 8))
+    return base * _MULTI_HOP_RERANK_MULTIPLIER
 
 
 # ---------------------------------------------------------------------------
@@ -147,10 +175,11 @@ def load_test_suite() -> list[dict[str, Any]]:
 
 
 def _run_full_pipeline(question: str, query_analysis=None) -> GeneratedAnswer:
-    """Run the production pipeline (one pass) and return a GeneratedAnswer.
+    """Run the production pipeline, including the second pass, and return a GeneratedAnswer.
 
-    Mirrors the logic in ``api/routes/query.py`` but without the second
-    retrieval pass and without writing a trace.
+    Mirrors the logic in ``api/routes/query.py`` exactly (query analysis,
+    expansion, hybrid retrieval, reranking, critic, optional second pass,
+    generation), only omitting SSE event emission and trace persistence.
 
     Args:
         question: Raw user question string.
@@ -171,16 +200,31 @@ def _run_full_pipeline(question: str, query_analysis=None) -> GeneratedAnswer:
     if m:
         doc_type_filter = m.group(1)
 
+    rerank_top_k = _resolve_rerank_top_k(query_analysis)
+
     dense_chunks = _dense_retriever.search(all_queries, None, doc_type_filter)
     sparse_chunks = _sparse_retriever.search(question)
     merged = merge_results(dense_chunks, sparse_chunks, query_analysis)
-    reranked = _reranker.rerank(question, merged)
+    reranked = _reranker.rerank(question, merged, rerank_top_k)
     verdict = assess_retrieval(question, reranked)
-    # One pass only — no second retrieval regardless of critic verdict
+
+    final_chunks = reranked
+    final_verdict = verdict
+
+    if not verdict.sufficient and verdict.refined_query:
+        refined_query = verdict.refined_query
+        dense2 = _dense_retriever.search([refined_query], None, None)
+        sparse2 = _sparse_retriever.search(refined_query)
+        merged2 = merge_results(dense2, sparse2, query_analysis)
+        reranked2 = _reranker.rerank(refined_query, merged2, rerank_top_k)
+        second_verdict = assess_retrieval(refined_query, reranked2)
+        final_chunks = reranked2
+        final_verdict = second_verdict
+
     return generate_answer(
         question,
-        reranked,
-        verdict,
+        final_chunks,
+        final_verdict,
         query_analysis.query_type.value,
     )
 

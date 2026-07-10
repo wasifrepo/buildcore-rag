@@ -36,9 +36,9 @@ retrieval system over construction and facilities management documents.
 The corpus contains six document types:
   • Safety SOPs (chemical spill, working at height, hot-works, confined
     space, electrical isolation / lockout-tagout)
-  • Subcontractor contracts (Apex Electrical SC-2024-038, Harrington
-    Scaffolding SC-2024-041) with scope schedules, price schedules, and
-    general conditions
+  • Subcontractor contracts (Apex Plumbing & Drainage SC-2024-038, Harrington
+    Electrical Services SC-2024-041) with scope schedules, price schedules,
+    and general conditions
   • Incident emails (INC-2024-007 forklift near-miss, INC-2024-002 laceration
     LTI, INC-2024-009 epoxy chemical spill)
   • Maintenance manuals (Toyota 8FGF25 forklift, Denyo DCA-45SPK3 generator)
