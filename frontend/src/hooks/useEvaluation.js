@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { useSSE } from "./useSSE";
-import { runEvaluation, getLatestEval } from "../utils/api";
+import { getLatestEval, BASE_URL } from "../utils/api";
 
 /**
  * Hook that manages running the evaluation suite and loading the latest report.
@@ -30,7 +30,7 @@ export function useEvaluation() {
     reset();
     setSavedReport(null);
     await start(
-      () => fetch("/evaluate/run", { method: "POST" }),
+      () => fetch(`${BASE_URL}/evaluate/run`, { method: "POST" }),
     );
   }, [reset, start]);
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSSE } from "../hooks/useSSE";
+import { BASE_URL } from "../utils/api";
 import { formatConfidence, formatScore, truncate } from "../utils/formatters";
 
 // ---------------------------------------------------------------------------
@@ -348,7 +349,7 @@ export default function QueryPage() {
     if (!q || isStreaming) return;
     reset();
     await start(() =>
-      fetch("/query/stream", {
+      fetch(`${BASE_URL}/query/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: q }),

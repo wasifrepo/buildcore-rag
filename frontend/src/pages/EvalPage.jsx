@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSSE } from "../hooks/useSSE";
-import { getLatestEval } from "../utils/api";
+import { getLatestEval, BASE_URL } from "../utils/api";
 import { formatScore, truncate } from "../utils/formatters";
 
 // ---------------------------------------------------------------------------
@@ -223,7 +223,7 @@ export default function EvalPage() {
   async function handleRun() {
     reset();
     setSavedReport(null);
-    await start(() => fetch("/evaluate/run", { method: "POST" }));
+    await start(() => fetch(`${BASE_URL}/evaluate/run`, { method: "POST" }));
   }
 
   const delta = activeSummary
