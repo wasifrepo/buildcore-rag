@@ -45,8 +45,7 @@ value that parses as a JSON array is converted back to a Python list.
 import os
 
 import chromadb
-from openai import OpenAI
-
+from common.llm_client import embed_texts, get_embedding_model
 from generation.schemas import Chunk
 from retrieval._parenting import parent_from_child
 
@@ -95,8 +94,7 @@ class DenseRetriever:
             chroma_collection_name: Name of the ChromaDB collection to query.
                 Falls back to ``CHROMA_COLLECTION_NAME``, then ``"buildcore"``.
         """
-        self._embed_model = os.environ.get("EMBEDDING_MODEL", _DEFAULT_EMBED_MODEL)
-        self._openai = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        self._embed_model = get_embedding_model()
 
         persist_dir = chroma_persist_dir or os.environ.get(
             "CHROMA_PERSIST_DIR", "./data/chroma"
@@ -146,11 +144,7 @@ class DenseRetriever:
         )
 
         # Embed all queries in one API call
-        embed_response = self._openai.embeddings.create(
-            model=self._embed_model,
-            input=queries,
-        )
-        embeddings = [item.embedding for item in embed_response.data]
+        embeddings = embed_texts(queries, model=self._embed_model)
 
         where_filter: dict | None = None
         if document_type_filter:

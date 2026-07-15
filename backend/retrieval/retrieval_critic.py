@@ -30,7 +30,11 @@ structured output so the response is parsed directly into a
 
 import os
 
-from openai import OpenAI
+from common.llm_client import (
+    get_analysis_model,
+    get_llm_client,
+    reasoning_extra_body,
+)
 
 from generation.schemas import Chunk, CriticVerdict
 
@@ -147,8 +151,8 @@ def assess_retrieval(query: str, chunks: list[Chunk]) -> CriticVerdict:
         openai.OpenAIError: On any API-level failure.  The caller is
             responsible for retry logic.
     """
-    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    model = os.environ.get("ANALYSIS_MODEL", "gpt-4o-mini")
+    client = get_llm_client()
+    model = get_analysis_model()
 
     user_message = _format_user_message(query, chunks)
 
@@ -159,6 +163,7 @@ def assess_retrieval(query: str, chunks: list[Chunk]) -> CriticVerdict:
             {"role": "user", "content": user_message},
         ],
         response_format=CriticVerdict,
+        extra_body=reasoning_extra_body("analysis"),
     )
 
     return completion.choices[0].message.parsed

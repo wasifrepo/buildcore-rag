@@ -51,11 +51,20 @@ backend. The cross-encoder reranker (MiniLM) is unchanged; in Azure prod the
 managed semantic ranker fills that role.
 
 ## Document types in corpus
+17 documents, six types. Twelve are the fictional BuildCore corpus; five are
+real OSHA PDFs covering the same topics as the internal SOPs (scaffolding,
+fall protection), so cross-document queries span company policy and regulation.
 - safety_sops/ — section-aware chunking (respects headers and numbered sections)
 - contracts/ — clause and table-aware chunking
 - incident_emails/ — thread-aware chunking (preserves sender, date, subject context)
 - maintenance_manuals/ — step-aware chunking (numbered procedures stay intact)
 - compliance_checklists/ — row-aware chunking (tabular structure preserved)
+- regulatory_docs/ — OSHA PDFs, section-aware over extracted text (regulatory_chunker.py)
+
+Scale skew is deliberate and load-bearing: the OSHA PDFs are ~84% of all child
+chunks (OSHA 3150 alone is 2,152 vs ~70 for the scaffold SOP). Queries about
+BuildCore's own documents face a ~30:1 imbalance of on-topic competitors, which
+is what the document_type filter and retrieval critic exist to handle.
 
 ## Code conventions
 - Every function has a docstring

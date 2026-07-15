@@ -26,6 +26,15 @@ class QueryAnalysis(BaseModel):
     query_type: QueryType
     intent_summary: str = Field(description="One sentence summary of what the user is asking")
     retrieval_strategy: str = Field(description="Which retrieval strategy to apply")
+    document_type_filter: Optional[DocumentType] = Field(
+        default=None,
+        description=(
+            "Restrict retrieval to this single document type when the query "
+            "clearly targets exactly one. Null when the query spans types or "
+            "the type is uncertain — a wrong filter hides the answer entirely, "
+            "so null is the safe default."
+        ),
+    )
     requires_multi_hop: bool = Field(description="Whether the query requires reasoning across multiple documents")
     confidence: float = Field(ge=0.0, le=1.0)
 

@@ -21,7 +21,11 @@ defined in ``generation/schemas.py``.
 
 import os
 
-from openai import OpenAI
+from common.llm_client import (
+    get_analysis_model,
+    get_llm_client,
+    reasoning_extra_body,
+)
 
 from generation.schemas import ExpandedQueries
 
@@ -97,8 +101,8 @@ def expand_query(query: str) -> ExpandedQueries:
         openai.OpenAIError: On any API-level failure (network, auth, rate
             limit).  The caller is responsible for retry logic.
     """
-    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    model = os.environ.get("ANALYSIS_MODEL", "gpt-4o-mini")
+    client = get_llm_client()
+    model = get_analysis_model()
 
     completion = client.beta.chat.completions.parse(
         model=model,
@@ -115,6 +119,7 @@ def expand_query(query: str) -> ExpandedQueries:
             },
         ],
         response_format=ExpandedQueries,
+        extra_body=reasoning_extra_body("expansion"),
     )
 
     result: ExpandedQueries = completion.choices[0].message.parsed

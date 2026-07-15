@@ -38,15 +38,15 @@ chunks, ``subsections`` in SOP chunks) are JSON-serialised to strings before
 upsert and must be deserialised by the retrieval layer if needed.
 """
 
+from __future__ import annotations
+
 import json
 import logging
 import os
 from pathlib import Path
 
-import chromadb
 import pypdf
-from openai import OpenAI
-
+from common.llm_client import embed_texts, get_embedding_model
 from generation.schemas import Chunk, DocumentType
 from ingestion.classifier import classify_document
 from ingestion.child_splitter import build_child_chunks
@@ -181,9 +181,13 @@ def run_ingestion(
     resolved_collection_name = chroma_collection_name or os.environ.get(
         "CHROMA_COLLECTION_NAME", "buildcore"
     )
-    embedding_model = os.environ.get("EMBEDDING_MODEL", "text-embedding-3-small")
+    embedding_model = get_embedding_model()
 
-    openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+    # Imported here rather than at module scope so that chunking (ingest_file)
+    # and the Azure indexing path (ingestion.azure_index, which reuses it) do
+    # not drag ChromaDB in. The Azure production image omits chromadb entirely.
+    import chromadb  # noqa: PLC0415
+
     chroma_client = chromadb.PersistentClient(path=resolved_persist_dir)
     collection = chroma_client.get_or_create_collection(
         name=resolved_collection_name,
@@ -210,7 +214,7 @@ def run_ingestion(
             children = [
                 child for parent in parents for child in build_child_chunks(parent)
             ]
-            _upsert_chunks(children, collection, openai_client, embedding_model)
+            _upsert_chunks(children, collection, embedding_model)
             chunks_upserted += len(children)
             files_processed += 1
             logger.info(
@@ -262,15 +266,14 @@ def _extract_pdf_text(path: Path) -> str:
 def _upsert_chunks(
     chunks: list[Chunk],
     collection: chromadb.Collection,
-    openai_client: OpenAI,
     embedding_model: str,
 ) -> None:
     """Embed a list of child chunks in batches and upsert them into ChromaDB.
 
     Splits ``chunks`` into batches of :data:`_EMBED_BATCH_SIZE`, requests
-    embeddings for each batch from the OpenAI Embeddings API, flattens each
-    chunk's metadata dict to ChromaDB-compatible scalars, and calls
-    ``collection.upsert`` for the batch.
+    embeddings for each batch via :func:`common.llm_client.embed_texts` (which
+    retries transient API failures), flattens each chunk's metadata dict to
+    ChromaDB-compatible scalars, and calls ``collection.upsert`` for the batch.
 
     The full chunk content is both embedded and stored verbatim — nothing is
     truncated.  Child chunks are character-capped by
@@ -282,7 +285,6 @@ def _upsert_chunks(
         chunks: Ordered list of child :class:`~generation.schemas.Chunk`
             objects to embed and store.
         collection: The ChromaDB collection to upsert into.
-        openai_client: Authenticated :class:`openai.OpenAI` client instance.
         embedding_model: OpenAI embedding model identifier
             (e.g. ``"text-embedding-3-small"``).
     """
@@ -291,11 +293,7 @@ def _upsert_chunks(
         texts = [chunk.content for chunk in batch]
         ids = [chunk.chunk_id for chunk in batch]
 
-        response = openai_client.embeddings.create(
-            model=embedding_model,
-            input=texts,
-        )
-        embeddings = [item.embedding for item in response.data]
+        embeddings = embed_texts(texts, model=embedding_model)
 
         collection.upsert(
             ids=ids,

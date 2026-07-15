@@ -14,9 +14,20 @@ Chunking strategy
 2. Walk the text line-by-line, collecting lines into the current section
    buffer.  Start a new section whenever a top-level header line is found.
 3. If a completed section exceeds ``_MAX_CHUNK_CHARS`` (1 500) characters,
-   split it at paragraph boundaries (blank lines).  Each paragraph-split
-   sub-chunk inherits the parent section's metadata.
+   split it at paragraph boundaries (blank lines), falling back to line and
+   then word boundaries so the ceiling always holds.  Each sub-chunk inherits
+   the parent section's metadata.
 4. Any trailing content after the last header becomes its own chunk.
+
+PDF-sourced text
+----------------
+The fallback in step 3 is load-bearing rather than defensive.  ``pypdf``
+emits a newline per *rendered* line and virtually no blank lines (OSHA 3150
+extracts to 4 blank lines across 574), so blank-line paragraph splitting finds
+no boundaries in PDF text and would return the entire section unsplit.  Chunks
+of 45,000+ characters then reach the generator and crowd everything else out
+of its context.  Line-boundary packing is the right unit for this text because
+rendered lines are the only structure PDF extraction preserves.
 
 Each chunk carries:
     - ``section_number``: the parsed header label (e.g. ``"1."``, ``"II."``,
@@ -238,44 +249,140 @@ def _split_into_sections(text: str) -> list[_Section]:
 
 
 def _split_at_paragraphs(text: str, max_chars: int) -> list[str]:
-    """Split text at blank-line paragraph boundaries if it exceeds max_chars.
+    """Split an oversized section into chunks of at most ``max_chars``.
 
-    If ``text`` is within ``max_chars`` it is returned as a single-element
-    list.  Otherwise it is split on double-newline boundaries and the
-    resulting paragraphs are greedily accumulated into chunks that stay
-    within ``max_chars``.  A paragraph that is itself longer than
-    ``max_chars`` is emitted as its own chunk regardless of size.
+    Splits on blank-line paragraph boundaries first, since those are the most
+    meaningful break points, and greedily packs the resulting paragraphs.
+
+    Any paragraph that alone exceeds ``max_chars`` is broken down further by
+    :func:`_split_long_block` rather than emitted oversized.  That fallback is
+    not an edge case: text extracted from PDFs contains a newline per *visual*
+    line but almost no blank lines (OSHA 3150 yields 4 blank lines across 574),
+    so paragraph splitting finds nothing to split on and the whole section
+    arrives here as one "paragraph".  Without the fallback the character
+    ceiling silently does not apply to any PDF-sourced document — sections of
+    45,000+ characters reach the generator, swamping its context with mostly
+    irrelevant text.
 
     Args:
         text: Section body text to split.
         max_chars: Maximum character count per output chunk.
 
     Returns:
-        List of text strings, each no longer than ``max_chars`` where
-        possible.
+        List of text strings, each no longer than ``max_chars``.
     """
     if len(text) <= max_chars:
         return [text]
 
     paragraphs = [p.strip() for p in re.split(r"\n\n+", text) if p.strip()]
+
+    # Guarantee every unit is within the cap before packing.
+    units: list[str] = []
+    for para in paragraphs:
+        if len(para) <= max_chars:
+            units.append(para)
+        else:
+            units.extend(_split_long_block(para, max_chars))
+
     result: list[str] = []
     buffer: list[str] = []
     buffer_len = 0
 
-    for para in paragraphs:
-        para_len = len(para)
+    for unit in units:
+        unit_len = len(unit)
         # +2 for the "\n\n" separator that would join them
-        if buffer and buffer_len + 2 + para_len > max_chars:
+        if buffer and buffer_len + 2 + unit_len > max_chars:
             result.append("\n\n".join(buffer))
             buffer = []
             buffer_len = 0
-        buffer.append(para)
-        buffer_len += (2 if buffer_len else 0) + para_len
+        buffer.append(unit)
+        buffer_len += (2 if buffer_len else 0) + unit_len
 
     if buffer:
         result.append("\n\n".join(buffer))
 
     return result
+
+
+def _split_long_block(text: str, max_chars: int) -> list[str]:
+    """Break a paragraph with no blank lines into <= max_chars pieces.
+
+    Packs whole lines greedily, because PDF-extracted text preserves one line
+    per rendered line and those are the only structural boundaries available.
+    A single line longer than ``max_chars`` is wrapped at word boundaries, and
+    a single word longer than the cap is sliced at character boundaries so the
+    ceiling always holds.
+
+    No text is discarded: concatenating the returned pieces reproduces the
+    input's word sequence.
+
+    Args:
+        text: An over-long block containing no blank-line boundaries.
+        max_chars: Maximum character count per output piece.
+
+    Returns:
+        Ordered list of pieces, each at most ``max_chars`` long.
+    """
+    units: list[str] = []
+    for line in text.split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        if len(line) <= max_chars:
+            units.append(line)
+        else:
+            units.extend(_wrap_words(line, max_chars))
+
+    pieces: list[str] = []
+    buffer: list[str] = []
+    buffer_len = 0
+    for unit in units:
+        added = len(unit) + (1 if buffer else 0)
+        if buffer and buffer_len + added > max_chars:
+            pieces.append("\n".join(buffer))
+            buffer = [unit]
+            buffer_len = len(unit)
+        else:
+            buffer.append(unit)
+            buffer_len += added
+    if buffer:
+        pieces.append("\n".join(buffer))
+    return pieces
+
+
+def _wrap_words(text: str, max_chars: int) -> list[str]:
+    """Wrap a single over-long line at word boundaries without losing text.
+
+    Args:
+        text: The over-long line.
+        max_chars: Maximum character count per output piece.
+
+    Returns:
+        Ordered list of pieces, each at most ``max_chars`` long.
+    """
+    pieces: list[str] = []
+    buffer: list[str] = []
+    buffer_len = 0
+    for word in text.split():
+        if len(word) > max_chars:
+            if buffer:
+                pieces.append(" ".join(buffer))
+                buffer = []
+                buffer_len = 0
+            for start in range(0, len(word), max_chars):
+                pieces.append(word[start : start + max_chars])
+            continue
+        added = len(word) + (1 if buffer else 0)
+        if buffer and buffer_len + added > max_chars:
+            pieces.append(" ".join(buffer))
+            buffer = [word]
+            buffer_len = len(word)
+        else:
+            buffer.append(word)
+            buffer_len += added
+    if buffer:
+        pieces.append(" ".join(buffer))
+    return pieces
 
 
 def _has_numbered_list(text: str) -> bool:

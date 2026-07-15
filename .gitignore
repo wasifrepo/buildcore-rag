@@ -9,8 +9,8 @@ __pycache__/
 venv/
 
 # ChromaDB
-data/chroma/
-data/processed/
+**/data/chroma/
+**/data/processed/
 
 # Traces
 backend/traces/*.json

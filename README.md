@@ -119,7 +119,7 @@ answer is fully traceable to its source document and section.
 
 ## Document-Type-Aware Ingestion
 
-The corpus contains five document types, each requiring a different
+The corpus contains six document types, each requiring a different
 chunking strategy. Fixed-size naive chunking fails all of them.
 
 | Document Type | Chunking Strategy | Key Challenge Solved |
@@ -129,6 +129,7 @@ chunking strategy. Fixed-size naive chunking fails all of them.
 | Incident Emails | One chunk per message, full header preserved | Sender, date, subject co-embedded with body |
 | Maintenance Manuals | Section-level, step sequences preserved | `STEP N` and sub-steps always stay together |
 | Compliance Checklists | Section-level, tabular rows intact | Item codes stay with their descriptions |
+| OSHA Regulatory PDFs | Section/heading-aware over extracted PDF text | Regulatory clauses stay whole across page breaks |
 
 Each document is classified on ingestion and routed to the appropriate
 chunker. Chunk IDs are deterministic SHA-256 hashes of document ID and
@@ -269,11 +270,24 @@ production, Azure's managed semantic ranker fills that role.
 
 ## Corpus
 
-The BuildCore corpus contains 12 documents across five types. Ingestion
-produces structure-aware **parent** chunks, then splits each into small 2-3
-sentence **child** chunks (small-to-big retrieval): children are embedded and
-indexed for precise matching, while the parent is returned for full-context
+The corpus contains 17 documents across six types. Ingestion produces
+structure-aware **parent** chunks, then splits each into small 2-3 sentence
+**child** chunks (small-to-big retrieval): children are embedded and indexed
+for precise matching, while the parent is returned for full-context
 generation.
+
+Twelve documents are the fictional BuildCore Operations corpus; five are real
+OSHA regulatory publications. That pairing is the point, and it is deliberate
+rather than incidental: the OSHA documents cover the *same topics* as
+BuildCore's internal SOPs. OSHA 3150 is a scaffold-use guide and BuildCore has
+a scaffold SOP; OSHA 3146 covers fall protection in construction and BuildCore
+has a fall-protection SOP.
+
+That mirrors how enterprise knowledge bases actually look — company policy
+sitting next to the external regulation it implements — and it enables the
+queries that matter most: *"what does our scaffold SOP require, and does it
+meet OSHA?"* is a cross-document question spanning an internal procedure and a
+73-page federal guide.
 
 **Safety SOPs (3)** — Fall Protection (SOP-001), Scaffold Safety (SOP-005),
 Hazard Communication (SOP-007)
@@ -292,10 +306,36 @@ Denyo DCA-45SPK3 generator (MAINT-GEN-01)
 **Compliance Checklists (2)** — Daily site safety inspection (SSIC-001),
 Subcontractor pre-mobilisation checklist (SC-PMCL-001)
 
-The document mix is intentionally heterogeneous — five structurally
-different document types, mixed formatting, tables, email threads, and
-numbered procedures — to stress-test every layer of the ingestion and
+**OSHA Regulatory Documents (5)** — real published PDFs: *A Guide to Scaffold
+Use in the Construction Industry* (OSHA 3150, 73pp), *Job Hazard Analysis*
+(OSHA 3071, 51pp), *Fall Protection in Construction* (OSHA 3146, 48pp),
+*Materials Handling and Storage* (OSHA 2236, 41pp), and the Walking-Working
+Surfaces & Fall Protection final-rule fact sheet (OSHA 3903, 3pp)
+
+The document mix is intentionally heterogeneous — six structurally different
+document types, mixed formatting, tables, email threads, numbered procedures,
+and real-world PDFs — to stress-test every layer of the ingestion and
 retrieval pipeline.
+
+### A note on scale, and why it makes retrieval hard
+
+The five OSHA PDFs dominate the index by volume: they produce **4,093 of the
+~4,900 child chunks**, roughly 84% of the corpus, because a published
+regulatory PDF is far longer than a two-page internal SOP. OSHA 3150 alone is
+2,152 children — more than every BuildCore document combined.
+
+The topical pairing that makes the corpus realistic is exactly what makes it
+adversarial. BuildCore's scaffold SOP produces ~70 child chunks; OSHA's
+scaffold guide produces ~2,152. A query about scaffolding therefore faces a
+**30:1 imbalance of on-topic competitors**, and pure vector similarity has no
+principled reason to prefer the company's own procedure over the federal guide
+— both are genuinely about scaffolding.
+
+This is where the upstream layers stop being decoration. Query classification
+and the `document_type` filter exist to decide *which* kind of document a
+question wants; the retrieval critic exists to notice when the answer came from
+the wrong one. A corpus of twelve tidy, same-sized, topically-disjoint
+documents would never have exercised either.
 
 ---
 

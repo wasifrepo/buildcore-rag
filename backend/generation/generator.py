@@ -49,7 +49,11 @@ chunk sizes at this volume.
 
 import os
 
-from openai import OpenAI
+from common.llm_client import (
+    get_generation_model,
+    get_llm_client,
+    reasoning_extra_body,
+)
 
 from generation.schemas import (
     Chunk,
@@ -191,8 +195,8 @@ def generate_answer(
         openai.OpenAIError: On any API-level failure.  The caller is
             responsible for retry logic.
     """
-    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    model = os.environ.get("GENERATION_MODEL", "gpt-4o")
+    client = get_llm_client()
+    model = get_generation_model()
 
     user_message = _build_user_message(query, chunks, critic_verdict, query_type)
 
@@ -203,6 +207,7 @@ def generate_answer(
             {"role": "user", "content": user_message},
         ],
         response_format=GeneratedAnswer,
+        extra_body=reasoning_extra_body("generation"),
     )
 
     answer: GeneratedAnswer = completion.choices[0].message.parsed

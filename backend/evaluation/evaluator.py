@@ -19,10 +19,12 @@ Module-level singletons
 ------------------------
 The :class:`~retrieval.base.Retriever` backend (chosen by ``RETRIEVER_BACKEND``
 via :func:`~retrieval.factory.get_retriever`) and the
-:class:`~retrieval.reranker.CrossEncoderReranker` are instantiated once at
+:class:`~retrieval.base.Reranker` backend (chosen by ``RERANKER_BACKEND`` via
+:func:`~retrieval.reranker_factory.get_reranker`) are instantiated once at
 module load, matching the production route so evaluation scores the shipping
-system.  The cross-encoder model is loaded lazily on first use, so the first
-evaluated item is slower than subsequent ones.
+system — including which reranker actually runs.  When the cross-encoder is
+selected its model is loaded lazily on first use, so the first evaluated item
+is slower than subsequent ones.
 
 Exported symbols
 -----------------
@@ -53,7 +55,7 @@ from generation.schemas import GeneratedAnswer
 from retrieval.factory import get_retriever
 from retrieval.query_analyzer import analyze_query
 from retrieval.query_expander import expand_query
-from retrieval.reranker import CrossEncoderReranker
+from retrieval.reranker_factory import get_reranker
 from retrieval.retrieval_critic import assess_retrieval
 
 # ---------------------------------------------------------------------------
@@ -63,7 +65,7 @@ from retrieval.retrieval_critic import assess_retrieval
 # Same retriever backend as the production route, so evaluation scores the
 # system that actually ships (local ChromaDB+BM25 or Azure AI Search).
 _retriever = get_retriever()
-_reranker = CrossEncoderReranker()
+_reranker = get_reranker()
 
 # Path to test_suite.json, resolved relative to this file
 _TEST_SUITE_PATH: Path = Path(__file__).parent / "test_suite.json"

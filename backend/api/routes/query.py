@@ -38,10 +38,11 @@ Singletons
 ----------
 The :class:`~retrieval.base.Retriever` backend (chosen by ``RETRIEVER_BACKEND``
 via :func:`~retrieval.factory.get_retriever`) and the
-:class:`~retrieval.reranker.CrossEncoderReranker` are instantiated once at
-module load time and reused across requests.  The cross-encoder model is
-loaded lazily on first use (see ``reranker.py``), so the first request after
-server startup will be slower than subsequent ones.
+:class:`~retrieval.base.Reranker` backend (chosen by ``RERANKER_BACKEND`` via
+:func:`~retrieval.reranker_factory.get_reranker`) are instantiated once at
+module load time and reused across requests.  When the cross-encoder reranker
+is selected its model is loaded lazily on first use (see ``reranker.py``), so
+the first request after server startup will be slower than subsequent ones.
 
 Trace persistence
 -----------------
@@ -73,7 +74,7 @@ from generation.generator import generate_answer
 from retrieval.factory import get_retriever
 from retrieval.query_analyzer import analyze_query
 from retrieval.query_expander import expand_query
-from retrieval.reranker import CrossEncoderReranker
+from retrieval.reranker_factory import get_reranker
 from retrieval.retrieval_critic import assess_retrieval
 
 # ---------------------------------------------------------------------------
@@ -88,10 +89,12 @@ router = APIRouter()
 
 # Instantiated once so ChromaDB connections and the BM25 index are built only
 # at startup.  The retriever backend (local ChromaDB+BM25 or Azure AI Search)
-# is chosen by RETRIEVER_BACKEND.  The cross-encoder model inside
-# CrossEncoderReranker is loaded lazily on first use.
+# is chosen by RETRIEVER_BACKEND; the reranker backend (local cross-encoder or
+# a pass-through, when the retriever already ranked its own results) is chosen
+# by RERANKER_BACKEND.  The cross-encoder model, if selected, is loaded lazily
+# on first use.
 _retriever = get_retriever()
-_reranker = CrossEncoderReranker()
+_reranker = get_reranker()
 
 # ---------------------------------------------------------------------------
 # Constants

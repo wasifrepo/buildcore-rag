@@ -28,7 +28,12 @@ controlled by the ``CHROMA_PERSIST_DIR``, ``CHROMA_COLLECTION_NAME``,
 import os
 
 import chromadb
-from openai import OpenAI
+from common.llm_client import (
+    embed_texts,
+    get_embedding_model,
+    get_generation_model,
+    get_llm_client,
+)
 
 _BASELINE_TOP_K: int = 5
 
@@ -56,9 +61,9 @@ def run_baseline(question: str) -> str:
         Plain text answer string from GPT-4o.  May be an explicit "I don't
         know" if the retrieved context is not relevant.
     """
-    openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    embed_model = os.environ.get("EMBEDDING_MODEL", "text-embedding-3-small")
-    gen_model = os.environ.get("GENERATION_MODEL", "gpt-4o")
+    openai_client = get_llm_client()
+    embed_model = get_embedding_model()
+    gen_model = get_generation_model()
 
     persist_dir = os.environ.get("CHROMA_PERSIST_DIR", "./data/chroma")
     collection_name = os.environ.get("CHROMA_COLLECTION_NAME", "buildcore")
@@ -70,11 +75,7 @@ def run_baseline(question: str) -> str:
     )
 
     # Embed the question
-    embed_response = openai_client.embeddings.create(
-        model=embed_model,
-        input=[question],
-    )
-    query_embedding = embed_response.data[0].embedding
+    query_embedding = embed_texts([question], model=embed_model)[0]
 
     # Retrieve top-5 child chunks
     result = collection.query(

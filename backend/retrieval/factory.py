@@ -9,13 +9,17 @@ Recognised values (case-insensitive):
 
 * ``local`` / ``chroma`` (default) → :class:`~retrieval.local_retriever.LocalRetriever`
 * ``azure`` / ``azure_ai_search`` → :class:`~retrieval.azure_ai_search_retriever.AzureAISearchRetriever`
+
+Backend modules are imported lazily, inside :func:`get_retriever`, so that
+selecting one backend never imports the other's dependencies.  This is what
+allows the Azure production image to omit ``chromadb`` and ``rank-bm25``
+entirely: nothing imports ``local_retriever`` unless the local backend is
+actually selected.
 """
 
 import os
 
-from retrieval.azure_ai_search_retriever import AzureAISearchRetriever
 from retrieval.base import Retriever
-from retrieval.local_retriever import LocalRetriever
 
 _LOCAL_ALIASES: frozenset[str] = frozenset({"local", "chroma"})
 _AZURE_ALIASES: frozenset[str] = frozenset({"azure", "azure_ai_search", "azure-ai-search"})
@@ -33,8 +37,14 @@ def get_retriever() -> Retriever:
     """
     backend = os.environ.get("RETRIEVER_BACKEND", "local").strip().lower()
     if backend in _LOCAL_ALIASES:
+        from retrieval.local_retriever import LocalRetriever  # noqa: PLC0415
+
         return LocalRetriever()
     if backend in _AZURE_ALIASES:
+        from retrieval.azure_ai_search_retriever import (  # noqa: PLC0415
+            AzureAISearchRetriever,
+        )
+
         return AzureAISearchRetriever()
     raise ValueError(
         f"Unknown RETRIEVER_BACKEND '{backend}'. "

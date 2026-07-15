@@ -61,7 +61,11 @@ classified as out_of_scope — those documents are part of the corpus.
 
 import os
 
-from openai import OpenAI
+from common.llm_client import (
+    get_analysis_model,
+    get_llm_client,
+    reasoning_extra_body,
+)
 
 from generation.schemas import QueryAnalysis
 
@@ -119,15 +123,24 @@ BUILDCORE CORPUS — what documents exist
      (sections: legal & insurance, safety documentation, worker
      credentials, site induction, plant & equipment)
 
-6. OSHA REGULATORY DOCUMENTS (5 documents)
+6. OSHA REGULATORY DOCUMENTS (5 documents, real published PDFs)
    - OSHA2236: Materials Handling and Storage
    - OSHA3071: Job Hazard Analysis
    - OSHA3146: Fall Protection in Construction
-   - OSHA3150: Control of Hazardous Energy (Lockout/Tagout)
-   - OSHA3903: Quick Start Guide to Safety Programs
+   - OSHA3150: A Guide to Scaffold Use in the Construction Industry —
+     scaffold erection, planking, guardrails, platform width and span,
+     competent person duties, training (29 CFR 1926 Subpart L)
+   - OSHA3903: OSHA's Final Rule on General Industry Walking-Working
+     Surfaces and Fall Protection Standards (fact sheet)
    NOTE: Queries about OSHA requirements, regulatory standards, or any of
    these specific topics must be classified as factual or procedural —
    NOT out_of_scope — because these documents are part of the corpus.
+
+   These OSHA documents deliberately overlap the internal SOPs in topic:
+   OSHA3150 covers the same ground as SOP-005 (scaffolding), and OSHA3146
+   covers the same ground as SOP-001 (fall protection). A query asking how
+   a BuildCore SOP compares to, aligns with, or satisfies OSHA is therefore
+   answerable from this corpus and is cross_document — never out_of_scope.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CLASSIFICATION RULES
@@ -159,18 +172,38 @@ query_type — choose exactly one:
 
   out_of_scope    The query requires knowledge that is definitively not present
                   in the BuildCore corpus. This includes: Australian federal
-                  or state legislation (WHS Act, Fair Work Act), OSHA
-                  regulations, general construction industry standards not
-                  referenced in these documents, financial market data,
-                  anything unrelated to BuildCore's own operations.
+                  or state legislation (WHS Act, Fair Work Act), construction
+                  industry standards not referenced in these documents,
+                  financial market data, and anything unrelated to BuildCore's
+                  operations or to the five OSHA publications listed above.
                   Return a high-confidence out_of_scope rather than guessing.
 
-retrieval_strategy — brief instruction for the hybrid retriever. Examples:
-  "Dense retrieval on contract documents; filter by document_type=contract"
+                  OSHA is NOT out of scope. The corpus contains five OSHA
+                  publications (see section 6). Only classify an OSHA query
+                  out_of_scope if it concerns a topic none of those five
+                  documents cover — not merely because it mentions OSHA.
+
+retrieval_strategy — brief human-readable note on the approach, for the trace.
+  This is descriptive only; it does not control retrieval. Examples:
+  "Dense retrieval on contract documents; rerank for relevance"
   "Dense + sparse retrieval across all document types; rerank for relevance"
   "Dense retrieval on SOP and email documents; multi-hop synthesis required"
   "Broad dense retrieval; surface diverse chunks for ambiguity resolution"
   "No retrieval required — query is out of scope"
+
+document_type_filter — this DOES control retrieval: it hard-restricts search to
+  one document type. Set it only when the query unambiguously targets exactly
+  one of: safety_sop, contract, incident_email, maintenance_manual,
+  compliance_checklist, regulatory_doc.
+
+  Leave it null whenever the query spans types or you are unsure. A wrong
+  filter makes the correct answer unreachable, whereas null merely means the
+  reranker does more work. Null is the safe default.
+
+  Set it:     "What is the contract sum for Apex Plumbing?"     -> contract
+              "How do I start the Denyo generator?"             -> maintenance_manual
+  Leave null: "Compare our scaffold SOP against OSHA"           -> spans safety_sop + regulatory_doc
+              "What happened with the forklift?"                -> could be email or manual
 
 requires_multi_hop — true only when the answer requires reasoning across
   two or more distinct document chunks or document IDs.
@@ -224,8 +257,8 @@ def analyze_query(query: str) -> QueryAnalysis:
             limit).  The caller (pipeline orchestrator) is responsible for
             retry logic.
     """
-    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    model = os.environ.get("ANALYSIS_MODEL", "gpt-4o-mini")
+    client = get_llm_client()
+    model = get_analysis_model()
 
     completion = client.beta.chat.completions.parse(
         model=model,
@@ -234,6 +267,7 @@ def analyze_query(query: str) -> QueryAnalysis:
             {"role": "user", "content": query},
         ],
         response_format=QueryAnalysis,
+        extra_body=reasoning_extra_body("analysis"),
     )
 
     return completion.choices[0].message.parsed

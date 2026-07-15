@@ -24,7 +24,11 @@ Three metrics are implemented:
 
 import os
 
-from openai import OpenAI
+from common.llm_client import (
+    get_analysis_model,
+    get_llm_client,
+    reasoning_extra_body,
+)
 from pydantic import BaseModel, Field
 
 from generation.schemas import GeneratedAnswer
@@ -121,8 +125,8 @@ def score_faithfulness(
         A :class:`FaithfulnessScore` with ``score`` in ``[0.0, 1.0]`` and
         a brief ``reasoning`` string.
     """
-    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    model = os.environ.get("ANALYSIS_MODEL", "gpt-4o-mini")
+    client = get_llm_client()
+    model = get_analysis_model()
 
     user_message = (
         f"REFERENCE ANSWER:\n{expected}\n\n"
@@ -138,6 +142,7 @@ def score_faithfulness(
             {"role": "user", "content": user_message},
         ],
         response_format=FaithfulnessScore,
+        extra_body=reasoning_extra_body("analysis"),
     )
     return completion.choices[0].message.parsed
 

@@ -16,17 +16,11 @@ against which the production
 evaluated for parity.
 """
 
-import re
-
 from generation.schemas import Chunk, QueryAnalysis
 from retrieval.base import Retriever
 from retrieval.dense_retriever import DenseRetriever
 from retrieval.hybrid_retriever import merge_results
 from retrieval.sparse_retriever import SparseRetriever
-
-# Pattern matching a ``document_type=<value>`` hint in the query analyser's
-# retrieval_strategy string (e.g. "document_type=contract").
-_DOC_TYPE_FILTER_RE: re.Pattern[str] = re.compile(r"document_type=([a-z_]+)")
 
 
 class LocalRetriever(Retriever):
@@ -67,8 +61,8 @@ class LocalRetriever(Retriever):
 
         Dense retrieval embeds every query variant; sparse retrieval uses the
         original query only (expanded variants over-count keyword matches).
-        A ``document_type=`` hint in the query analysis is applied as a dense
-        ``where`` filter.
+        The query analysis's ``document_type_filter`` field, when set, is
+        applied as a dense ``where`` filter.
 
         Args:
             queries: Original query plus expanded variants (for dense search).
@@ -81,8 +75,10 @@ class LocalRetriever(Retriever):
             RRF-fused list of parent :class:`~generation.schemas.Chunk` objects
             sorted by fused score descending.
         """
-        doc_type_filter = self._extract_doc_type_filter(
-            query_analysis.retrieval_strategy
+        doc_type_filter = (
+            query_analysis.document_type_filter.value
+            if query_analysis.document_type_filter
+            else None
         )
         dense_chunks = self._dense.search(queries, top_k, doc_type_filter)
         sparse_chunks = self._sparse.search(original_query, top_k)
@@ -91,18 +87,3 @@ class LocalRetriever(Retriever):
     def refresh(self) -> None:
         """Rebuild the in-memory BM25 index after re-ingestion."""
         self._sparse.rebuild_index()
-
-    @staticmethod
-    def _extract_doc_type_filter(retrieval_strategy: str) -> str | None:
-        """Parse a ``document_type=<value>`` hint from a retrieval strategy.
-
-        Args:
-            retrieval_strategy: Free-text strategy string from the query
-                analyser.
-
-        Returns:
-            The document type value (e.g. ``"contract"``) if present, else
-            ``None``.
-        """
-        match = _DOC_TYPE_FILTER_RE.search(retrieval_strategy)
-        return match.group(1) if match else None

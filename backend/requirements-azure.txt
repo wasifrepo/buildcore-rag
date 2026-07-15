@@ -1,0 +1,44 @@
+# Production (Azure) dependency set.
+#
+# Deliberately a subset of requirements.txt. With RETRIEVER_BACKEND=azure_ai_search
+# and RERANKER_BACKEND=passthrough, the self-hosted retrieval stack is never
+# imported, so its dependencies are not installed:
+#
+#   chromadb              -> replaced by Azure AI Search vector search
+#   rank-bm25             -> replaced by Azure AI Search BM25
+#   torch                 -> replaced by the Azure managed semantic ranker
+#   sentence-transformers -> ditto
+#   transformers          -> ditto
+#
+# Dropping torch alone takes the image from ~3 GB to ~300 MB, which is what
+# makes Container Apps scale-to-zero cold starts tolerable: the platform must
+# pull the image before serving the first request after a scale-up.
+#
+# retrieval/factory.py and retrieval/reranker_factory.py import their backends
+# lazily, so nothing here is imported by accident. Keep versions in sync with
+# requirements.txt.
+
+# API
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+
+# LLM & Embeddings
+openai==1.51.0
+
+# Azure AI Search (retrieval backend) + Managed Identity auth
+azure-search-documents==12.0.0
+azure-identity==1.25.3
+
+# Document Ingestion
+pypdf==5.0.1
+
+# Data Validation
+pydantic==2.9.2
+pydantic-settings==2.5.2
+
+# Utilities
+python-dotenv==1.0.1
+tenacity==9.0.0
+httpx==0.27.2
+numpy==1.26.4
