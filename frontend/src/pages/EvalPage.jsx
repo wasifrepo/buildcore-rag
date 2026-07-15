@@ -113,6 +113,45 @@ function PassIcon({ passed }) {
   );
 }
 
+function FailedItems({ errors }) {
+  // Distinct error messages, with a count. A systemic failure (a missing
+  // dependency, an expired key, a rate limit) produces the same message for
+  // every item, so collapsing them says "one thing is broken" rather than
+  // scrolling 55 identical rows.
+  const grouped = errors.reduce((acc, e) => {
+    const key = `${e.type}: ${e.error}`;
+    (acc[key] ??= []).push(e.id);
+    return acc;
+  }, {});
+
+  return (
+    <div style={{ marginTop: 32 }}>
+      <div style={{
+        fontSize: 11,
+        color: "var(--text-muted)",
+        textTransform: "uppercase",
+        letterSpacing: "0.08em",
+        fontWeight: 600,
+        paddingBottom: 10,
+        borderBottom: "1px solid var(--border)",
+      }}>
+        {errors.length} item{errors.length === 1 ? "" : "s"} failed to evaluate
+      </div>
+      {Object.entries(grouped).map(([message, ids]) => (
+        <div key={message} style={{ padding: "12px 0", borderBottom: "1px solid var(--border)" }}>
+          <div style={{ fontSize: 13, color: "var(--danger, #e5484d)", fontFamily: "monospace" }}>
+            {message}
+          </div>
+          <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>
+            {ids.length} item{ids.length === 1 ? "" : "s"}: {ids.slice(0, 8).join(", ")}
+            {ids.length > 8 ? ` +${ids.length - 8} more` : ""}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ResultsTable({ cases }) {
   return (
     <div style={{ marginTop: 32 }}>
@@ -190,6 +229,16 @@ export default function EvalPage() {
   const streamedCases = steps
     .filter((s) => s.step === "case_complete")
     .map((s) => s.payload);
+
+  // The backend emits case_error for any item that fails to evaluate. These
+  // were previously received and discarded, so a run where every item failed
+  // rendered exactly like a run that had not started — the page just sat
+  // there while errors streamed in unseen. Surfacing them is the difference
+  // between a diagnosable failure and a silent one.
+  const streamedErrors = steps
+    .filter((s) => s.step === "case_error")
+    .map((s) => s.payload);
+
   const summaryStep = steps.find((s) => s.step === "evaluation_complete");
   const streamedSummary = summaryStep?.payload ?? null;
 
@@ -345,6 +394,10 @@ export default function EvalPage() {
           )}
         </>
       )}
+
+      {/* Failed items — shown above the results table so a run that is failing
+          is impossible to mistake for a run that is merely slow. */}
+      {streamedErrors.length > 0 && <FailedItems errors={streamedErrors} />}
 
       {/* Results table */}
       {activeCases.length > 0 && <ResultsTable cases={activeCases} />}
