@@ -1,0 +1,12 @@
+# node_modules is reinstalled inside the image via "npm ci". Copying the host
+# copy in would be slow and can carry platform-specific native builds that do
+# not match the image's OS.
+node_modules/
+
+# The production build is produced inside the image; a stale local dist/ must
+# never be able to shadow it.
+dist/
+
+.env
+.env.*
+npm-debug.log*

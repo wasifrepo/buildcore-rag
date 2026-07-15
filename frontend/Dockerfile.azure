@@ -1,0 +1,41 @@
+# Production image for Azure Container Apps.
+#
+# Separate from ./Dockerfile, which stays as the local docker-compose dev image
+# running the Vite dev server. That server is explicitly not for production: it
+# compiles on demand, ships source maps and the HMR websocket client, and binds
+# an unminified module graph. This image builds static assets and serves them
+# with nginx.
+#
+# Two stages: node builds, nginx serves. The node toolchain (~400MB) never
+# reaches the final image, which is nginx:alpine plus a few hundred KB of
+# assets.
+
+FROM node:20-alpine AS build
+
+WORKDIR /app
+
+# Copied before the source so editing components does not reinstall deps.
+# npm ci (not npm install) installs exactly the lockfile, so the image cannot
+# silently drift to newer transitive versions than were tested.
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+
+# Vite inlines import.meta.env.* at BUILD time — this is not a runtime setting.
+# The backend's Container App FQDN must therefore be known before this image is
+# built, which is why the backend is deployed first. Rebuild this image if the
+# backend URL ever changes.
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+RUN npm run build
+
+
+FROM nginx:alpine
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,46 @@
+# Production image for Azure Container Apps.
+#
+# Separate from ./Dockerfile, which stays as the local docker-compose dev image
+# (hot reload, full local retrieval stack). This one differs in three ways that
+# all matter in production:
+#
+# 1. requirements-azure.txt, not requirements.txt. With
+#    RETRIEVER_BACKEND=azure_ai_search and RERANKER_BACKEND=passthrough the
+#    self-hosted stack is never imported, so torch/chromadb/rank-bm25 are not
+#    installed: ~3GB -> ~300MB. Container Apps scales to zero and must pull the
+#    image before serving the first request after a scale-up, so image size is
+#    directly a latency problem, not just a storage one.
+#
+# 2. No --reload. The reloader watches the filesystem and forks a child process;
+#    in a container it wastes memory and can mask crashes behind a restart loop.
+#
+# 3. No apt packages. The dev image installs build-essential, poppler and
+#    tesseract for the `unstructured` library — which is commented out in
+#    requirements.txt. PDF handling is pypdf, which is pure Python.
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+# Copied and installed before the source so that editing code does not
+# invalidate the (slow) dependency layer.
+COPY requirements-azure.txt .
+RUN pip install --no-cache-dir -r requirements-azure.txt
+
+COPY . .
+
+# Run unprivileged. Container Apps does not require root and a compromised
+# process should not own its own filesystem.
+RUN useradd --create-home --uid 1000 appuser \
+    && chown -R appuser:appuser /app
+USER appuser
+
+EXPOSE 8000
+
+# PORT is honoured so the platform can choose the port; 8000 matches the
+# Container Apps ingress target port configured at deploy time.
+CMD ["sh", "-c", "uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

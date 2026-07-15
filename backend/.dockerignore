@@ -1,0 +1,25 @@
+# Without this file, "COPY . ." pulls the local virtualenv (multi-GB, with
+# torch) into the image and the build is both enormous and wrong: the venv's
+# platform-specific binaries would shadow the ones pip installs in the image.
+.venv/
+venv/
+env/
+
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets never belong in an image layer. Azure config is injected as
+# Container Apps environment variables and secrets at runtime.
+.env
+.env.*
+
+# Runtime output, not source.
+traces/
+
+# The corpus is indexed into Azure AI Search ahead of time by
+# ingestion/azure_index.py; the serving container never reads it.
+data/
