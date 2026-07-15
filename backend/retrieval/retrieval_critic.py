@@ -42,9 +42,24 @@ from generation.schemas import Chunk, CriticVerdict
 # Constants
 # ---------------------------------------------------------------------------
 
-# Maximum number of characters from each chunk included in the user message.
-# This caps token usage while still giving the critic enough text to judge.
-_MAX_CHUNK_CHARS: int = 2000
+# The critic sees each chunk in full, exactly as the generator will.
+#
+# It previously truncated each chunk to 2,000 characters to cap token usage. That
+# is unsound: the critic *gates* the generator, and the generator receives the
+# full chunk (see generator.py, "full content, no truncation"). A judge reading
+# strictly less than the text it is authorising will veto answers the generator
+# could have produced from content it never saw.
+#
+# This was not hypothetical. "How is FLT-03's service brake tested during the
+# daily pre-start check?" retrieved the correct 4,225-char DAILY PRE-START
+# CHECK PROCEDURE chunk, but the answer (step 5.7) sits past the 2,000-char
+# cut, so the critic reported the procedure "not present in the excerpts" and
+# the pipeline refused a question it had already retrieved the answer to.
+#
+# Cost is bounded by TOP_K_RERANKED (default 8) times the largest parent the
+# chunkers emit (~4.2k chars), i.e. ~8k tokens per critic call — comfortable
+# for the analysis model, and cheaper than a wrong refusal.
+
 
 # ---------------------------------------------------------------------------
 # System prompt
@@ -177,10 +192,10 @@ def assess_retrieval(query: str, chunks: list[Chunk]) -> CriticVerdict:
 def _format_user_message(query: str, chunks: list[Chunk]) -> str:
     """Build the user message that presents the query and retrieved chunks.
 
-    Each chunk is formatted with its rank, document ID, document type, and
-    a truncated excerpt of its content.  Truncation is applied per chunk at
-    ``_MAX_CHUNK_CHARS`` characters to keep the message within a reasonable
-    token budget while preserving enough context for the critic to judge.
+    Each chunk is formatted with its rank, document ID, document type, and its
+    content **in full**.  The critic must not read less than the generator it
+    gates — see the note above :data:`_SYSTEM_PROMPT` — or it will veto answers
+    the generator could have produced.
 
     Args:
         query: The original user query string.
@@ -200,9 +215,7 @@ def _format_user_message(query: str, chunks: list[Chunk]) -> str:
         lines.append("(no chunks were retrieved)")
     else:
         for rank, chunk in enumerate(chunks, start=1):
-            excerpt = chunk.content[:_MAX_CHUNK_CHARS]
-            if len(chunk.content) > _MAX_CHUNK_CHARS:
-                excerpt += "… [truncated]"
+            excerpt = chunk.content
             lines += [
                 f"[{rank}] document_id={chunk.document_id}  "
                 f"type={chunk.document_type}  "
