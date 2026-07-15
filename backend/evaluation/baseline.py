@@ -163,12 +163,12 @@ def _search_azure(embedding: list[float], top_k: int) -> list[str]:
 
     from ingestion.azure_index import (  # noqa: PLC0415
         get_parent_id_field,
-        get_search_client,
         get_vector_field,
+        search_with_retry,
     )
 
     parent_id_field = get_parent_id_field()
-    results = get_search_client().search(
+    results = search_with_retry(
         search_text=None,
         vector_queries=[
             VectorizedQuery(

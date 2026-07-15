@@ -54,6 +54,11 @@ import os
 from pathlib import Path
 
 from azure.core.credentials import AzureKeyCredential
+from azure.core.exceptions import (
+    IncompleteReadError,
+    ServiceRequestError,
+    ServiceResponseError,
+)
 from azure.search.documents import SearchClient
 from azure.search.documents.indexes import SearchIndexClient
 from azure.search.documents.indexes.models import (
@@ -71,6 +76,13 @@ from azure.search.documents.indexes.models import (
     VectorSearch,
     VectorSearchAlgorithmMetric,
     VectorSearchProfile,
+)
+
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
 )
 
 from common.llm_client import embed_texts, get_embedding_model
@@ -209,6 +221,50 @@ def get_search_client() -> SearchClient:
         index_name=get_index_name(),
         credential=build_credential(),
     )
+
+
+#: Transient Azure AI Search failures worth retrying.
+#:
+#: IncompleteReadError is listed explicitly rather than catching its parent.
+#: Its MRO is DecodeError -> HttpResponseError -> AzureError, so retrying
+#: HttpResponseError would also retry a 400 Bad Request or a 404 — permanent
+#: errors that fail identically on every attempt and should surface at once.
+_SEARCH_RETRYABLE = (
+    ServiceRequestError,
+    ServiceResponseError,
+    IncompleteReadError,
+)
+
+
+@retry(
+    retry=retry_if_exception_type(_SEARCH_RETRYABLE),
+    stop=stop_after_attempt(4),
+    wait=wait_exponential(multiplier=1, min=1, max=15),
+    reraise=True,
+)
+def search_with_retry(**kwargs) -> list[dict]:
+    """Run a search query and materialise the results, retrying transient faults.
+
+    ``SearchClient.search`` returns a lazy paged iterator: the HTTP response
+    body is streamed as the caller iterates, so a dropped connection surfaces
+    during *iteration*, not at call time.  Retrying only the ``search`` call
+    would therefore not protect against the common failure —
+    ``IncompleteReadError`` mid-stream.  This helper materialises the results
+    inside the retried scope so a broken read is retried as one unit.
+
+    Args:
+        **kwargs: Passed through unchanged to
+            :meth:`azure.search.documents.SearchClient.search`.
+
+    Returns:
+        The result rows as plain dicts, fully read from the wire.
+
+    Raises:
+        azure.core.exceptions.AzureError: If every attempt fails, the last
+            error is re-raised.
+    """
+    results = get_search_client().search(**kwargs)
+    return [dict(row) for row in results]
 
 
 def get_index_client() -> SearchIndexClient:

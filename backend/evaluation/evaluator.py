@@ -37,6 +37,7 @@ Exported symbols
 """
 
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Any
@@ -57,6 +58,8 @@ from retrieval.query_analyzer import analyze_query
 from retrieval.query_expander import expand_query
 from retrieval.reranker_factory import get_reranker
 from retrieval.retrieval_critic import assess_retrieval
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Module-level singletons (instantiated once at import time)
@@ -343,14 +346,46 @@ def run_evaluation_suite() -> EvaluationReport:
     :func:`evaluate_single_item`, and aggregates results into an
     :class:`EvaluationReport`.
 
+    An item that raises is logged and skipped rather than aborting the run.  A
+    full suite is dozens of minutes of live API calls against several services,
+    and a single transient fault on the last item previously discarded every
+    prior result. Skipped items are excluded from the aggregates rather than
+    scored zero: a network fault is not evidence about answer quality, and
+    counting it as one would understate the system for a reason that has
+    nothing to do with retrieval.
+
     Returns:
         A fully populated :class:`EvaluationReport` including per-item
         results, aggregate scores for both systems, and the delta.
+
+    Raises:
+        RuntimeError: If every item failed, so there is nothing to report.
     """
     items = load_test_suite()
     results: list[ItemResult] = []
-    for item in items:
-        results.append(evaluate_single_item(item))
+    failed: list[str] = []
+
+    for index, item in enumerate(items, start=1):
+        item_id = item.get("id", f"item_{index}")
+        logger.info("Evaluating %d/%d: %s", index, len(items), item_id)
+        try:
+            results.append(evaluate_single_item(item))
+        except Exception:
+            failed.append(item_id)
+            logger.exception("  ✗ '%s' failed; skipping", item_id)
+
+    if failed:
+        logger.warning(
+            "%d of %d item(s) failed and are excluded from the report: %s",
+            len(failed),
+            len(items),
+            ", ".join(failed),
+        )
+    if not results:
+        raise RuntimeError(
+            f"All {len(items)} evaluation items failed; no report can be "
+            "produced. Check connectivity and backend configuration."
+        )
 
     return _compile_report(results)
 

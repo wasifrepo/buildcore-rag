@@ -75,8 +75,8 @@ from common.llm_client import embed_texts, get_embedding_model
 from generation.schemas import Chunk, QueryAnalysis
 from ingestion.azure_index import (
     get_parent_id_field,
-    get_search_client,
     get_vector_field,
+    search_with_retry,
 )
 from retrieval.base import Retriever
 
@@ -108,7 +108,6 @@ class AzureAISearchRetriever(Retriever):
         Args:
             semantic_config: Optional semantic configuration name override.
         """
-        self._client = get_search_client()
         self._semantic_config = semantic_config or os.environ.get(
             "AZURE_SEARCH_SEMANTIC_CONFIG"
         )
@@ -181,7 +180,7 @@ class AzureAISearchRetriever(Retriever):
             search_kwargs["query_type"] = "semantic"
             search_kwargs["semantic_configuration_name"] = self._semantic_config
 
-        results = self._client.search(**search_kwargs)
+        results = search_with_retry(**search_kwargs)
         return self._collapse_to_parents(results, resolved_top_k)
 
     def _collapse_to_parents(self, results, top_k: int) -> list[Chunk]:
