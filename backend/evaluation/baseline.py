@@ -27,7 +27,6 @@ controlled by the ``CHROMA_PERSIST_DIR``, ``CHROMA_COLLECTION_NAME``,
 
 import os
 
-import chromadb
 from common.llm_client import (
     embed_texts,
     get_embedding_model,
@@ -67,6 +66,14 @@ def run_baseline(question: str) -> str:
 
     persist_dir = os.environ.get("CHROMA_PERSIST_DIR", "./data/chroma")
     collection_name = os.environ.get("CHROMA_COLLECTION_NAME", "buildcore")
+
+    # Imported inside the function, not at module scope. api/main.py reaches
+    # this module transitively (routes.evaluate -> evaluator -> baseline), so a
+    # module-level import would make chromadb a hard dependency of simply
+    # starting the API — and the Azure production image deliberately omits it.
+    # The container would then die on startup with ModuleNotFoundError before
+    # uvicorn ever binds a port.
+    import chromadb  # noqa: PLC0415
 
     chroma_client = chromadb.PersistentClient(path=persist_dir)
     collection = chroma_client.get_or_create_collection(
