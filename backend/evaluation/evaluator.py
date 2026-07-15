@@ -17,11 +17,12 @@ production actually runs would understate the system's real quality.
 
 Module-level singletons
 ------------------------
-:class:`~retrieval.dense_retriever.DenseRetriever`,
-:class:`~retrieval.sparse_retriever.SparseRetriever`, and
+The :class:`~retrieval.base.Retriever` backend (chosen by ``RETRIEVER_BACKEND``
+via :func:`~retrieval.factory.get_retriever`) and the
 :class:`~retrieval.reranker.CrossEncoderReranker` are instantiated once at
-module load.  The cross-encoder model is loaded lazily on first use, so the
-first evaluated item is slower than subsequent ones.
+module load, matching the production route so evaluation scores the shipping
+system.  The cross-encoder model is loaded lazily on first use, so the first
+evaluated item is slower than subsequent ones.
 
 Exported symbols
 -----------------
@@ -35,7 +36,6 @@ Exported symbols
 
 import json
 import os
-import re
 from pathlib import Path
 from typing import Any
 
@@ -50,24 +50,20 @@ from evaluation.metrics import (
 )
 from generation.generator import generate_answer
 from generation.schemas import GeneratedAnswer
-from retrieval.dense_retriever import DenseRetriever
-from retrieval.hybrid_retriever import merge_results
+from retrieval.factory import get_retriever
 from retrieval.query_analyzer import analyze_query
 from retrieval.query_expander import expand_query
 from retrieval.reranker import CrossEncoderReranker
 from retrieval.retrieval_critic import assess_retrieval
-from retrieval.sparse_retriever import SparseRetriever
 
 # ---------------------------------------------------------------------------
 # Module-level singletons (instantiated once at import time)
 # ---------------------------------------------------------------------------
 
-_dense_retriever = DenseRetriever()
-_sparse_retriever = SparseRetriever()
+# Same retriever backend as the production route, so evaluation scores the
+# system that actually ships (local ChromaDB+BM25 or Azure AI Search).
+_retriever = get_retriever()
 _reranker = CrossEncoderReranker()
-
-# Pattern for document_type filter hint in retrieval_strategy strings
-_DOC_TYPE_FILTER_RE: re.Pattern[str] = re.compile(r"document_type=([a-z_]+)")
 
 # Path to test_suite.json, resolved relative to this file
 _TEST_SUITE_PATH: Path = Path(__file__).parent / "test_suite.json"
@@ -195,16 +191,9 @@ def _run_full_pipeline(question: str, query_analysis=None) -> GeneratedAnswer:
     expanded = expand_query(question)
     all_queries = [expanded.original] + expanded.variants
 
-    doc_type_filter: str | None = None
-    m = _DOC_TYPE_FILTER_RE.search(query_analysis.retrieval_strategy)
-    if m:
-        doc_type_filter = m.group(1)
-
     rerank_top_k = _resolve_rerank_top_k(query_analysis)
 
-    dense_chunks = _dense_retriever.search(all_queries, None, doc_type_filter)
-    sparse_chunks = _sparse_retriever.search(question)
-    merged = merge_results(dense_chunks, sparse_chunks, query_analysis)
+    merged = _retriever.retrieve(all_queries, question, query_analysis)
     reranked = _reranker.rerank(question, merged, rerank_top_k)
     verdict = assess_retrieval(question, reranked)
 
@@ -213,9 +202,7 @@ def _run_full_pipeline(question: str, query_analysis=None) -> GeneratedAnswer:
 
     if not verdict.sufficient and verdict.refined_query:
         refined_query = verdict.refined_query
-        dense2 = _dense_retriever.search([refined_query], None, None)
-        sparse2 = _sparse_retriever.search(refined_query)
-        merged2 = merge_results(dense2, sparse2, query_analysis)
+        merged2 = _retriever.retrieve([refined_query], refined_query, query_analysis)
         reranked2 = _reranker.rerank(refined_query, merged2, rerank_top_k)
         second_verdict = assess_retrieval(refined_query, reranked2)
         final_chunks = reranked2

@@ -24,10 +24,31 @@ so the architecture is visible, explainable, and defensible.
 ## Retrieval pipeline — layer order
 1. Query classification and intent analysis (query_analyzer.py)
 2. Multi-query expansion — 3 variants generated (query_expander.py)
-3. Hybrid retrieval — dense (ChromaDB) + sparse (BM25) merged (hybrid_retriever.py)
+3. Hybrid retrieval — dense (ChromaDB) + sparse (BM25) merged (hybrid_retriever.py),
+   behind a Retriever adapter (see below)
 4. Cross-encoder reranking (reranker.py)
 5. Retrieval critic — LLM-as-judge, triggers second pass if confidence is low (retrieval_critic.py)
 6. Generation with inline citation tracking (generator.py)
+
+## Small-to-big (parent-child) retrieval
+Documents are indexed at two granularities. Structure-aware **parent** chunks
+(from the five chunkers) are split into 2-3 sentence **child** chunks by
+ingestion/child_splitter.py. Children are what get embedded + BM25-indexed, so
+matching is precise; each child carries its parent's id/text in metadata, and
+the retrievers collapse child hits back to parents (retrieval/_parenting.py) so
+the reranker and generator always see full-context parents. Children are
+character-capped, so ingestion never truncates — no source text is dropped.
+
+## Retriever adapter (local ↔ Azure)
+Retrieval sits behind the Retriever interface (retrieval/base.py), selected by
+RETRIEVER_BACKEND via retrieval/factory.py:
+- LocalRetriever (default) — ChromaDB dense + BM25 sparse + RRF fusion.
+- AzureAISearchRetriever — production backend (Azure AI Search hybrid + semantic
+  ranker). Scaffold only; wired up during the Azure deployment phase (no local
+  emulator). Azure AI Search "index projections" mirror the parent-child model.
+query.py and evaluator.py both call get_retriever() so eval scores the shipping
+backend. The cross-encoder reranker (MiniLM) is unchanged; in Azure prod the
+managed semantic ranker fills that role.
 
 ## Document types in corpus
 - safety_sops/ — section-aware chunking (respects headers and numbered sections)
@@ -67,6 +88,9 @@ so the architecture is visible, explainable, and defensible.
 
 ## Environment variables
 See .env.example. Copy to .env before running. Never commit .env.
+Key additions: RETRIEVER_BACKEND (local|azure_ai_search), CHILD_SENTENCES,
+CHILD_OVERLAP, CHILD_MAX_CHARS, CHILD_FETCH_MULTIPLIER, and the AZURE_SEARCH_*
+group (only for the Azure backend).
 
 ## Running locally (without Docker)
 ```

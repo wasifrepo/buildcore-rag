@@ -13,11 +13,22 @@ Provides two public entry points:
 
 ``run_ingestion``
     Walks the full ``data/raw/`` directory tree, processes every ``.txt`` and
-    ``.pdf`` file via ``ingest_file``, embeds each chunk with OpenAI
-    ``text-embedding-3-small``, and upserts the results into a ChromaDB
-    persistent collection.  Idempotent: re-running against an unchanged
-    corpus produces the same chunk IDs and ChromaDB silently skips
-    unchanged entries.
+    ``.pdf`` file via ``ingest_file``, splits each structure-aware *parent*
+    chunk into 2-3 sentence *child* chunks (see ``ingestion.child_splitter``),
+    embeds every child with OpenAI ``text-embedding-3-small``, and upserts the
+    children into a ChromaDB persistent collection.  Idempotent: re-running
+    against an unchanged corpus produces the same chunk IDs and ChromaDB
+    silently skips unchanged entries.
+
+Small-to-big indexing
+---------------------
+Children are the units that get embedded and BM25-indexed, so matching happens
+against small, focused text.  Each child carries its parent's ID and full text
+in metadata, and the retrieval layer resolves a child hit back to its parent
+(see ``retrieval/_parenting.py``) before reranking and generation — precise
+matching, full-context answers.  Because children are character-capped below
+the embedding token limit, ingestion never truncates: no source text is dropped
+on the way into the store.
 
 ChromaDB metadata constraint
 -----------------------------
@@ -27,7 +38,6 @@ chunks, ``subsections`` in SOP chunks) are JSON-serialised to strings before
 upsert and must be deserialised by the retrieval layer if needed.
 """
 
-import hashlib
 import json
 import logging
 import os
@@ -39,6 +49,7 @@ from openai import OpenAI
 
 from generation.schemas import Chunk, DocumentType
 from ingestion.classifier import classify_document
+from ingestion.child_splitter import build_child_chunks
 from ingestion.chunkers.base import BaseChunker
 from ingestion.chunkers.checklist_chunker import ChecklistChunker
 from ingestion.chunkers.contract_chunker import ContractChunker
@@ -195,12 +206,18 @@ def run_ingestion(
     for file_path in corpus_files:
         logger.info("Processing '%s'", file_path.name)
         try:
-            chunks = ingest_file(file_path)
-            _upsert_chunks(chunks, collection, openai_client, embedding_model)
-            chunks_upserted += len(chunks)
+            parents = ingest_file(file_path)
+            children = [
+                child for parent in parents for child in build_child_chunks(parent)
+            ]
+            _upsert_chunks(children, collection, openai_client, embedding_model)
+            chunks_upserted += len(children)
             files_processed += 1
             logger.info(
-                "  ✓ %d chunks upserted from '%s'", len(chunks), file_path.name
+                "  ✓ %d parent chunks → %d child chunks upserted from '%s'",
+                len(parents),
+                len(children),
+                file_path.name,
             )
         except Exception:
             files_failed += 1
@@ -222,40 +239,6 @@ def run_ingestion(
 # ---------------------------------------------------------------------------
 # Private helpers
 # ---------------------------------------------------------------------------
-
-
-# Character limit applied before sending text to the OpenAI embeddings API.
-# text-embedding-3-small accepts up to 8,192 tokens; at ~4 chars/token that is
-# ~32,768 characters, but we use a conservative 6,000-character ceiling to
-# stay well clear of the limit while keeping chunks semantically complete.
-_EMBED_MAX_CHARS: int = 6_000
-
-
-def _truncate_for_embedding(chunk: Chunk) -> str:
-    """Return the chunk content, truncated to ``_EMBED_MAX_CHARS`` if necessary.
-
-    Logs a warning when truncation occurs so that oversized chunks are visible
-    in ingestion logs without failing the entire pipeline.
-
-    Args:
-        chunk: The :class:`~generation.schemas.Chunk` whose content is to be
-            embedded.
-
-    Returns:
-        The original content string if it is within ``_EMBED_MAX_CHARS``,
-        otherwise the first ``_EMBED_MAX_CHARS`` characters.
-    """
-    text = chunk.content
-    if len(text) <= _EMBED_MAX_CHARS:
-        return text
-    logger.warning(
-        "Chunk '%s' from '%s' exceeds %d characters (%d); truncating for embedding.",
-        chunk.chunk_id,
-        chunk.document_id,
-        _EMBED_MAX_CHARS,
-        len(text),
-    )
-    return text[:_EMBED_MAX_CHARS]
 
 
 def _extract_pdf_text(path: Path) -> str:
@@ -282,16 +265,22 @@ def _upsert_chunks(
     openai_client: OpenAI,
     embedding_model: str,
 ) -> None:
-    """Embed a list of chunks in batches and upsert them into a ChromaDB collection.
+    """Embed a list of child chunks in batches and upsert them into ChromaDB.
 
     Splits ``chunks`` into batches of :data:`_EMBED_BATCH_SIZE`, requests
-    embeddings for each batch from the OpenAI Embeddings API, flattens
-    each chunk's metadata dict to ChromaDB-compatible scalars, and calls
+    embeddings for each batch from the OpenAI Embeddings API, flattens each
+    chunk's metadata dict to ChromaDB-compatible scalars, and calls
     ``collection.upsert`` for the batch.
 
+    The full chunk content is both embedded and stored verbatim — nothing is
+    truncated.  Child chunks are character-capped by
+    ``ingestion.child_splitter`` well below the embedding model's token limit,
+    so the embedding call never rejects an over-long input and no source text
+    is ever dropped.
+
     Args:
-        chunks: Ordered list of :class:`~generation.schemas.Chunk` objects
-            to embed and store.
+        chunks: Ordered list of child :class:`~generation.schemas.Chunk`
+            objects to embed and store.
         collection: The ChromaDB collection to upsert into.
         openai_client: Authenticated :class:`openai.OpenAI` client instance.
         embedding_model: OpenAI embedding model identifier
@@ -299,20 +288,8 @@ def _upsert_chunks(
     """
     for batch_start in range(0, len(chunks), _EMBED_BATCH_SIZE):
         batch = chunks[batch_start : batch_start + _EMBED_BATCH_SIZE]
-        texts = [_truncate_for_embedding(chunk) for chunk in batch]
-
-        # Regenerate IDs for any chunk whose content was truncated.  The
-        # original chunk_id is derived from the full content hash, so two
-        # chunks from the same document that truncate to identical prefixes
-        # would collide.  Mixing in chunk_index breaks that symmetry.
-        ids = [
-            hashlib.sha256(
-                f"{chunk.chunk_id}::{chunk.metadata.get('chunk_index', 0)}".encode()
-            ).hexdigest()[:16]
-            if len(chunk.content) > _EMBED_MAX_CHARS
-            else chunk.chunk_id
-            for chunk in batch
-        ]
+        texts = [chunk.content for chunk in batch]
+        ids = [chunk.chunk_id for chunk in batch]
 
         response = openai_client.embeddings.create(
             model=embedding_model,

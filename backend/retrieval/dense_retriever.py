@@ -24,21 +24,31 @@ maximally dissimilar.  The conversion used here is:
 For OpenAI embeddings (which are unit-normalised), this yields values in
 ``[−1, 1]`` that are monotonically equivalent to cosine similarity.
 
+Small-to-big (parent-child) collapsing
+--------------------------------------
+The ChromaDB collection stores *child* chunks (2-3 sentence windows).  Vector
+search matches children, but this retriever returns *parent* chunks: each child
+hit is resolved to its parent via ``retrieval._parenting.parent_from_child`` and
+duplicates are collapsed by parent ID, keeping the best cosine similarity seen
+across the parent's children.  Because many children map to one parent, the
+retriever over-fetches children (``top_k × CHILD_FETCH_MULTIPLIER``) so that
+enough distinct parents survive the collapse.
+
 Metadata reconstruction
 ------------------------
 The ingestion pipeline serialises ``list`` metadata values to JSON strings
-before upserting into ChromaDB (see ``pipeline._flatten_metadata``).  This
-module reverses that transformation: any string metadata value that parses as
-a JSON array is converted back to a Python list.
+before upserting into ChromaDB (see ``pipeline._flatten_metadata``).  The
+parent-reconstruction helper reverses that transformation: any string metadata
+value that parses as a JSON array is converted back to a Python list.
 """
 
-import json
 import os
 
 import chromadb
 from openai import OpenAI
 
 from generation.schemas import Chunk
+from retrieval._parenting import parent_from_child
 
 # ---------------------------------------------------------------------------
 # Module-level constants
@@ -46,6 +56,9 @@ from generation.schemas import Chunk
 
 _DEFAULT_TOP_K: int = 20
 _DEFAULT_EMBED_MODEL: str = "text-embedding-3-small"
+# Children fetched per query variant = top_k × this multiplier, so that after
+# collapsing children to parents there are still ~top_k distinct parents.
+_DEFAULT_CHILD_FETCH_MULTIPLIER: int = 4
 
 
 # ---------------------------------------------------------------------------
@@ -122,11 +135,15 @@ class DenseRetriever:
                 ``where`` filter clause.
 
         Returns:
-            Deduplicated list of :class:`~generation.schemas.Chunk` objects
-            sorted by ``dense_score`` descending.  Each chunk's ``dense_score``
-            is the best cosine similarity observed across all query variants.
+            Deduplicated list of parent :class:`~generation.schemas.Chunk`
+            objects sorted by ``dense_score`` descending, at most
+            ``resolved_top_k`` long.  Each parent's ``dense_score`` is the best
+            cosine similarity observed across its children and query variants.
         """
         resolved_top_k = top_k or int(os.environ.get("TOP_K_DENSE", _DEFAULT_TOP_K))
+        child_fetch = resolved_top_k * int(
+            os.environ.get("CHILD_FETCH_MULTIPLIER", _DEFAULT_CHILD_FETCH_MULTIPLIER)
+        )
 
         # Embed all queries in one API call
         embed_response = self._openai.embeddings.create(
@@ -139,13 +156,14 @@ class DenseRetriever:
         if document_type_filter:
             where_filter = {"document_type": {"$eq": document_type_filter}}
 
-        # Query ChromaDB for each embedding and merge results
-        best: dict[str, Chunk] = {}  # chunk_id → best Chunk seen so far
+        # Query ChromaDB for each embedding, collapse child hits to parents, and
+        # keep the best score per parent across all query variants.
+        best: dict[str, Chunk] = {}  # parent_id → best parent Chunk seen so far
 
         for embedding in embeddings:
             query_kwargs: dict = {
                 "query_embeddings": [embedding],
-                "n_results": resolved_top_k,
+                "n_results": child_fetch,
                 "include": ["documents", "metadatas", "distances"],
             }
             if where_filter:
@@ -158,91 +176,19 @@ class DenseRetriever:
             metadatas: list[dict] = result["metadatas"][0]
             distances: list[float] = result["distances"][0]
 
-            for chunk_id, content, flat_meta, distance in zip(
+            for child_id, content, flat_meta, distance in zip(
                 ids, documents, metadatas, distances
             ):
                 dense_score = 1.0 - distance
-                if chunk_id in best and best[chunk_id].dense_score >= dense_score:
-                    continue
-                chunk = _build_chunk_from_chroma(
-                    chunk_id=chunk_id,
-                    content=content,
-                    flat_meta=flat_meta,
-                    dense_score=dense_score,
+                parent = parent_from_child(
+                    child_id, content, flat_meta, dense_score, "dense"
                 )
-                best[chunk_id] = chunk
+                existing = best.get(parent.chunk_id)
+                if existing is not None and (existing.dense_score or 0.0) >= dense_score:
+                    continue
+                best[parent.chunk_id] = parent
 
-        return sorted(best.values(), key=lambda c: c.dense_score or 0.0, reverse=True)
-
-
-# ---------------------------------------------------------------------------
-# Private helpers
-# ---------------------------------------------------------------------------
-
-
-def _build_chunk_from_chroma(
-    chunk_id: str,
-    content: str,
-    flat_meta: dict,
-    dense_score: float,
-) -> Chunk:
-    """Reconstruct a :class:`~generation.schemas.Chunk` from a ChromaDB result row.
-
-    Extracts ``document_id`` and ``document_type`` from the flat metadata,
-    deserialises any JSON-array strings back to Python lists, and packages
-    the remainder of the metadata into the chunk's ``metadata`` dict.
-
-    Args:
-        chunk_id: ChromaDB document ID (equals the chunk's SHA-256-derived ID).
-        content: Raw chunk text as stored in ChromaDB.
-        flat_meta: Flat metadata dict as returned by ChromaDB.  List values
-            are stored as JSON strings and are deserialised here.
-        dense_score: Pre-computed cosine similarity score (``1.0 − distance``).
-
-    Returns:
-        A fully populated :class:`~generation.schemas.Chunk` instance.
-    """
-    document_id: str = flat_meta.get("document_id", "")
-    document_type: str = flat_meta.get("document_type", "")
-
-    # Reconstruct chunk metadata — exclude the top-level fields that are
-    # stored separately on the Chunk model itself.
-    metadata: dict = {}
-    for key, value in flat_meta.items():
-        if key in ("document_id", "document_type"):
-            continue
-        metadata[key] = _try_deserialise_list(value)
-
-    return Chunk(
-        chunk_id=chunk_id,
-        document_id=document_id,
-        document_type=document_type,
-        content=content,
-        metadata=metadata,
-        dense_score=dense_score,
-    )
-
-
-def _try_deserialise_list(value: object) -> object:
-    """Attempt to deserialise a JSON-array string back to a Python list.
-
-    The ingestion pipeline serialises list metadata values to JSON strings
-    (e.g. ``'["item1", "item2"]'``).  This function reverses that
-    transformation for string values that begin with ``[``.  Non-matching
-    values are returned unchanged.
-
-    Args:
-        value: Metadata value as stored in ChromaDB.
-
-    Returns:
-        The original Python list if ``value`` is a valid JSON array string,
-        otherwise ``value`` unchanged.
-    """
-    if isinstance(value, str) and value.startswith("["):
-        try:
-            parsed = json.loads(value)
-            if isinstance(parsed, list):
-                return parsed
-        except json.JSONDecodeError:
-            pass
-    return value
+        ranked = sorted(
+            best.values(), key=lambda c: c.dense_score or 0.0, reverse=True
+        )
+        return ranked[:resolved_top_k]

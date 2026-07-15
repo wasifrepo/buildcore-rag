@@ -9,10 +9,16 @@ baseline and the full pipeline is visible in the evaluation report.
 Pipeline
 --------
 1. Embed the raw question using ``text-embedding-3-small``.
-2. Query ChromaDB for the top-5 nearest chunks (cosine similarity).
-3. Concatenate the raw chunk text into a single context block.
+2. Query ChromaDB for the top-5 nearest child chunks (cosine similarity).
+3. Resolve each hit to its parent text and concatenate the distinct parents
+   into a single context block.
 4. Send the question + context to GPT-4o with a plain prompt.
 5. Return the response as a raw string (no structured output, no citations).
+
+Resolving hits to parent text (rather than using the raw 2-3 sentence child
+snippets) keeps the comparison fair: the delta against the full pipeline then
+reflects the *pipeline's* sophistication — query expansion, hybrid retrieval,
+reranking, and the critic — not merely the fact that it returns larger chunks.
 
 The same ChromaDB collection and OpenAI models are used as the full pipeline,
 controlled by the ``CHROMA_PERSIST_DIR``, ``CHROMA_COLLECTION_NAME``,
@@ -70,16 +76,31 @@ def run_baseline(question: str) -> str:
     )
     query_embedding = embed_response.data[0].embedding
 
-    # Retrieve top-5 chunks
+    # Retrieve top-5 child chunks
     result = collection.query(
         query_embeddings=[query_embedding],
         n_results=_BASELINE_TOP_K,
-        include=["documents"],
+        include=["documents", "metadatas"],
     )
-    chunks: list[str] = result["documents"][0]
+    documents: list[str] = result["documents"][0]
+    metadatas: list[dict] = result["metadatas"][0]
 
-    # Concatenate chunk text into a single context block
-    context = "\n\n---\n\n".join(chunks)
+    # Resolve each child hit to its parent text, de-duplicating parents while
+    # preserving retrieval order.  Falls back to the child text if an index
+    # predates the parent-child migration and carries no parent_content.
+    seen_parents: set[str] = set()
+    contexts: list[str] = []
+    for document, meta in zip(documents, metadatas):
+        parent_id = meta.get("parent_id")
+        parent_text = meta.get("parent_content") or document
+        key = parent_id or document
+        if key in seen_parents:
+            continue
+        seen_parents.add(key)
+        contexts.append(parent_text)
+
+    # Concatenate parent text into a single context block
+    context = "\n\n---\n\n".join(contexts)
 
     user_message = f"CONTEXT:\n{context}\n\nQUESTION:\n{question}"
 

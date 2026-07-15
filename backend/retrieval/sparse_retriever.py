@@ -37,6 +37,7 @@ import chromadb
 from rank_bm25 import BM25Okapi
 
 from generation.schemas import Chunk
+from retrieval._parenting import parent_from_child
 
 # ---------------------------------------------------------------------------
 # Module-level constants
@@ -119,10 +120,12 @@ class SparseRetriever:
                 ``TOP_K_SPARSE`` environment variable (default ``20``).
 
         Returns:
-            List of :class:`~generation.schemas.Chunk` objects with
-            ``sparse_score`` populated (normalised to ``[0, 1]``) and sorted
-            by ``sparse_score`` descending.  Returns an empty list if the
-            BM25 index is empty or no documents score above zero.
+            List of parent :class:`~generation.schemas.Chunk` objects with
+            ``sparse_score`` populated (normalised to ``[0, 1]``) and sorted by
+            ``sparse_score`` descending, at most ``resolved_top_k`` long.  The
+            BM25 index scores *child* chunks; each child hit is collapsed to its
+            parent, keeping the parent's best-scoring child.  Returns an empty
+            list if the BM25 index is empty or no documents score above zero.
         """
         if self._bm25 is None or not self._chunk_ids:
             return []
@@ -142,26 +145,26 @@ class SparseRetriever:
             if score > 0.0
         ]
         scored.sort(key=lambda x: x[1], reverse=True)
-        top = scored[:resolved_top_k]
 
-        chunks: list[Chunk] = []
-        for idx, normalised_score in top:
-            flat_meta = self._chunk_metadatas[idx]
-            chunks.append(
-                Chunk(
-                    chunk_id=self._chunk_ids[idx],
-                    document_id=flat_meta.get("document_id", ""),
-                    document_type=flat_meta.get("document_type", ""),
-                    content=self._chunk_documents[idx],
-                    metadata={
-                        k: v
-                        for k, v in flat_meta.items()
-                        if k not in ("document_id", "document_type")
-                    },
-                    sparse_score=normalised_score,
-                )
+        # Walk child hits in descending score order, collapsing to parents.
+        # The first time a parent is seen carries its best child score, so we
+        # keep that and stop once we have resolved_top_k distinct parents.
+        best: dict[str, Chunk] = {}
+        for idx, normalised_score in scored:
+            parent = parent_from_child(
+                self._chunk_ids[idx],
+                self._chunk_documents[idx],
+                self._chunk_metadatas[idx],
+                normalised_score,
+                "sparse",
             )
-        return chunks
+            if parent.chunk_id in best:
+                continue
+            best[parent.chunk_id] = parent
+            if len(best) >= resolved_top_k:
+                break
+
+        return list(best.values())
 
     def rebuild_index(self) -> None:
         """Reload all documents from ChromaDB and rebuild the BM25 index.

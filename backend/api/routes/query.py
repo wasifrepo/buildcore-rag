@@ -36,8 +36,8 @@ verdict so the frontend can display "second pass triggered" context.
 
 Singletons
 ----------
-:class:`~retrieval.dense_retriever.DenseRetriever`,
-:class:`~retrieval.sparse_retriever.SparseRetriever`, and
+The :class:`~retrieval.base.Retriever` backend (chosen by ``RETRIEVER_BACKEND``
+via :func:`~retrieval.factory.get_retriever`) and the
 :class:`~retrieval.reranker.CrossEncoderReranker` are instantiated once at
 module load time and reused across requests.  The cross-encoder model is
 loaded lazily on first use (see ``reranker.py``), so the first request after
@@ -54,7 +54,6 @@ UUID4.
 import asyncio
 import json
 import os
-import re
 import time
 import uuid
 from pathlib import Path
@@ -71,13 +70,11 @@ from generation.schemas import (
     QueryAnalysis,
 )
 from generation.generator import generate_answer
-from retrieval.dense_retriever import DenseRetriever
-from retrieval.hybrid_retriever import merge_results
+from retrieval.factory import get_retriever
 from retrieval.query_analyzer import analyze_query
 from retrieval.query_expander import expand_query
 from retrieval.reranker import CrossEncoderReranker
 from retrieval.retrieval_critic import assess_retrieval
-from retrieval.sparse_retriever import SparseRetriever
 
 # ---------------------------------------------------------------------------
 # Router
@@ -90,19 +87,15 @@ router = APIRouter()
 # ---------------------------------------------------------------------------
 
 # Instantiated once so ChromaDB connections and the BM25 index are built only
-# at startup.  The cross-encoder model inside CrossEncoderReranker is loaded
-# lazily on first use.
-_dense_retriever = DenseRetriever()
-_sparse_retriever = SparseRetriever()
+# at startup.  The retriever backend (local ChromaDB+BM25 or Azure AI Search)
+# is chosen by RETRIEVER_BACKEND.  The cross-encoder model inside
+# CrossEncoderReranker is loaded lazily on first use.
+_retriever = get_retriever()
 _reranker = CrossEncoderReranker()
 
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-
-# Pattern matching a document_type= filter hint in the query analyser's
-# retrieval_strategy string (e.g. "document_type=contract").
-_DOC_TYPE_FILTER_RE: re.Pattern[str] = re.compile(r"document_type=([a-z_]+)")
 
 # Multiplier applied to TOP_K_RERANKED for queries that need evidence from
 # more than one document, so a fixed 8-chunk cap doesn't get filled entirely
@@ -195,17 +188,12 @@ async def stream_query(request: QueryRequest) -> StreamingResponse:
 
             # ── Step 3: Hybrid retrieval (first pass) ──────────────────────
             all_queries = [expanded_queries.original] + expanded_queries.variants
-            doc_type_filter = _extract_doc_type_filter(
-                query_analysis.retrieval_strategy
+            first_merged = await asyncio.to_thread(
+                _retriever.retrieve,
+                all_queries,
+                request.question,
+                query_analysis,
             )
-
-            dense_chunks, sparse_chunks = await asyncio.gather(
-                asyncio.to_thread(
-                    _dense_retriever.search, all_queries, None, doc_type_filter
-                ),
-                asyncio.to_thread(_sparse_retriever.search, request.question),
-            )
-            first_merged = merge_results(dense_chunks, sparse_chunks, query_analysis)
             yield _sse("chunks_retrieved", _chunk_summaries(first_merged))
 
             # ── Step 4: Reranking (first pass) ────────────────────────────
@@ -231,13 +219,12 @@ async def stream_query(request: QueryRequest) -> StreamingResponse:
                 refined_query: str = first_verdict.refined_query
                 yield _sse("second_pass_triggered", {"refined_query": refined_query})
 
-                dense2, sparse2 = await asyncio.gather(
-                    asyncio.to_thread(
-                        _dense_retriever.search, [refined_query], None, None
-                    ),
-                    asyncio.to_thread(_sparse_retriever.search, refined_query),
+                merged2 = await asyncio.to_thread(
+                    _retriever.retrieve,
+                    [refined_query],
+                    refined_query,
+                    query_analysis,
                 )
-                merged2 = merge_results(dense2, sparse2, query_analysis)
                 reranked2 = await asyncio.to_thread(
                     _reranker.rerank, refined_query, merged2, rerank_top_k
                 )
@@ -343,26 +330,6 @@ def _chunk_summaries(chunks: list[Chunk]) -> list[dict]:
             entry["rerank_score"] = round(chunk.rerank_score, 4)
         summaries.append(entry)
     return summaries
-
-
-def _extract_doc_type_filter(retrieval_strategy: str) -> str | None:
-    """Parse the retrieval strategy string for an explicit document type hint.
-
-    The query analyser sometimes embeds a ``document_type=<value>`` token in
-    its ``retrieval_strategy`` field.  When present, this value is passed as
-    a ChromaDB ``where`` filter to restrict dense retrieval to a single
-    document type.
-
-    Args:
-        retrieval_strategy: Free-text strategy string from
-            :class:`~generation.schemas.QueryAnalysis`.
-
-    Returns:
-        The document type value (e.g. ``"contract"``), or ``None`` if no
-        filter is specified.
-    """
-    match = _DOC_TYPE_FILTER_RE.search(retrieval_strategy)
-    return match.group(1) if match else None
 
 
 def _write_trace(trace: PipelineTrace) -> None:
