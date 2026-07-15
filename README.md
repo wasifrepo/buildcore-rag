@@ -43,8 +43,9 @@ The pipeline has six layers. Each exists for a specific, defensible reason.
 
 ### Layer 1 — Query Analysis
 
-Before touching the vector store, the incoming query is classified using
-GPT-4o-mini with structured output. Queries are routed into one of five
+Before touching the vector store, the incoming query is classified using a
+small, fast model with structured output (`gpt-4o-mini` locally, `gpt-5-mini`
+on Azure). Queries are routed into one of five
 types: `factual`, `procedural`, `cross_document`, `ambiguous`, or
 `out_of_scope`. The classification drives retrieval strategy — a factual
 lookup against contracts uses a different approach than a procedural query
@@ -110,10 +111,15 @@ consequences — this is not optional.
 
 ### Layer 6 — Grounded Generation with Citations
 
-GPT-4o generates the final answer under strict instructions: use only the
+The generation model (`gpt-4o` locally, `gpt-5.4-mini` on Azure) produces the
+final answer under strict instructions: use only the
 provided chunks, cite every factual claim by document ID, and return a
 structured response with inline citations and verbatim excerpts. Every
 answer is fully traceable to its source document and section.
+
+The model is a configuration detail, not an architectural one — every LLM call
+resolves through a single client factory, so switching provider or model is one
+environment variable and no code change.
 
 ---
 
@@ -224,11 +230,11 @@ Everything is tunable without touching code — `CHILD_SENTENCES`,
 Children overlap by one sentence by default, so a fact spanning a window
 boundary is still fully present in at least one child.
 
-> **Note on measurement:** the evaluation numbers reported below were
-> produced *before* the small-to-big migration. The rationale above is
-> architectural, not yet measured. Re-running the eval suite against the
-> re-ingested index is the honest next step, and the harness exists to do
-> exactly that.
+> **On measurement:** the [evaluation numbers](#evaluation-results) below were
+> produced against the re-ingested index, so they include this change. They do
+> not *isolate* it — small-to-big landed alongside the Azure migration and a
+> model change, and no ablation was run to separate the three. The argument
+> above is architectural; treat it as reasoning, not as a measured claim.
 
 ---
 
@@ -341,50 +347,132 @@ documents would never have exercised either.
 
 ## Evaluation Results
 
-The system was evaluated against a hand-crafted test suite of 50 questions
-across four difficulty levels: simple factual (15), procedural (15),
-multi-hop cross-document reasoning (10), and out-of-scope refusals (10).
+Measured against the **deployed Azure system** — Azure AI Search with the
+managed semantic ranker, `gpt-5.4-mini` for generation, `gpt-5-mini` for the
+analysis layers — over a hand-crafted suite of 55 questions: factual (15),
+procedural (15), multi-hop cross-document (15), and out-of-scope refusals (10).
 
-Each answer was scored by an LLM judge on three metrics: faithfulness to
-source documents, citation presence, and refusal accuracy.
+Each answer is scored by an LLM judge on faithfulness to source documents,
+citation presence, and refusal accuracy.
 
 | Metric | BuildCore Intelligence | Naive Baseline | Delta |
 |---|---|---|---|
-| Faithfulness | 76.4% | 66.8% | +9.6pp |
-| Citation presence | **80.0%** | **20.0%** | **+60.0pp** |
-| Refusal accuracy | 80.0% | 80.0% | 0.0pp |
-| **Overall** | **78.8%** | **55.6%** | **+23.2pp** |
+| Faithfulness | 88.7% | 79.3% | +9.5pp |
+| Citation presence | **95.5%** | **18.2%** | **+77.3pp** |
+| Refusal accuracy | 96.4% | 81.8% | +14.5pp |
+| **Overall** | **93.5%** | **59.8%** | **+33.8pp** |
 
+By difficulty:
+
+| Difficulty | n | System | Baseline | Delta |
+|---|---|---|---|---|
+| Factual | 15 | 98.7% | 65.3% | +33.3pp |
+| Procedural | 15 | 84.4% | 65.3% | +19.1pp |
+| Multi-hop cross-document | 15 | 93.1% | 50.7% | **+42.4pp** |
+| Out-of-scope refusal | 10 | **100.0%** | 56.7% | +43.3pp |
+
+<!-- STALE: this screenshot predates the Azure migration and shows the earlier
+     50-question / 12-document numbers, which contradict the table above.
+     Re-capture from the EvalPage after the next suite run before publishing. -->
 ![Evaluation Dashboard](docs/evaluation.png)
 
-The citation presence result is the most significant finding. The naive
-baseline generates answers without citing sources 80% of the time. The
-full pipeline cites sources on 80% of answers — a 4x improvement. For
-enterprise deployments where auditability matters, this is the difference
-between a system that can be trusted and one that cannot.
+### What the baseline is, and why the comparison is fair
 
-The naive baseline used for comparison: dense-only retrieval, no query
-expansion, no reranking, no retrieval critic, plain GPT-4o generation with
-no structured output or citation requirements.
+The baseline is a naive RAG system: embed the question, take the top-5 nearest
+chunks by cosine similarity, concatenate, generate. No query expansion, no
+sparse retrieval, no hybrid fusion, no reranking, no critic, no structured
+output or citation requirement.
+
+Everything else is held identical *on purpose*, because a comparison is only
+worth reporting if it isolates one variable:
+
+- **Same retrieval substrate** — the baseline queries the same Azure AI Search
+  index, passing `search_text=None` and no `query_type` so that neither BM25
+  nor the semantic ranker contributes. It is a bare nearest-neighbour lookup
+  against the same data.
+- **Same chunks** — baseline hits resolve to the same *parent* text the full
+  pipeline generates from, so the delta is not an artefact of the baseline
+  receiving smaller context.
+- **Same models** — embedding, generation, and reasoning effort all resolve
+  through the same client factory.
+
+What differs is exactly the list in the first paragraph. That is the thing
+being measured.
+
+### Reading the numbers
+
+**Citation presence is the headline.** The naive baseline cites a source on
+18.2% of answers; the full pipeline does on 95.5% — a 5x difference. Every
+factual claim is traceable to a document ID and a verbatim excerpt. For any
+deployment where an answer has consequences, that is the line between a system
+that can be audited and one that cannot.
+
+**The biggest deltas are where the architecture is aimed.** Multi-hop (+42.4pp)
+and out-of-scope refusal (+43.3pp) are precisely what query expansion, hybrid
+retrieval, and the critic gate exist for. Naive retrieval scores 50.7% on
+multi-hop because a single vector query cannot span an internal SOP and a
+73-page federal regulation at once.
+
+**Refusals are perfect (100%) and were the only place the system erred.** Every
+failure in the suite was an *over*-refusal — the system declining a question it
+could have answered. It never hallucinated an answer it could not support. That
+is the safe direction to be wrong.
+
+### Three honest caveats
+
+**These numbers are not comparable to this project's earlier 78.8% / +23.2pp.**
+That run used 50 questions over 12 documents on `gpt-4o` with a ChromaDB
+baseline. This one uses 55 questions over 17 documents (including 4,093 OSHA
+distractor chunks that did not exist then) on `gpt-5.4-mini` with a fair Azure
+baseline. Four variables moved at once; the improvement cannot be attributed to
+any single one, and it is not claimed to be.
+
+**Two items scored 0.00 for a bug that is now fixed, and the fix is not
+reflected above.** Both failures were the retrieval critic truncating chunks to
+2,000 characters while the generator reads them in full — so for *"How is
+FLT-03's service brake tested?"* the correct 4,225-character chunk was
+retrieved and ranked 2nd, but the answer at step 5.7 sat past the cut. The
+critic reported it absent and the pipeline refused a question whose answer it
+was already holding. Both now pass (0.92 / 0.86 critic confidence) with correct
+cited answers. Re-running the suite would lift Procedural from 84.4% to roughly
+97% and Overall to roughly 97%; the numbers above are left as measured rather
+than adjusted by hand.
+
+**One multi-hop question was made easier during authoring.** `multi_hop_15`
+originally asked whether SOP-001 and SOP-005 agree on guardrail height, and the
+system failed it by applying OSHA's general 42±3 in figure to a scaffold. The
+rewritten version states both figures in the question, so the model only has to
+reason about regulatory scope rather than retrieve the numbers. It scores 1.00 —
+partly because the question is easier than the one it replaced.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Python 3.11, FastAPI, uvicorn |
-| Frontend | React 18, Vite |
-| Vector store | ChromaDB (cosine similarity, persistent) |
-| Embeddings | OpenAI `text-embedding-3-small` |
-| Query analysis, expansion, critic | GPT-4o-mini (structured output) |
-| Final generation | GPT-4o |
-| Sparse retrieval | BM25 via `rank_bm25` |
-| Reranker | `cross-encoder/ms-marco-MiniLM-L-6-v2` |
-| Rank fusion | Reciprocal Rank Fusion (RRF, k=60) |
-| Chunking model | Small-to-big parent-child (structure-aware parents, 2–3 sentence children) |
-| Retrieval backend | Swappable adapter — local (ChromaDB + BM25) or Azure AI Search |
-| Containerisation | Docker Compose |
+Every row below with two entries is a swap made by an environment variable, not
+a code change.
+
+| Layer | Local (development) | Azure (production) |
+|---|---|---|
+| Backend | Python 3.11, FastAPI, uvicorn | ← same, on Container Apps |
+| Frontend | React 18, Vite dev server | ← same build, served by nginx on Container Apps |
+| Vector search | ChromaDB (cosine, persistent) | Azure AI Search (HNSW, cosine) |
+| Keyword search | BM25 via `rank_bm25` | Azure AI Search (BM25) |
+| Rank fusion | Reciprocal Rank Fusion (RRF, k=60) | Azure AI Search native hybrid (also RRF) |
+| Reranker | `cross-encoder/ms-marco-MiniLM-L-6-v2` | Azure managed semantic ranker |
+| Embeddings | OpenAI `text-embedding-3-small` | Azure OpenAI `text-embedding-3-small` |
+| Query analysis, expansion, critic | `gpt-4o-mini` | Azure OpenAI `gpt-5-mini` |
+| Final generation | `gpt-4o` | Azure OpenAI `gpt-5.4-mini` (Data Zone Standard) |
+| Chunking | Small-to-big parent-child (structure-aware parents, 2–3 sentence children) | ← identical, pushed to the index |
+| Secrets | `.env` | Container Apps secret store |
+| Registry / orchestration | Docker Compose | Azure Container Registry + Container Apps |
+
+The Azure image installs a **separate, smaller dependency set**: with the
+managed semantic ranker doing the reranking, `torch`, `sentence-transformers`,
+`chromadb`, and `rank-bm25` are never imported and therefore never installed —
+roughly 3GB down to 300MB. Both factories import their backends lazily, which
+is what makes that possible. It matters because Container Apps scales to zero
+and must pull the image before serving the first request after a scale-up.
 
 ---
 
@@ -411,11 +499,64 @@ docker exec buildcore-backend python -c \
 # http://localhost:5173
 ```
 
-The ingestion step chunks all 12 documents into structure-aware parents,
+The ingestion step chunks all 17 documents into structure-aware parents,
 splits those into small child chunks, embeds the children, and upserts them
 into ChromaDB. It runs once — the index persists across container restarts.
-Re-run only when documents change (reset the collection first if the chunking
-strategy changed, so stale chunks from a previous scheme aren't left behind).
+Re-run only when documents change, and pass `recreate=True` if the chunking
+strategy changed, so stale chunks from a previous scheme aren't left behind.
+
+---
+
+## Running on Azure
+
+The same code runs against Azure with no source changes — the backends are
+selected by environment variable:
+
+```bash
+LLM_BACKEND=azure_openai
+RETRIEVER_BACKEND=azure_ai_search
+RERANKER_BACKEND=passthrough        # the managed semantic ranker reranks
+AZURE_SEARCH_SEMANTIC_CONFIG=buildcore-semantic
+```
+
+**Deployed architecture:**
+
+| Component | Service |
+|---|---|
+| Backend API | Container Apps (scale-to-zero, 1 vCPU / 2GiB) |
+| Frontend | Container Apps (nginx, static build) |
+| Images | Azure Container Registry, pulled via managed identity |
+| Retrieval | Azure AI Search (Basic + semantic ranker, Free plan) |
+| Inference | Azure OpenAI (Data Zone Standard) |
+| Secrets | Container Apps secret store, referenced as `secretref:` |
+
+Indexing is a **push** from `ingestion/azure_index.py`, not an Azure indexer +
+skillset. That is deliberate: Azure's built-in `SplitSkill` chunks on fixed
+character or page boundaries, which would discard the six document-type-aware
+chunkers this project is built around. Azure AI Search is used as a retrieval
+engine, not a chunking engine — so both backends index byte-identical text and
+the evaluation harness compares like with like.
+
+```bash
+# Build in Azure (no local Docker needed) and deploy
+az acr build --registry <acr> --image buildcore-backend:v1 --file Dockerfile.azure .
+az containerapp update -n ca-buildcore-api -g <rg> --image <acr>.azurecr.io/buildcore-backend:v1
+
+# One-glance config check — reports which backends are actually live
+curl https://<backend-fqdn>/health
+# {"status":"ok","retriever_backend":"azure_ai_search",
+#  "reranker_backend":"passthrough","llm_backend":"azure_openai"}
+```
+
+The frontend must be built *after* the backend exists: Vite inlines
+`VITE_API_URL` at build time, so the backend's FQDN has to be known before the
+frontend image is produced.
+
+Note that nginx serves static assets only and does **not** proxy the API. nginx
+buffers responses by default, and proxying the SSE stream through it would
+deliver all six pipeline events in one burst at the end instead of streaming —
+silently destroying the live progress view. The browser calls the backend
+directly and `CORS_ORIGINS` allows exactly the frontend origin.
 
 ---
 
@@ -448,7 +589,7 @@ buildcore-rag/
 │   │   ├── generator.py     # Grounded generation with citations
 │   │   └── schemas.py       # Pydantic models for entire pipeline
 │   └── evaluation/
-│       ├── test_suite.json  # 50 hand-crafted Q&A pairs
+│       ├── test_suite.json  # 55 hand-crafted Q&A pairs
 │       ├── baseline.py      # Naive RAG comparison system
 │       ├── metrics.py       # LLM-judge scoring functions
 │       └── evaluator.py     # Full evaluation orchestrator
@@ -459,7 +600,7 @@ buildcore-rag/
 │       ├── hooks/           # useSSE, useEvaluation, useTraces
 │       └── utils/           # API client, formatters
 └── data/
-    └── raw/                 # BuildCore corpus (5 document type folders)
+    └── raw/                 # Corpus (6 document type folders, 17 documents)
 ```
 
 ---
@@ -494,8 +635,15 @@ behind an interface from the start means the Azure migration is a
 configuration change rather than a fork — and the evaluation harness follows
 the switch automatically.
 
-**Evaluation as a first-class component.** The test suite was written
-before the evaluator, and the evaluator scores both the full pipeline and
-a naive baseline. The +23.2pp overall improvement and the 4x citation
-presence improvement are not estimated — they are measured against 50
-hand-crafted test cases with an LLM judge.
+**Evaluation as a first-class component.** The test suite was written before
+the evaluator, and the evaluator scores both the full pipeline and a naive
+baseline through the same `get_retriever()` / `get_reranker()` factories the
+production route uses — so it always scores the backend that actually ships,
+not a local stand-in. The +33.8pp overall and 5x citation-presence improvements
+are measured against 55 hand-crafted cases with an LLM judge, against the
+deployed Azure system.
+
+The suite has also earned its place by failing the system. Both failures in the
+last run turned out to be a real bug — the critic reading truncated chunks and
+vetoing answers the generator was already holding — not noise in the questions.
+That is what a test suite is for.
